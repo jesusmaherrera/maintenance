@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Gasera K19 - {% block title %}{% endblock %}</title>
+  
+  <!-- Estilos -->
+  <link rel='stylesheet' href='{{STATIC_URL}}css/bootstrap.css'/>
+  <link rel='stylesheet' href='{{STATIC_URL}}css/menu.css'/>
+  <link rel='stylesheet' href='{{STATIC_URL}}css/base.css'/>
+  <link rel='stylesheet'>
+    {% block style_css %}{% endblock %}
+  </link>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js" ></script>
+  <script src='{{STATIC_URL}}js/bootstrap.js'></script>
+  {% block js_code %}{% endblock %}
+
+</head>
+<body>
+  <header>
+    <div id="banner">
+      <img id="logo" src='{{STATIC_URL}}img/gas-k19-logo.png' />
+      <!-- Menu de Navegacion -->
+      <nav>
+        <ul id="MenuNav" style="z-index:600;">
+          <li><a href="/"><i class="icon-home icon-white"></i> Home</a></li>
+          <li><a href="#" title="Reportes"><i class="icon-calendar icon-white"></i> Nuevo &nbsp;<span class="flechabot"/> </a>
+            <ul>
+              <li><a href="{% url maintenance.main.views.chassis_manageView %}">Chasis</a></li>
+              <li><a href="{% url maintenance.main.views.storage_tank_manageView %}">Tanque de Almacenamiento</a></li>
+              <li><a href="{% url maintenance.main.views.carburetion_tank_manageView %}">Tanque de Carburacion</a></li>
+              <li><a href="{% url maintenance.main.views.radio_manageView %}">Radio</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <section id="content">
+    {% block content %}{% endblock %}
+  </section>
+  <footer>
+    2012 Gasera K19. Todos los derechos reservados
+  </footer>
+</body>
+</html>

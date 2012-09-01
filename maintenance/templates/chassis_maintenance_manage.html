@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Chasis{% endblock %}
+{% block js_code %}{% endblock %}
+{% block content %}
+  <h2>Mantenimiento de Chasis</h2>
+  <section>
+    <form method="post" action="." width="400px">
+      {% csrf_token %}
+      {{ chassis_maintenanceForm }}
+      <br>
+      <p style="clear:both;">
+        <input type="submit" class="btn btn-large" value="Guardar y Salir" />
+      </p>  
+    </form>
+  </section>
+  <br><br><br><br><br><br><br><br><br><br><br>
+{% endblock %}
+

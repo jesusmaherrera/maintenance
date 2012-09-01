@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Tanque de Almacenamiento{% endblock %}
+{% block js_code %}{% endblock %}
+{% block content %}
+  <h2>Nuevo Tanque de Carburacion</h2>
+  <section>
+    <form method="post" action="." width="400px">
+      {% csrf_token %}
+      {{ carburetion_tankForm }}
+      <br>
+      <p style="clear:both;">
+        <input type="submit" class="btn btn-large" value="Guardar y Salir" />
+      </p>  
+    </form>
+  </section>
+  <br><br><br><br><br><br><br><br><br><br><br>
+{% endblock %}
+

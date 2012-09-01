@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}     
+  <h2>Detalles de Tanque de Carburacion <a class="btn" href="{% url maintenance.main.views.carburetion_tank_manageView%}"><i class="icon-plus"></i> Nuevo Tanque de Carburacion</a><a class="btn" href="{% url maintenance.main.views.carburetion_tank_manageView carburetion_tank.id %}">Editar </a></h2>
+  <br>
+  {{ carburetion_tank.series}}<br>
+  <br>
+  <p><label>{{ carburetion_tank.brand }}{{ carburetion_tank.model}}</label></p>
+  <p><label style="float:left;">Chasis </label> {{ carburetion_tank.series }}</p>
+
+  <br>
+  <h3>Mantenimientos Realizados a Tanque de Almacenamiento</h3>
+  {% for carburetion_tank_maintenance in carburetion_tank_maintenances %}
+  <article class="tarjeta">
+    <a href='#' ><header>{{ carburetion_tank_maintenance.date }} {{ carburetion_tank_maintenance.garage }}   </header></a>
+    <section>
+      {% for carburetion_tank_service in carburetion_tank_services %} 
+        {% if carburetion_tank_service.carburetion_tank_maintenance == carburetion_tank_maintenance %}
+            <p>{{ carburetion_tank_service.service.name }}</p>
+        {% endif%}
+      {% endfor %}
+
+      {% for carburetione_tank_service_group in carburetion_tank_services_groups %} 
+        {% if carburetion_tank_service_group.carburetion_tank_maintenance == carburetion_tank_maintenance %}
+            <p style="font-weight:bold;">{{ carburetion_tank_service_group.services_group.name }}</p>
+        {% endif%}
+      {% endfor %}
+    </section>
+  </article>  
+  {% endfor %}
+  <br>
+  <br>
+  
+  <br><br><br><br><br><br><br><br><br><br>
+{% endblock %}
+

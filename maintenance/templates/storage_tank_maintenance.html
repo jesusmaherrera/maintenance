@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}     
+  <h2>Detalles de Tanque de Almacenamiento <a class="btn" href="{% url maintenance.main.views.storage_tank_manageView %}"><i class="icon-plus"></i> Nuevo</a></h2>
+  <a class="btn" href="{% url maintenance.main.views.storage_tank_manageView storage_tank.id %}">Editar</a></h2>
+  <br>
+  {{ storage_tank.series}}<br>
+  <br>
+  <p><label>{{ storage_tank.brand }}{{ storage_tank.model}}</label></p>
+  <p><label style="float:left;">Chasis </label> {{ storage_tank.series }}</p>
+
+  <br>
+  <h3>Mantenimientos Realizados a Tanque de Almacenamiento</h3>
+  {% for storage_tank_maintenance in storage_tank_maintenances %}
+  <article class="tarjeta">
+    <a href='#' ><header>{{ storage_tank_maintenance.date }} {{ storage_tank_maintenance.garage }}   </header></a>
+    <section>
+      {% for storage_tank_service in storage_tank_services %} 
+        {% if storage_tank_service.storage_tank_maintenance == storage_tank_maintenance %}
+            <p>{{ storage_tank_service.service.name }}</p>
+        {% endif%}
+      {% endfor %}
+
+      {% for storage_tank_service_group in storage_tank_services_groups %} 
+        {% if storage_tank_service_group.storage_tank_maintenance == storage_tank_maintenance %}
+            <p style="font-weight:bold;">{{ storage_tank_service_group.services_group.name }}</p>
+        {% endif%}
+      {% endfor %}
+    </section>
+  </article>  
+  {% endfor %}
+  <br>
+  <br>
+  
+  <br><br><br><br><br><br><br><br><br><br>
+{% endblock %}
+

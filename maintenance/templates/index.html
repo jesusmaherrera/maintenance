@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+  <h2 >Vehiculos en Uso </h2>  <a class="btn" href="/nuevoVehiculo/"><i class="icon-plus"></i> Nuevo Vehiculo</a>
+  <br>
+  <br>
+  {% for vehicle in vehicles %}
+  	<article class="tarjeta">
+  		  <a href='{% url maintenance.main.views.vehicle_details vehicle.id %}' >
+          <header> 
+            <div class="btn-group">
+              <a class="btn btn-primary  span2" href='{% url maintenance.main.views.vehicle_details vehicle.id %}'>{{ vehicle.name }} </a>
+              <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#"><i class="icon-pencil"></i> Edit</a></li>
+                <li><a href="#"><i class="icon-trash"></i> Delete</a></li>
+                <li><a href="#"><i class="icon-ban-circle"></i> Ban</a></li>
+                <li class="divider"></li>
+                <li><a href="#"><i class="i"></i> Make admin</a></li>
+              </ul>
+            </div>
+          </header>
+        </a>
+  		  <section>
+          <img src='{{MEDIA_URL}}{{vehicle.image}}' style="wheight: 130px; width: 200px; margin-top:.5em; margin-bottom:.5em;"/>
+          <p><label>{{ vehicle.chassis.brand }} {{ vehicle.chassis.line}} {{ vehicle.chassis.model}}</label></p>
+          <p><label style="float:left;">Chasis </label> {{ vehicle.chassis.name }}</p>
+          <p><label style="float:left;">Placas:</label> {{ vehicle.chassis.license_plates}}</p>
+        </section>
+  	</article>	
+  {% endfor%}
+  <br><br><br><br><br>
+  <br><br><br><br><br>
+  <br><br><br><br><br>
+
+
+{% endblock %}
+

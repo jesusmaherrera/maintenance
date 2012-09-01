@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}     
+  <h2>Detalles de Chasis 
+    <a class="btn" href="{% url maintenance.main.views.chassis_manageView %}"><i class="icon-plus"></i> Nuevo Chasis</a>
+    <a class="btn" href="{% url maintenance.main.views.chassis_manageView chassis.id %}">Editar</a>
+  </h2>
+  <br>
+  {{ chassis.name}} <br>
+  <br>
+  <p><label>{{ chassis.brand }} {{ chassis.line}} {{ chassis.model}}</label></p>
+  <p><label style="float:left;">Chasis </label> {{ chassis.name }}</p>
+  <p><label style="float:left;">Placas:</label> {{ chassis.license_plates}}</p>
+  <p><label style="float:left;">Color:</label> {{ chassis.color}}</p>
+  <p><label style="float:left;">Kilometraje:</label> {{ chassis.mileage}}</p>
+
+  <br>
+  <h3>Mantenimientos Realizados a Chasis <a class="btn" href="{% url maintenance.main.views.chassis_maintenance_manageView %}"><i class="icon-plus"></i> Nuevo Mantenimiento</a></h3>
+  {% for chassis_maintenance in chassis_maintenances %}
+  <article class="tarjeta">
+    <a href='{% url maintenance.main.views.chassis_maintenance_manageView chassis_maintenance.id %}' ><header>{{ chassis_maintenance.date }} {{ chassis_maintenance.garage }}   </header></a>
+    <section>
+      {% for chassis_service in chassis_services %} 
+        {% if chassis_service.chassis_maintenance == chassis_maintenance %}
+            <p>{{ chassis_service.service.name }}</p>
+        {% endif%}
+      {% endfor %}
+
+      {% for chassis_service_group in chassis_services_groups %} 
+        {% if chassis_service_group.chassis_maintenance == chassis_maintenance %}
+            <p style="font-weight:bold;">{{ chassis_service_group.services_group.name }}</p>
+        {% endif%}
+      {% endfor %}
+    </section>
+  </article>  
+  {% endfor %}
+  <br>
+  <br>
+  
+  <br><br><br><br><br><br><br><br><br><br>
+{% endblock %}
+
