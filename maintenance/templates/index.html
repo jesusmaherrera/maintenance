@@ -9,11 +9,11 @@
   	<article class="tarjeta">
   		  <a href='{% url maintenance.main.views.vehicle_details vehicle.id %}' >
           <header> 
-            <div class="btn-group">
-              <a class="btn btn-primary  span2" href='{% url maintenance.main.views.vehicle_details vehicle.id %}'>{{ vehicle.name }} </a>
-              <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+            <label style="float:left;">{{ vehicle.name }} </label>
+            <div class="btn-group" >
+              <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-asterisk"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="#"><i class="icon-pencil"></i> Edit</a></li>
+                <li><a href='{% url maintenance.main.views.vehicle_details vehicle.id %}'><i class="icon-pencil"></i> Edit</a></li>
                 <li><a href="#"><i class="icon-trash"></i> Delete</a></li>
                 <li><a href="#"><i class="icon-ban-circle"></i> Ban</a></li>
                 <li class="divider"></li>

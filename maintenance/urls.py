@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     (r'^TanqueAlmacenamiento/edit/(?P<id>\d+)/$', views.storage_tank_manageView, {}, 'storage_tank_edit'),
     (r'^Chasis/new/$', views.chassis_manageView, {}, 'chassis_new'),
     (r'^Chasis/edit/(?P<id>\d+)/$', views.chassis_manageView, {}, 'chassis_edit'),
+    (r'^chassis_maintenance/add/$', views.chassis_manageView, {}, 'chassis_maintenance_add'),
 	url(r'^media/(?P<path>.*)$','django.views.static.serve',
 		{'document_root':settings.MEDIA_ROOT,}
 	),

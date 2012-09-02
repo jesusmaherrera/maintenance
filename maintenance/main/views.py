@@ -1,7 +1,8 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
-from maintenance.main.models import vehicle, radio, chassis, storage_tank, carburetion_tank, chassis_maintenance, chassis_maintenance_S, chassis_maintenance_SG, storage_tank_maintenance, storage_tank_maintenance_S, storage_tank_maintenance_SG, carburetion_tank_maintenance, carburetion_tank_S, carburetion_tank_SG
-from maintenance.main.forms import new_vehicleForm, chassis_manageForm, storage_tank_manageForm, carburetion_tank_manageForm, radio_manageForm, chassis_maintenance_manageForm
+from django.http import HttpResponseRedirect
+from maintenance.main.models import vehicle, radio, chassis, storage_tank, carburetion_tank, chassis_maintenance, chassis_maintenance_S, chassis_maintenance_SG, storage_tank_maintenance, storage_tank_maintenance_S, storage_tank_maintenance_SG, carburetion_tank_maintenance, carburetion_tank_S, carburetion_tank_SG, service
+from maintenance.main.forms import new_vehicleForm, chassis_manageForm, storage_tank_manageForm, carburetion_tank_manageForm, radio_manageForm, chassis_maintenance_manageForm, chassis_maintenance_S_manageForm
 
 # Create your views here.
 def index(request):
@@ -119,10 +120,14 @@ def radio_manageView(request, id = None, template_name='radio_manage.html'):
 
 def chassis_maintenance_manageView(request, id=None, template_name='chassis_maintenance_manage.html'):
     if id:
-        chassis_maintenanceI = get_object_or_404(chassis_maintenance, pk=id)
+    	chassis_maintenanceI = get_object_or_404(chassis_maintenance, pk=id)
+    	servicesI = chassis_maintenance_S.objects.filter(chassis_maintenance = chassis_maintenanceI)
+    	servicesGroups = chassis_maintenance_SG.objects.filter(chassis_maintenance = chassis_maintenanceI)
     else:
     	chassis_maintenanceI = chassis_maintenance()
-
+    	servicesI= None
+    	servicesGroups = None
+    services = service.objects.all()
     if request.method == 'POST':
         chassis_maintenanceForm = chassis_maintenance_manageForm(request.POST, instance=chassis_maintenanceI)
         if chassis_maintenanceForm.is_valid():
@@ -133,6 +138,25 @@ def chassis_maintenance_manageView(request, id=None, template_name='chassis_main
         chassis_maintenanceForm = chassis_maintenance_manageForm(instance=chassis_maintenanceI)
 
     return render_to_response(template_name, {
-        'chassis_maintenanceForm': chassis_maintenanceForm,
+    	 'chassis_maintenanceForm': chassis_maintenanceForm, 'servicesI': servicesI, 'servicesGroups': servicesGroups, 'services':services,
     }, context_instance=RequestContext(request))
 
+    def add_chassis_maintenanceView(request):
+    	if request.method == 'POST':
+    		chassis_maintenanceForm = chassis_maintenance_manageForm(request.POST, instance= chassis_maintenance())
+    		chassis_maintenanceSForm = [chassis_maintenance_SForm(request.POST, prefix = str(x), instance= chassis_maintenance_S()) for x in range(0,3)]
+    		if chassis_maintenanceForm.is_valid() and all([chms.is_valid() for chms in chassis_maintenance_SForm]):
+    			new_chassis_maintenance = chassis_maintenanceForm.save()
+    			for chmd in chassis_maintenanceSForm:
+    				new_chmService =chmd.save(commit=False)
+    				new_chmService.chassis_maintenance = new_chassis_maintenance
+    				new_chmService.save()
+    			return HttpResponseRedirect('/chassis_maintenance/add/')
+    		else:
+    			chassis_maintenanceForm = chassis_maintenance_manageForm(instance = chassis_maintenance())
+    			chassis_maintenanceSForm = [chassis_maintenance_SForm(request.POST, prefix = str(x), instance= chassis_maintenance_S()) for x in range(0,3)]
+   			return render_to_response('add_chassis_maintenance.html', {'chassis_maintenanceForm': chassis_maintenanceForm, 'chassis_maintenanceSForm': chassis_maintenanceSForm})
+
+	def all(items):
+		import operator
+		return reduce(operator.and_, [bool(item) for item in items])
