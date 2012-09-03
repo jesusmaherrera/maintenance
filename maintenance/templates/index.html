@@ -8,18 +8,24 @@
   <a href='/chassis_maintenance/add/' >Nuevo FORMSET</a>
   <br>
   {% for vehicle in vehicles %}
-  	<article class="tarjeta">
+    <article class="tarjeta" >
   		  <a href='{% url maintenance.main.views.vehicle_details vehicle.id %}' >
           <header> 
-            <label style="float:left;">{{ vehicle.name }} </label>
-            <div class="btn-group" >
-              <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-asterisk"></span></a>
+            <div class="btn-group" style="width:100%;">
+              <a href='{% url maintenance.main.views.vehicle_details vehicle.id %}' style="width:75%;" class="btn btn-primary">
+                {{ vehicle.name }}
+              </a>
+              <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-asterisk"></span></a>
               <ul class="dropdown-menu">
-                <li><a href='{% url maintenance.main.views.vehicle_details vehicle.id %}'><i class="icon-pencil"></i> Edit</a></li>
-                <li><a href="{% url maintenance.main.views.delete_vehicle vehicle.id %}"><i class="icon-trash"></i> Delete</a></li>
-                <li><a href="#"><i class="icon-ban-circle"></i> Ban</a></li>\
+                <li><a href='{% url maintenance.main.views.vehicle_details vehicle.id %}'><i class="icon-pencil"></i> Editar</a></li>
+                <li><a href="{% url maintenance.main.views.delete_vehicle vehicle.id %}"><i class="icon-trash"></i> Eliminar</a></li>
+                <li><a href="#"><i class="icon-ban-circle"></i> Deshabilitar</a></li>\
               </ul>
+              
             </div>
+            
+            
+            </a>
           </header>
         </a>
   		  <section>
