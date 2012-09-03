@@ -7,6 +7,7 @@ from maintenance.main.forms import *
 from django.core.context_processors import csrf
 from django.template import RequestContext # For CSRF
 from django.forms.formsets import formset_factory, BaseFormSet
+from django.forms.models import inlineformset_factory
 
 # Create your views here.
 def index(request):
@@ -44,15 +45,23 @@ def carburetion_tank_maintenanceView(request, query):
 
 def new_vehicleView(request):
 	if request.method == 'POST':
-		vehicleForm = new_vehicleForm(request.POST)
+		vehicleForm = new_vehicleForm(request.POST, request.FILES)
 		if vehicleForm.is_valid():
 			vehicleForm.save()
+			vehicles = vehicle.objects.all()
 			return render_to_response('index.html',context_instance = RequestContext(request))
 	else:
 	 	vehicleForm = new_vehicleForm()
 
 	return render_to_response('new_vehicle.html', {'vehicleForm': vehicleForm,}
 			,context_instance = RequestContext(request))
+
+def delete_vehicle(request, id = None):
+	vehicleInstance = get_object_or_404(vehicle, pk=id)
+	vehicleInstance.delete()
+
+	vehicles = vehicle.objects.all()
+  	return render_to_response('index.html',{'vehicles':vehicles},context_instance=RequestContext(request))
 
 def chassis_manageView(request, id= None, template_name = 'chassis_manage.html'):
 	if id:
@@ -64,6 +73,7 @@ def chassis_manageView(request, id= None, template_name = 'chassis_manage.html')
 		chassisForm = chassis_manageForm(request.POST, instance= chassisI)
 		if chassisForm.is_valid():
 			chassisForm.save()
+			vehicles = vehicle.objects.all()
 			return render_to_response('index.html',context_instance = RequestContext(request))
 	else:
 	 	chassisForm = chassis_manageForm(instance= chassisI)
@@ -81,6 +91,7 @@ def storage_tank_manageView(request, id = None, template_name='storage_tank_mana
 		storage_tankForm = storage_tank_manageForm(request.POST, instance= storage_tankI)
 		if storage_tankForm.is_valid():
 			storage_tankForm.save()
+			vehicles = vehicle.objects.all()
 			return render_to_response('index.html',context_instance = RequestContext(request))
 	else:
 	 	storage_tankForm = storage_tank_manageForm(instance= storage_tankI)
@@ -98,6 +109,7 @@ def carburetion_tank_manageView(request, id = None, template_name='carburetion_t
 		carburetion_tankForm = carburetion_tank_manageForm(request.POST, instance= carburetion_tankI)
 		if carburetion_tankForm.is_valid():
 			carburetion_tankForm.save()
+			vehicles = vehicle.objects.all()
 			return render_to_response('index.html',context_instance = RequestContext(request))
 	else:
 	 	carburetion_tankForm = carburetion_tank_manageForm(instance= carburetion_tankI)
@@ -115,12 +127,20 @@ def radio_manageView(request, id = None, template_name='radio_manage.html'):
 		radioForm = radio_manageForm(request.POST, instance=radioI)
 		if radioForm.is_valid():
 			radioForm.save()
+			vehicles = vehicle.objects.all()
 			return render_to_response('index.html',context_instance = RequestContext(request))
 	else:
 	 	radioForm = radio_manageForm(instance=radioI)
 
 	return render_to_response(template_name, {'radioForm': radioForm,}
 			,context_instance = RequestContext(request))
+
+def delete_chassis_maintenance(request, id = None):
+	chassis_maintenanceInstance = get_object_or_404(chassis_maintenance, pk=id)
+	chassis_maintenanceInstance.delete()
+	vehicles = vehicle.objects.all()
+
+  	return render_to_response('index.html',{'vehicles':vehicles},context_instance=RequestContext(request))
 
 def chassis_maintenance_manageView(request , id = None, id_mant = None, template_name='chassis_maintenance_manage.html'):
 	 # This class is used to make empty formset forms required
@@ -131,7 +151,11 @@ def chassis_maintenance_manageView(request , id = None, id_mant = None, template
             for form in self.forms:
                 form.empty_permitted = False
 
-    ChassisMaintenanceS_Formset = formset_factory(chassis_maintenance_S_manageForm, max_num=10, formset=RequiredFormSet)
+	# chassisMaintenance_FormSet = inlineformset_factory(chassis_maintenance, chassis_maintenance_S)
+	# chassisMaintenancei= get_object_or_404(chassis_maintenance , pk = id_mant)
+	# chassisMaintenanceiFormSet = chassisMaintenance_FormSet(instance = chassisMaintenancei)
+	
+    ChassisMaintenanceS_Formset = formset_factory(chassis_maintenance_S_manageForm,can_delete=True, max_num=10, formset=RequiredFormSet)
 
     chassisI = get_object_or_404(chassis, pk=id)
 
@@ -144,7 +168,7 @@ def chassis_maintenance_manageView(request , id = None, id_mant = None, template
         chassis_maintenance_form = chassis_maintenance_manageForm(request.POST, instance = chassisMaintenance) # A form bound to the POST data
 
         # Create a formset from the submitted data
-       	chassis_maintenance_S_formset = ChassisMaintenanceS_Formset(request.POST, request.FILES, queryset = chassis_maintenance_S.objects.all())
+       	chassis_maintenance_S_formset = ChassisMaintenanceS_Formset(request.POST, request.FILES)
         
         if chassis_maintenance_form.is_valid() and chassis_maintenance_S_formset.is_valid():
             chassis_maintenanceI = chassis_maintenance_form.save(commit=False)
@@ -156,8 +180,10 @@ def chassis_maintenance_manageView(request , id = None, id_mant = None, template
                 chassis_maintenanceS.save()
 
             return HttpResponseRedirect('thanks') # Redirect to a 'success' page
+	#cuando es uno que se va a editar            
     else:
         chassis_maintenance_form = chassis_maintenance_manageForm(instance = chassisMaintenance)
+        #chassis_maintenance_S_formset = chassisMaintenanceiFormSet
         chassis_maintenance_S_formset = ChassisMaintenanceS_Formset()
     
     # For CSRF protection
