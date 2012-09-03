@@ -24,14 +24,13 @@ class radio_manageForm(forms.ModelForm):
 class chassis_maintenance_manageForm(forms.ModelForm):
 	class Meta:
 		model = chassis_maintenance
+		exclude = ('chassis',)
 
 class chassis_maintenance_S_manageForm(forms.ModelForm):
 	class Meta:
 		model = chassis_maintenance_S
 		exclude = ('chassis_maintenance',)
 
-	
 
 
 		
-

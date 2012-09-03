@@ -16,10 +16,10 @@
   <p><label style="float:left;">Kilometraje:</label> {{ chassis.mileage}}</p>
 
   <br>
-  <h3>Mantenimientos Realizados a Chasis <a class="btn" href="{% url maintenance.main.views.chassis_maintenance_manageView %}"><i class="icon-plus"></i> Nuevo Mantenimiento</a></h3>
+  <h3>Mantenimientos Realizados a Chasis <a class="btn" href="{% url maintenance.main.views.chassis_maintenance_manageView chassis.id %}"><i class="icon-plus"></i> Nuevo Mantenimiento</a></h3>
   {% for chassis_maintenance in chassis_maintenances %}
   <article class="tarjeta">
-    <a href='{% url maintenance.main.views.chassis_maintenance_manageView chassis_maintenance.id %}' ><header>{{ chassis_maintenance.date }} {{ chassis_maintenance.garage }}   </header></a>
+    <a href='{% url maintenance.main.views.chassis_maintenance_manageView chassis.id chassis_maintenance.id %}' ><header>{{ chassis_maintenance.date }} {{ chassis_maintenance.garage }}   </header></a>
     <section>
       {% for chassis_service in chassis_services %} 
         {% if chassis_service.chassis_maintenance == chassis_maintenance %}

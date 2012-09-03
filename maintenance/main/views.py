@@ -1,8 +1,12 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
-from maintenance.main.models import vehicle, radio, chassis, storage_tank, carburetion_tank, chassis_maintenance, chassis_maintenance_S, chassis_maintenance_SG, storage_tank_maintenance, storage_tank_maintenance_S, storage_tank_maintenance_SG, carburetion_tank_maintenance, carburetion_tank_S, carburetion_tank_SG, service
-from maintenance.main.forms import new_vehicleForm, chassis_manageForm, storage_tank_manageForm, carburetion_tank_manageForm, radio_manageForm, chassis_maintenance_manageForm, chassis_maintenance_S_manageForm
+from maintenance.main.models import *
+from maintenance.main.forms import *
+
+from django.core.context_processors import csrf
+from django.template import RequestContext # For CSRF
+from django.forms.formsets import formset_factory, BaseFormSet
 
 # Create your views here.
 def index(request):
@@ -118,45 +122,49 @@ def radio_manageView(request, id = None, template_name='radio_manage.html'):
 	return render_to_response(template_name, {'radioForm': radioForm,}
 			,context_instance = RequestContext(request))
 
-def chassis_maintenance_manageView(request, id=None, template_name='chassis_maintenance_manage.html'):
-    if id:
-    	chassis_maintenanceI = get_object_or_404(chassis_maintenance, pk=id)
-    	servicesI = chassis_maintenance_S.objects.filter(chassis_maintenance = chassis_maintenanceI)
-    	servicesGroups = chassis_maintenance_SG.objects.filter(chassis_maintenance = chassis_maintenanceI)
+def chassis_maintenance_manageView(request , id = None, id_mant = None, template_name='chassis_maintenance_manage.html'):
+	 # This class is used to make empty formset forms required
+    # See http://stackoverflow.com/questions/2406537/django-formsets-make-first-required/4951032#4951032
+    class RequiredFormSet(BaseFormSet):
+        def __init__(self, *args, **kwargs):
+            super(RequiredFormSet, self).__init__(*args, **kwargs)
+            for form in self.forms:
+                form.empty_permitted = False
+
+    ChassisMaintenanceS_Formset = formset_factory(chassis_maintenance_S_manageForm, max_num=10, formset=RequiredFormSet)
+
+    chassisI = get_object_or_404(chassis, pk=id)
+
+    if id_mant:
+    	chassisMaintenance = get_object_or_404(chassis_maintenance, pk=id_mant)
     else:
-    	chassis_maintenanceI = chassis_maintenance()
-    	servicesI= None
-    	servicesGroups = None
-    services = service.objects.all()
-    if request.method == 'POST':
-        chassis_maintenanceForm = chassis_maintenance_manageForm(request.POST, instance=chassis_maintenanceI)
-        if chassis_maintenanceForm.is_valid():
-            chassis_maintenanceForm.save()
-            # If the save was successful, redirect to another page
-            return render_to_response('index.html',context_instance = RequestContext(request))
+		chassisMaintenance = chassis_maintenance()
+
+    if request.method == 'POST': # If the form has been submitted...
+        chassis_maintenance_form = chassis_maintenance_manageForm(request.POST, instance = chassisMaintenance) # A form bound to the POST data
+
+        # Create a formset from the submitted data
+       	chassis_maintenance_S_formset = ChassisMaintenanceS_Formset(request.POST, request.FILES, queryset = chassis_maintenance_S.objects.all())
+        
+        if chassis_maintenance_form.is_valid() and chassis_maintenance_S_formset.is_valid():
+            chassis_maintenanceI = chassis_maintenance_form.save(commit=False)
+            chassis_maintenanceI.chassis = chassisI
+            chassis_maintenanceI.save()
+            for form in chassis_maintenance_S_formset.forms:
+                chassis_maintenanceS= form.save(commit=False)
+                chassis_maintenanceS.chassis_maintenance = chassis_maintenanceI
+                chassis_maintenanceS.save()
+
+            return HttpResponseRedirect('thanks') # Redirect to a 'success' page
     else:
-        chassis_maintenanceForm = chassis_maintenance_manageForm(instance=chassis_maintenanceI)
-
-    return render_to_response(template_name, {
-    	 'chassis_maintenanceForm': chassis_maintenanceForm, 'servicesI': servicesI, 'servicesGroups': servicesGroups, 'services':services,
-    }, context_instance=RequestContext(request))
-
-    def add_chassis_maintenanceView(request):
-    	if request.method == 'POST':
-    		chassis_maintenanceForm = chassis_maintenance_manageForm(request.POST, instance= chassis_maintenance())
-    		chassis_maintenanceSForm = [chassis_maintenance_SForm(request.POST, prefix = str(x), instance= chassis_maintenance_S()) for x in range(0,3)]
-    		if chassis_maintenanceForm.is_valid() and all([chms.is_valid() for chms in chassis_maintenance_SForm]):
-    			new_chassis_maintenance = chassis_maintenanceForm.save()
-    			for chmd in chassis_maintenanceSForm:
-    				new_chmService =chmd.save(commit=False)
-    				new_chmService.chassis_maintenance = new_chassis_maintenance
-    				new_chmService.save()
-    			return HttpResponseRedirect('/chassis_maintenance/add/')
-    		else:
-    			chassis_maintenanceForm = chassis_maintenance_manageForm(instance = chassis_maintenance())
-    			chassis_maintenanceSForm = [chassis_maintenance_SForm(request.POST, prefix = str(x), instance= chassis_maintenance_S()) for x in range(0,3)]
-   			return render_to_response('add_chassis_maintenance.html', {'chassis_maintenanceForm': chassis_maintenanceForm, 'chassis_maintenanceSForm': chassis_maintenanceSForm})
-
-	def all(items):
-		import operator
-		return reduce(operator.and_, [bool(item) for item in items])
+        chassis_maintenance_form = chassis_maintenance_manageForm(instance = chassisMaintenance)
+        chassis_maintenance_S_formset = ChassisMaintenanceS_Formset()
+    
+    # For CSRF protection
+    # See http://docs.djangoproject.com/en/dev/ref/contrib/csrf/ 
+    c = {'chassis_maintenance_form': chassis_maintenance_form,'chassis':chassisI,
+         'chassis_maintenance_S_formset': chassis_maintenance_S_formset,
+        }
+    c.update(csrf(request))
+    
+    return render_to_response(template_name, c, context_instance = RequestContext(request))

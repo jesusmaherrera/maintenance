@@ -1,7 +1,14 @@
 from django.contrib import admin
 from maintenance.main.models import chassis, storage_tank, carburetion_tank, radio, vehicle, garage, chassis_maintenance, storage_tank_maintenance, carburetion_tank_maintenance, service, services_group, services_group_items, chassis_maintenance_S, chassis_maintenance_SG, storage_tank_maintenance_S, storage_tank_maintenance_SG, carburetion_tank_S, carburetion_tank_SG
 
-admin.site.register(chassis)
+class chassis_maintenanceInline(admin.TabularInline):
+    model = chassis_maintenance
+    extra = 1
+
+class Chassisdmin(admin.ModelAdmin):
+    inlines = [chassis_maintenanceInline]
+
+admin.site.register(chassis, Chassisdmin)
 admin.site.register(storage_tank)
 admin.site.register(carburetion_tank)
 admin.site.register(radio)
