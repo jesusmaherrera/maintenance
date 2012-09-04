@@ -20,17 +20,22 @@
   {% for chassis_maintenance in chassis_maintenances %}
   <article class="tarjeta">
     
-      <header><a href='{% url maintenance.main.views.chassis_maintenance_manageView chassis.id chassis_maintenance.id %}' >{{ chassis_maintenance.date }} {{ chassis_maintenance.garage }} </a>  
-        <div class="btn-group" >
-              <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-asterisk"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href=''><i class="icon-pencil"></i> Edit</a></li>
-                <li><a href="{% url maintenance.main.views.delete_chassis_maintenance chassis_maintenance.id %}"><i class="icon-trash"></i> Delete</a></li>
-                <li><a href="#"><i class="icon-ban-circle"></i> Ban</a></li>
-              </ul>
-            </div>
+      <header>
+        <div class="btn-group" style="width:100%;">
+          <a href='{% url maintenance.main.views.chassis_maintenance_manageView chassis.id chassis_maintenance.id %}' style="width:75%;" class="btn btn-primary">
+            {{ chassis_maintenance.date }} {{ chassis_maintenance.garage }}
+          </a>
+          <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-asterisk"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href=''><i class="icon-pencil"></i> Editar</a></li>
+            <li><a href="{% url maintenance.main.views.delete_chassis_maintenance chassis_maintenance.id %}"><i class="icon-trash"></i> Eliminar</a></li>
+            <li><a href="#"><i class="icon-ban-circle"></i> Deshabilitar</a></li>\
+          </ul>
+        </div>  
       </header>
     <section>
+      <a href='{% url maintenance.main.views.chassis_maintenance_manageinlineView chassis_maintenance.id%}' >Nuevo FORMSET</a>
+      
       {% for chassis_service in chassis_services %} 
         {% if chassis_service.chassis_maintenance == chassis_maintenance %}
             <p>{{ chassis_service.service.name }}</p>

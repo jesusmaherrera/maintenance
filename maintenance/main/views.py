@@ -143,7 +143,7 @@ def delete_chassis_maintenance(request, id = None):
   	return render_to_response('index.html',{'vehicles':vehicles},context_instance=RequestContext(request))
 
 def chassis_maintenance_manageView(request , id = None, id_mant = None, template_name='chassis_maintenance_manage.html'):
-	 # This class is used to make empty formset forms required
+	# This class is used to make empty formset forms required
     # See http://stackoverflow.com/questions/2406537/django-formsets-make-first-required/4951032#4951032
     class RequiredFormSet(BaseFormSet):
         def __init__(self, *args, **kwargs):
@@ -194,3 +194,47 @@ def chassis_maintenance_manageView(request , id = None, id_mant = None, template
     c.update(csrf(request))
     
     return render_to_response(template_name, c, context_instance = RequestContext(request))
+
+
+def manage_chassismaintenance2(request, id_mant = None, template_name='chassis_services_Manage.html'):
+ 	if id_mant:
+ 		chassisMaintenance = get_object_or_404(chassis_maintenance, pk=id_mant)
+ 	else:
+ 		chassisMaintenance = chassis_maintenance()
+	
+	chassis_maintenanceInlineFormSet = inlineformset_factory(chassis_maintenance, chassis_maintenance_S, extra=1)
+
+	if request.method == "POST":
+		formsetI = chassis_maintenanceInlineFormSet(request.POST, request.FILES, instance=chassisMaintenance)
+    	# if formsetI.is_valid():
+    	# 	formsetI.save()
+    	# 	vehicles = vehicle.objects.all()
+     #    	return render_to_response('index.html',context_instance = RequestContext(request))
+	#sdfdsfdsf        	
+	else:
+		formsetI = chassis_maintenanceInlineFormSet(instance=chassisMaintenance)
+	
+	return render_to_response(template_name, {"formset": formsetI,},context_instance = RequestContext(request))
+
+def chassis_maintenance_manageinlineView(request , id = None, id_mant = None, template_name='chassis_services_Manage.html'):
+	
+	if id_mant:
+		chassisMaintenance = get_object_or_404(chassis_maintenance, pk=id_mant)
+	else:
+		chassisMaintenance = chassis_maintenance()
+
+	chassis_maintenanceInlineFormSet = inlineformset_factory(chassis_maintenance, chassis_maintenance_S, extra=1)
+
+	if request.method == "POST":
+		formsetI = chassis_maintenanceInlineFormSet(request.POST, request.FILES, instance=chassisMaintenance)
+    	# if formsetI.is_valid():
+    	# 	formsetI.save()
+    	# 	vehicles = vehicle.objects.all()
+     #    	return render_to_response('index.html',context_instance = RequestContext(request))
+	#sdfdsfdsf        	
+	else:
+		formsetI = chassis_maintenanceInlineFormSet(instance=chassisMaintenance)
+	
+	return render_to_response(template_name, {"formset": formsetI,},context_instance = RequestContext(request))  	
+ 
+    	

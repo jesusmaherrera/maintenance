@@ -2,28 +2,25 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}     
-  <h2>Detalles de Troca</h2>
+  <h2>Detalles de Vehiculo</h2>
   <br>
   {{ vehicle.nombre}}<br>
   <br>
   {% if vehicle.chassis %}
   <article class="tarjeta">
-    <a href='{% url maintenance.main.views.chassis_maintenanceView vehicle.chassis.id %} ' >
     <header>
-      
-      <div class="btn-group">
-              <a class="btn span2" href='{% url maintenance.main.views.chassis_maintenanceView vehicle.chassis.id %} '> CHASIS:  {{ vehicle.chassis.name }}  </a>
-              <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#"><i class="icon-pencil"></i> Edit</a></li>
-                <li><a href="#"><i class="icon-trash"></i> Delete</a></li>
-                <li><a href="#"><i class="icon-ban-circle"></i> Ban</a></li>
-                <li class="divider"></li>
-                <li><a href="#"><i class="i"></i> Make admin</a></li>
-              </ul>
-            </div>      
+      <div class="btn-group" style="width:100%;">
+        <a href='{%url maintenance.main.views.chassis_maintenanceView vehicle.chassis.id %}' style="width:75%;" class="btn btn-primary">
+           CHASIS:  {{ vehicle.chassis.name }}
+        </a>
+        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-asterisk"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href=''><i class="icon-pencil"></i> Editar</a></li>
+          <li><a href=""><i class="icon-trash"></i> Eliminar</a></li>
+          <li><a href="#"><i class="icon-ban-circle"></i> Deshabilitar</a></li>\
+        </ul>
+      </div>
     </header>
-    </a>
     <section>
       <p><label>{{ vehicle.chassis.brand }} {{ vehicle.chassis.line}} {{ vehicle.chassis.model}}</label></p>
       <p><label style="float:left;">Chasis </label> {{ vehicle.chassis.name }}</p>
