@@ -34,7 +34,7 @@
         </div>  
       </header>
     <section>
-      <a href='{% url maintenance.main.views.chassis_maintenance_manageinlineView chassis_maintenance.id%}' >Nuevo FORMSET</a>
+      <a href='{% url maintenance.main.views.chassis_maintenance_manageFormSet chassis_maintenance.id%}' >Nuevo FORMSET</a>
       
       {% for chassis_service in chassis_services %} 
         {% if chassis_service.chassis_maintenance == chassis_maintenance %}

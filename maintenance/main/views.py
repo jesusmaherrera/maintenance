@@ -206,6 +206,7 @@ def manage_chassismaintenance2(request, id_mant = None, template_name='chassis_s
 
 	if request.method == "POST":
 		formsetI = chassis_maintenanceInlineFormSet(request.POST, request.FILES, instance=chassisMaintenance)
+       
     	# if formsetI.is_valid():
     	# 	formsetI.save()
     	# 	vehicles = vehicle.objects.all()
@@ -213,6 +214,7 @@ def manage_chassismaintenance2(request, id_mant = None, template_name='chassis_s
 	#sdfdsfdsf        	
 	else:
 		formsetI = chassis_maintenanceInlineFormSet(instance=chassisMaintenance)
+		chassis_maintenance_form = chassis_maintenance_manageForm(instance = chassisMaintenance) # A form bound to the POST data
 	
 	return render_to_response(template_name, {"formset": formsetI,},context_instance = RequestContext(request))
 
@@ -223,18 +225,54 @@ def chassis_maintenance_manageinlineView(request , id = None, id_mant = None, te
 	else:
 		chassisMaintenance = chassis_maintenance()
 
-	chassis_maintenanceInlineFormSet = inlineformset_factory(chassis_maintenance, chassis_maintenance_S, extra=1)
+	chassis_maintenanceInlineFormSetS = inlineformset_factory(chassis_maintenance, chassis_maintenance_S, extra=1)
+	chassis_maintenanceInlineFormSetSG = inlineformset_factory(chassis_maintenance, chassis_maintenance_SG, extra=1)
 
 	if request.method == "POST":
-		formsetI = chassis_maintenanceInlineFormSet(request.POST, request.FILES, instance=chassisMaintenance)
-    	# if formsetI.is_valid():
-    	# 	formsetI.save()
-    	# 	vehicles = vehicle.objects.all()
-     #    	return render_to_response('index.html',context_instance = RequestContext(request))
+		formsetIS = chassis_maintenanceInlineFormSetS(request.POST, request.FILES, instance=chassisMaintenance)
+		formsetISG = chassis_maintenanceInlineFormSetSG(request.POST, request.FILES, instance=chassisMaintenance)
+		chassis_maintenance_form = chassis_maintenance_manageForm(request.POST, instance = chassisMaintenance)
+
+		if chassis_maintenance_form.is_valid():
+			chassis_maintenance_form.save()
+    	 	
+    	 	if formsetIS.is_valid() and formsetISG.is_valid():
+    			formsetIS.save()
+    			formsetISG.save()
+    			return render_to_response(template_name, {"formsetS": formsetIS,'formsetSG':formsetISG,'chassis_maintenance_form':chassis_maintenance_form,},context_instance = RequestContext(request))  		
 	#sdfdsfdsf        	
 	else:
-		formsetI = chassis_maintenanceInlineFormSet(instance=chassisMaintenance)
+		formsetIS = chassis_maintenanceInlineFormSetS(instance=chassisMaintenance)
+		formsetISG = chassis_maintenanceInlineFormSetSG(instance=chassisMaintenance)
+		chassis_maintenance_form = chassis_maintenance_manageForm(instance = chassisMaintenance)
 	
-	return render_to_response(template_name, {"formset": formsetI,},context_instance = RequestContext(request))  	
+
+	return render_to_response(template_name, {"formsetS": formsetIS,'formsetSG':formsetISG,'chassis_maintenance_form':chassis_maintenance_form,},context_instance = RequestContext(request))  		
+
+def chassis_maintenance_manageFormSet(request, object_id=None):
+    
+    chassisServiceFormSet = inlineformset_factory(chassis_maintenance, chassis_maintenance_S, extra = 1)
+    
+    if object_id:
+        chassisMaintenance = chassis_maintenance.objects.get(pk=object_id)
+    else:
+        chassisMaintenance=chassis_maintenance()
+
+    if request.method == 'POST':
+        f=chassis_maintenance_Form(request.POST, request.FILES, instance=chassisMaintenance)
+        if f.is_valid():
+        	created_maintenance = f.save(commit=False)
+        	fs = chassisServiceFormSet(request.POST,instance=chassisMaintenance)
+        	if fs.is_valid():
+            	f.save()
+            	fs.save()
+            	return render_to_response('chassis_maintenance_manageFormSet.html', \
+               		{'fs': fs,'f':f,'chassisMaintenance':chassisMaintenance},context_instance = RequestContext(request))
+    else:
+        f  = chassis_maintenance_Form(instance=chassisMaintenance)
+        fs = chassisServiceFormSet(instance=chassisMaintenance)
+
+    return render_to_response('chassis_maintenance_manageFormSet.html', \
+               {'fs': fs,'f':f,'chassisMaintenance':chassisMaintenance},context_instance = RequestContext(request))
  
     	

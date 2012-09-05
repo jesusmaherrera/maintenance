@@ -31,6 +31,10 @@ class chassis_maintenance_S_manageForm(forms.ModelForm):
 		model = chassis_maintenance_S
 		exclude = ('chassis_maintenance',)
 
+class chassis_maintenance_Form(forms.ModelForm):
+    class Meta:
+    	model=chassis_maintenance
+
 
 
 		

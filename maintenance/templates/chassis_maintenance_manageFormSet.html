@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block style_css %}
+{% endblock %}
+{% block js_code %}
+
+{% endblock %}
+
+{% block content %}
+  	<h2 >Vehiculos en Uso </h2>  
+  	<form method="post" action="">{% csrf_token %}
+	  	{{ f }}
+	  	{{ fs }}
+	  	<input type="submit" class="btn btn-large" value="Guardar y Salir" />
+  	</form>
+{% endblock %}
+
