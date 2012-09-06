@@ -250,29 +250,33 @@ def chassis_maintenance_manageinlineView(request , id = None, id_mant = None, te
 	return render_to_response(template_name, {"formsetS": formsetIS,'formsetSG':formsetISG,'chassis_maintenance_form':chassis_maintenance_form,},context_instance = RequestContext(request))  		
 
 def chassis_maintenance_manageFormSet(request, object_id=None):
-    
-    chassisServiceFormSet = inlineformset_factory(chassis_maintenance, chassis_maintenance_S, extra = 1)
-    
-    if object_id:
-        chassisMaintenance = chassis_maintenance.objects.get(pk=object_id)
-    else:
-        chassisMaintenance=chassis_maintenance()
+	chassisServiceFormSet, chassisServiceGroupFormSet = inlineformset_factory(chassis_maintenance, chassis_maintenance_S, extra = 1), inlineformset_factory(chassis_maintenance, chassis_maintenance_SG, extra = 1)
+	
+	if object_id:
+		chassisMaintenance = chassis_maintenance.objects.get(pk=object_id)
+	else:
+		chassisMaintenance=chassis_maintenance()
 
-    if request.method == 'POST':
-        f=chassis_maintenance_Form(request.POST, request.FILES, instance=chassisMaintenance)
-        if f.is_valid():
-        	created_maintenance = f.save(commit=False)
-        	fs = chassisServiceFormSet(request.POST,instance=chassisMaintenance)
-        	if fs.is_valid():
+	if request.method == 'POST':
+		f=chassis_maintenance_Form(request.POST, request.FILES, instance=chassisMaintenance)
+
+		if f.is_valid():
+			created_maintenance = f.save(commit=False)
+			fs, fsg = chassisServiceFormSet(request.POST,prefix='chassisServiceFormS', instance=chassisMaintenance), chassisServiceGroupFormSet(request.POST, prefix="chassisServiceFormSG", instance=chassisMaintenance)
+
+        	if fs.is_valid() and fsg.is_valid():
         		f.save()
-            	fs.save()
-            	return render_to_response('chassis_maintenance_manageFormSet.html', \
-               		{'fs': fs,'f':f,'chassisMaintenance':chassisMaintenance},context_instance = RequestContext(request))
-    else:
-        f  = chassis_maintenance_Form(instance=chassisMaintenance)
-        fs = chassisServiceFormSet(instance=chassisMaintenance)
-
-    return render_to_response('chassis_maintenance_manageFormSet.html', \
-               {'fs': fs,'f':f,'chassisMaintenance':chassisMaintenance},context_instance = RequestContext(request))
- 
-    	
+        		for form in fs:
+        			createdform = form.save(commit=False)
+        			createdform.chassis_maintenance = chassisMaintenance
+        			createdform.save()
+				for form in fsg:
+					createdform = form.save(commit=False)
+					createdform.chassis_maintenance = chassisMaintenance
+        			createdform.save()
+            	return render_to_response('chassis_maintenance_manageFormSet.html', {'fs': fs,'f':f,'chassisMaintenance':chassisMaintenance,}, context_instance = RequestContext(request))		
+	else:
+		f  = chassis_maintenance_Form(instance=chassisMaintenance)
+    	fs = chassisServiceFormSet(prefix='chassisServiceFormS', instance=chassisMaintenance)
+    	fsg = chassisServiceGroupFormSet(prefix='chassisServiceFormSG', instance=chassisMaintenance)
+	return render_to_response('chassis_maintenance_manageFormSet.html', {'fs': fs, 'fsg':fsg, 'f':f,'chassisMaintenance':chassisMaintenance,}, context_instance = RequestContext(request))
