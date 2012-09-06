@@ -264,7 +264,7 @@ def chassis_maintenance_manageFormSet(request, object_id=None):
         	created_maintenance = f.save(commit=False)
         	fs = chassisServiceFormSet(request.POST,instance=chassisMaintenance)
         	if fs.is_valid():
-            	f.save()
+        		f.save()
             	fs.save()
             	return render_to_response('chassis_maintenance_manageFormSet.html', \
                		{'fs': fs,'f':f,'chassisMaintenance':chassisMaintenance},context_instance = RequestContext(request))
