@@ -274,7 +274,8 @@ def chassis_maintenance_manageFormSet(request, object_id=None):
 					createdform = form.save(commit=False)
 					createdform.chassis_maintenance = chassisMaintenance
         			createdform.save()
-            	return render_to_response('chassis_maintenance_manageFormSet.html', {'fs': fs,'f':f,'chassisMaintenance':chassisMaintenance,}, context_instance = RequestContext(request))		
+        			
+            	return render_to_response('chassis_maintenance_manageFormSet.html', {'fs': fs, 'fsg':fsg, 'f':f,'chassisMaintenance':chassisMaintenance,}, context_instance = RequestContext(request))
 	else:
 		f  = chassis_maintenance_Form(instance=chassisMaintenance)
     	fs = chassisServiceFormSet(prefix='chassisServiceFormS', instance=chassisMaintenance)

@@ -31,23 +31,14 @@
 </script>
 {{ event_formset.media }}
 <script type="text/javascript">
-    $(function() {
+    $(function(){
         $('#id_service_info_table tbody tr').formset({
             formCssClass: 'dynamic-contact-form',
             prefix: "{{ fs.prefix }}"
         });
-        $('table.form-container').formset({
+        $('#id_serviceGroup_info_table tbody tr').formset({
             formCssClass: 'dynamic-event-form',
-            prefix: "{{ fsg.prefix }}",
-            added: function(row) {
-                // Find the fields with the calendar widget
-                //$(row).find('.vDateField').each(function(i) {
-                    // Remove the cloned spam element: it links to an incorrect calendar
-                    //$(this).parent().find('span').remove();
-                    // DateTimeShortcuts is defined in DateTimeShortcuts.js in the Django admin media
-                  //  DateTimeShortcuts.addCalendar(this);
-                //});
-            }
+            prefix: "{{ fsg.prefix }}"
         });
     });
 </script>
@@ -58,7 +49,7 @@
     <form method="post" action="">{% csrf_token %}
     	{{ f }}
     <h2>Servicios</h2>
-        <table id="id_service_info_table" border="0" cellpadding="0" cellspacing="5">
+        <table id="id_service_info_table" border="0" cellpadding="0" cellspacing="5" style="float:left;">
             <thead>
                 <tr>
                     <th scope="col">Servicio</th>
@@ -75,22 +66,24 @@
                 {% endfor %}
             </tbody>
         </table>
-
-        <h2>Grupos de Servicios</h2>
-        {% for form in fsg.forms %}
-        <table id="{{ form.prefix }}-row" class="form-container" border="0" cellpadding="0" cellspacing="5">
-            <tbody>
+        <table id="id_serviceGroup_info_table" border="0" cellpadding="0" cellspacing="5">
+            <thead>
                 <tr>
-                    <th scope="row">Name</th>
+                    <th scope="col">Servicio Grupo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for form in fsg.forms %}
+                <tr id="{{ form.prefix }}-row" class="form-container">
                     <td>
 						{% for fld in form.hidden_fields %}{{ fld }}{% endfor %}
 		            	{% if form.instance.pk %}{{ form.DELETE }}{% endif %}
 	                    {{ form.services_group }}
                     </td>
-                </tr>
+                </tr>                
+                {% endfor %}
             </tbody>
         </table>
-        {% endfor %}
           	<input type="submit" class="btn btn-large" value="Guardar y Salir" />
         <p>
         	{{ f.management_form }}
