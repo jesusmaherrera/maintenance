@@ -250,7 +250,7 @@ def chassis_maintenance_manageinlineView(request , id = None, id_mant = None, te
 	return render_to_response(template_name, {"formsetS": formsetIS,'formsetSG':formsetISG,'chassis_maintenance_form':chassis_maintenance_form,},context_instance = RequestContext(request))  		
 
 def chassis_maintenance_manageFormSet(request, object_id=None):
-	chassisServiceFormSet, chassisServiceGroupFormSet = inlineformset_factory(chassis_maintenance, chassis_maintenance_S, extra = 0), inlineformset_factory(chassis_maintenance, chassis_maintenance_SG, extra = 0)
+	chassisServiceFormSet, chassisServiceGroupFormSet = inlineformset_factory(chassis_maintenance, chassis_maintenance_S, extra = 1), inlineformset_factory(chassis_maintenance, chassis_maintenance_SG, extra = 1)
 	message = ""
 	if object_id:
 		chassisMaintenance = chassis_maintenance.objects.get(pk=object_id)

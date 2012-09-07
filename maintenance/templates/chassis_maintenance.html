@@ -17,20 +17,17 @@
   <h3>Mantenimientos Realizados a Chasis <a class="btn" href="/ChasisMaintenenceFS/new/"><i class="icon-plus"></i> Nuevo Mantenimiento</a></h3>
   {% for chassis_maintenance in chassis_maintenances %}
   <article class="tarjeta">
-    
-      <header>
-        <div class="btn-group" style="width:100%;">
-          <a href='{% url maintenance.main.views.chassis_maintenance_manageFormSet chassis_maintenance.id%}' style="width:75%;" class="btn btn-primary">
+        <div class="btn-group btn-danger" style="width:100%;">
+          <a href='{% url maintenance.main.views.chassis_maintenance_manageFormSet chassis_maintenance.id%}' style="width:75%;" class="btn btn-danger btn-primary">
             {{ chassis_maintenance.date }} 
           </a>
-          <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-asterisk"></span></a>
+          <a class="btn btn-danger btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-asterisk"></span></a>
           <ul class="dropdown-menu">
             <li><a href=''><i class="icon-pencil"></i> Editar</a></li>
             <li><a href="{% url maintenance.main.views.delete_chassis_maintenance chassis_maintenance.id %}"><i class="icon-trash"></i> Eliminar</a></li>
             <li><a href="#"><i class="icon-ban-circle"></i> Deshabilitar</a></li>\
           </ul>
         </div>  
-      </header>
     <section>
       {% for chassis_service in chassis_services %} 
         {% if chassis_service.chassis_maintenance == chassis_maintenance %}
