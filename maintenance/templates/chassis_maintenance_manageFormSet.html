@@ -3,15 +3,8 @@
 {% block style_css %}
 <style type="text/css">
     .add-row {
-        padding-left:18px;
-        background:url({{ MEDIA_URL }}images/add.png) no-repeat left center;
     }
     .delete-row {
-        float:right;
-        display:block;
-        margin-left:4px;
-        padding-left:18px;
-        background:url({{ MEDIA_URL }}images/delete.png) no-repeat left center;
     }
     .dynamic-event-form th {
         text-align:right;
@@ -22,10 +15,12 @@
         border:0;
     }
 </style>
+<link rel='stylesheet' href='{{STATIC_URL}}css/redmond/jquery-ui-1.8.23.custom.css'/>
 {% endblock %}
 {% block js_code %}
 <script src='{{STATIC_URL}}js/jquery.formset.js'></script>
 <script type="text/javascript">
+
     // Define this so we don't have to bother with the admin jsi18n stuff:
     function gettext(msgid) { return msgid; }
 </script>
@@ -34,22 +29,61 @@
     $(function(){
         $('#id_service_info_table tbody tr').formset({
             formCssClass: 'dynamic-contact-form',
-            prefix: "{{ fs.prefix }}"
+            prefix: "{{ fs.prefix }}",
+            addText:"Nuevo",
+            deleteText:"",
         });
         $('#id_serviceGroup_info_table tbody tr').formset({
             formCssClass: 'dynamic-event-form',
-            prefix: "{{ fsg.prefix }}"
+            prefix: "{{ fsg.prefix }}",
+            addText:"Nuevo",
+            deleteText:"",
         });
+        
+        $(".delete-row").addClass("delete btn btn-small btn-danger");
+        $('.delete-row').append('<i class="icon-trash"></i>');
+        $('.delete-row').attr('href', "ChasisMaintenanceS/delete/16/"); 
+        $(".add-row").addClass("btn btn-small btn-success");
+        $('#id_date').datetimepicker({ dateFormat: 'dd/mm/yy',});
     });
 </script>
 {% endblock %}
 {% block content %}
-  	<h2 >Vehiculos en Uso </h2>  
-<div class="entry">
+  	<h2 >Mantenimiento</h2>  
+    {% if message != "" %}
+    <div class="alert fade in">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>{{ message }}!</strong> 
+    </div>
+    {% endif %}
     <form method="post" action="">{% csrf_token %}
-    	{{ f }}
-    <h2>Servicios</h2>
-        <table id="id_service_info_table" border="0" cellpadding="0" cellspacing="5" style="float:left;">
+    <div style="text-align:left;">
+        <fieldset>
+        <legend>Detales de Mantenimiento:</legend>
+        <span class="span3">
+            Fecha:
+            <br>
+            {{ f.date }}
+        </span>
+        <span class="span3">
+            Taller:<br>
+            {{ f.garage }}
+        </span>
+        <span class="span3">
+            Chassis:
+            {{ f.chassis }}
+        </span>
+        <br>
+        <span class="span3">
+            Kilometraje:
+            {{ f.mileage }}
+        </span>
+        </fieldset>
+    </div>
+     <div style="text-align:left;">
+        <fieldset>
+        <legend>Servicios y Grupos de Servicios:</legend>
+       <table id="id_service_info_table" border="0" cellpadding="0" cellspacing="5" style="float:left; margin-right:3em;">
             <thead>
                 <tr>
                     <th scope="col">Servicio</th>
@@ -57,11 +91,11 @@
             </thead>
             <tbody>
                 {% for form in fs.forms %}
-                <tr id="{{ form.prefix }}-row" class="form-container">
-                    <td style="text-align:center;">
+                <tr id="{{ form.prefix }}-row" class="form-container" style="text-align:left;">
+                    <td style="height:4em;">
                     {% for fld in form.hidden_fields %}{{ fld }}{% endfor %}
-	            	{% if form.instance.pk %}{{ form.DELETE }}{% endif %}
-					{{ form.service }}</td>
+                    {% if form.instance.pk %}{{ form.DELETE }}{% endif %}
+                    {{ form.service }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -74,26 +108,28 @@
             </thead>
             <tbody>
                 {% for form in fsg.forms %}
-                <tr id="{{ form.prefix }}-row" class="form-container">
+                <tr id="{{ form.prefix }}-row" class="form-container" style="text-align:left;">
                     <td>
-						{% for fld in form.hidden_fields %}{{ fld }}{% endfor %}
-		            	{% if form.instance.pk %}{{ form.DELETE }}{% endif %}
-	                    {{ form.services_group }}
+                        {% for fld in form.hidden_fields %}{{ fld }}{% endfor %}
+                        {% if form.instance.pk %}{{ form.DELETE }}{% endif %}
+                        {{ form.services_group }}
                     </td>
                 </tr>                
                 {% endfor %}
             </tbody>
         </table>
-          	<input type="submit" class="btn btn-large" value="Guardar y Salir" />
         <p>
-        	{{ f.management_form }}
+            {{ f.management_form }}
             {{ fs.management_form }}
             {{ fsg.management_form }}
-            </p>  
-
-    </form>
-</div>
-
-
+        </p>
+        </fieldset>
+    </div>
+    
+    
+    <input type="submit" class="btn btn-large" value="Guardar y Salir" />
+    <br>
+    <br>
   	<br>
 {% endblock %}
+

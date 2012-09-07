@@ -8,20 +8,18 @@
   <br>
   {% if vehicle.chassis %}
   <article class="tarjeta">
-    <header>
-      <div class="btn-group" style="width:100%;">
+      <div class="btn-group" style="width:100%; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px;"  >
         <a href='{%url maintenance.main.views.chassis_maintenanceView vehicle.chassis.id %}' style="width:75%;" class="btn btn-primary">
-           CHASIS:  {{ vehicle.chassis.name }}
+           CHASIS
         </a>
-        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-asterisk"></span></a>
+        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-asterisk icon-white"></span></a>
         <ul class="dropdown-menu">
           <li><a href=''><i class="icon-pencil"></i> Editar</a></li>
           <li><a href=""><i class="icon-trash"></i> Eliminar</a></li>
-          <li><a href="#"><i class="icon-ban-circle"></i> Deshabilitar</a></li>\
         </ul>
       </div>
-    </header>
     <section>
+      <p><label>{{ vehicle.chassis.name }}</label></p>
       <p><label>{{ vehicle.chassis.brand }} {{ vehicle.chassis.line}} {{ vehicle.chassis.model}}</label></p>
       <p><label style="float:left;">Chasis </label> {{ vehicle.chassis.name }}</p>
       <p><label style="float:left;">Placas:</label> {{ vehicle.chassis.license_plates}}</p>
@@ -31,11 +29,20 @@
     </section>
   </article>  
   {% endif %}
-
   {% if vehicle.storage_tank %}
   <article class="tarjeta">
-    <a href='{% url maintenance.main.views.storage_tank_maintenanceView vehicle.storage_tank.id %} ' ><header>TANQUE DE ALMACENAMIENTO #:{{ vehicle.storage_tank.series }} </header></a>
+      <div class="btn-group" style="width:100%;">
+        <a href='{% url maintenance.main.views.storage_tank_maintenanceView vehicle.storage_tank.id %}' style="width:75%;" class="btn btn-primary">
+           TANQUE DE ALMACENAMIENTO
+        </a>
+        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-asterisk icon-white"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href='{% url maintenance.main.views.storage_tank_manageView vehicle.storage_tank.id %}'><i class="icon-pencil"></i> Editar</a></li>
+          <li><a href=""><i class="icon-trash"></i> Eliminar</a></li>
+        </ul>
+      </div>
     <section>
+      <p><label>{{ vehicle.storage_tank.series }} </label></p>
       <p><label>{{ vehicle.storage_tank.brand }} {{ vehicle.storage_tank.model}}</label></p>
       <p><label style="float:left;">Capacidad Nominal </label> {{ vehicle.storage_tank.water_nominal_cap }}</p>
       <p><label style="float:left;">Contenido:</label> {{ vehicle.storage_tank.content}}</p>
@@ -46,17 +53,38 @@
 
   {% if vehicle.carburetion_tank %}
   <article class="tarjeta">
-    <a href='{% url maintenance.main.views.carburetion_tank_maintenanceView vehicle.carburetion_tank.id %}' ><header>TANQUE DE CARBURACION #:{{ vehicle.carburetion_tank.series }} </header></a>
+    <div class="btn-group" style="width:100%;">
+        <a href='{% url maintenance.main.views.carburetion_tank_maintenanceView vehicle.carburetion_tank.id %}' style="width:75%;" class="btn btn-primary">
+          TANQUE DE CARBURACION
+        </a>
+        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-asterisk icon-white"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href='{% url maintenance.main.views.carburetion_tank_manageView vehicle.carburetion_tank.id %}'><i class="icon-pencil"></i> Editar</a></li>
+          <li><a href=""><i class="icon-trash"></i> Eliminar</a></li>
+        </ul>
+      </div>
     <section>
+      <p><label>{{ vehicle.carburetion_tank.series }}</label></p>
       <p><label>{{ vehicle.carburetion_tank.brand }} {{ vehicle.carburetion_tank.model}}</label></p>
       <p><label style="float:left;">Capacidad: </label> {{ vehicle.carburetion_tank.capacity }}</p>
   </article>  
   {% endif %}
 
   {% if vehicle.radio %}
+    
   <article class="tarjeta">
-    <a href='{% url maintenance.main.views.radio_manageView vehicle.radio.id %}' ><header>RADIO DE COMUNICACION #:{{ vehicle.radio.series }} </header></a>
+      <div class="btn-group" style="width:100%;">
+        <a href='{% url maintenance.main.views.radio_manageView vehicle.radio.id %}' style="width:75%;" class="btn btn-primary">
+          RADIO DE COMUNICACION
+        </a>
+        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-asterisk icon-white"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href='#'><i class="icon-pencil"></i> Editar</a></li>
+          <li><a href=""><i class="icon-trash"></i> Eliminar</a></li>
+        </ul>
+      </div>
     <section>
+      <p><label>{{ vehicle.radio.series }}</label></p>
       <p><label>{{ vehicle.radio.brand }} </label></p>
       <p><label style="float:left;">Modelo </label> {{ vehicle.radio.model }}</p>
   </article>  

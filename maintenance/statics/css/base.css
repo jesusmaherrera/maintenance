@@ -9,7 +9,7 @@ body{
 }
 
 body #content{
-	background-color: #E7E7E7;
+	background-color: white;
 	padding-left: 5%;
 	padding-right: 5%;
 }
@@ -19,7 +19,9 @@ body section h2{
 }
 
 body footer{
-	background-color: #E0E0E0;
+	background-color: white;
+  border-top: 1px;
+  border-top-color: gray;
 }
 
 .tarjeta{
@@ -28,6 +30,7 @@ body footer{
   float: left;
   margin-right: 1em;
 }
+
 
 .tarjeta header{
   background-color: #859ED6;
@@ -43,8 +46,7 @@ body footer{
   border-color: #BEBEBE;
 }
 
-.tarjeta header:hover{ 
-    background-color: #364F86;
+.tarjeta a:hover{ 
     text-decoration: none;
 }
 

@@ -2,24 +2,21 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-  <h2 >Vehiculos en Uso </h2>  <a class="btn" href="/nuevoVehiculo/"><i class="icon-plus"></i> Nuevo Vehiculo</a>
+  <h2 >Vehiculos en Uso </h2> 
   <br>
   <br>
   {% for vehicle in vehicles %}
     <article class="tarjeta" >
-          <header> 
             <div class="btn-group" style="width:100%;">
               <a href='{% url maintenance.main.views.vehicle_details vehicle.id %}' style="width:75%;" class="btn btn-primary">
                 {{ vehicle.name }}
               </a>
-              <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-asterisk"></span></a>
+              <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-asterisk icon-white"></span></a>
               <ul class="dropdown-menu">
                 <li><a href='{% url maintenance.main.views.vehicle_details vehicle.id %}'><i class="icon-pencil"></i> Editar</a></li>
                 <li><a href="{% url maintenance.main.views.delete_vehicle vehicle.id %}"><i class="icon-trash"></i> Eliminar</a></li>
-                <li><a href="#"><i class="icon-ban-circle"></i> Deshabilitar</a></li>\
               </ul>
             </div>
-          </header>
         </a>
   		  <section>
           <img src='{{MEDIA_URL}}{{vehicle.image}}' style="wheight: 130px; width: 200px; margin-top:.5em; margin-bottom:.5em;"/>

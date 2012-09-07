@@ -3,8 +3,6 @@
 
 {% block content %}     
   <h2>Detalles de Chasis 
-    <a class="btn" href="{% url maintenance.main.views.chassis_manageView %}"><i class="icon-plus"></i> Nuevo Chasis</a>
-    <a class="btn" href="{% url maintenance.main.views.chassis_manageView chassis.id %}">Editar</a>
   </h2>
   <br>
   {{ chassis.name}} <br>
@@ -16,14 +14,14 @@
   <p><label style="float:left;">Kilometraje:</label> {{ chassis.mileage}}</p>
 
   <br>
-  <h3>Mantenimientos Realizados a Chasis <a class="btn" href="{% url maintenance.main.views.chassis_maintenance_manageView chassis.id %}"><i class="icon-plus"></i> Nuevo Mantenimiento</a></h3>
+  <h3>Mantenimientos Realizados a Chasis <a class="btn" href="/ChasisMaintenenceFS/new/"><i class="icon-plus"></i> Nuevo Mantenimiento</a></h3>
   {% for chassis_maintenance in chassis_maintenances %}
   <article class="tarjeta">
     
       <header>
         <div class="btn-group" style="width:100%;">
-          <a href='{% url maintenance.main.views.chassis_maintenance_manageView chassis.id chassis_maintenance.id %}' style="width:75%;" class="btn btn-primary">
-            {{ chassis_maintenance.date }} {{ chassis_maintenance.garage }}
+          <a href='{% url maintenance.main.views.chassis_maintenance_manageFormSet chassis_maintenance.id%}' style="width:75%;" class="btn btn-primary">
+            {{ chassis_maintenance.date }} 
           </a>
           <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-asterisk"></span></a>
           <ul class="dropdown-menu">
@@ -34,8 +32,6 @@
         </div>  
       </header>
     <section>
-      <a href='{% url maintenance.main.views.chassis_maintenance_manageFormSet chassis_maintenance.id%}' >Nuevo FORMSET</a>
-      
       {% for chassis_service in chassis_services %} 
         {% if chassis_service.chassis_maintenance == chassis_maintenance %}
             <p>{{ chassis_service.service.name }}</p>
