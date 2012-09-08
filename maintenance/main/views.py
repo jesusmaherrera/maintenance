@@ -135,6 +135,24 @@ def radio_manageView(request, id = None, template_name='radio_manage.html'):
 	return render_to_response(template_name, {'radioForm': radioForm,}
 			,context_instance = RequestContext(request))
 
+def service_manageView(request, id = None, template_name='service.html'):
+	if id:
+		Service = get_object_or_404(service, pk=id)
+	else:
+		Service = service()
+
+	if request.method == 'POST':
+		Form = serviceForm(request.POST, instance=Service)
+		if Form.is_valid():
+			Form.save()
+			vehicles = vehicle.objects.all()
+			return render_to_response('index.html',context_instance = RequestContext(request))
+	else:
+	 	Form = serviceForm(instance=Service)
+
+	return render_to_response(template_name, {'Form': Form,}
+			,context_instance = RequestContext(request))
+
 def delete_chassis_maintenance(request, id = None):
 	chassis_maintenanceInstance = get_object_or_404(chassis_maintenance, pk=id)
 	chassis_maintenanceInstance.delete()
@@ -292,3 +310,93 @@ def delete_chassis_maintenanceS(request, id = None):
 	fs = chassisServiceFormSet(prefix='chassisServiceFormS', instance=chassis_maintenanceS.chassis_maintenance)
 	fsg = chassisServiceGroupFormSet(prefix='chassisServiceFormSG', instance=chassis_maintenanceS.chassis_maintenance)
 	return render_to_response('chassis_maintenance_manageFormSet.html', {'fs': fs, 'fsg':fsg, 'f':f,'chassisMaintenance':chassisMaintenance,}, context_instance = RequestContext(request))
+
+def carburetion_tank_maintenance_MFS(request, object_id=None):
+	carburetion_tankServiceFS, carburetion_tankServiceGroupFS = inlineformset_factory(carburetion_tank_maintenance, carburetion_tank_S, extra = 1), inlineformset_factory(carburetion_tank_maintenance, carburetion_tank_SG, extra = 1)
+	message = ""
+	if object_id:
+		CarburetionTankMaintenance = carburetion_tank_maintenance.objects.get(pk=object_id)
+	else:
+		CarburetionTankMaintenance = carburetion_tank_maintenance()
+
+	if request.method == 'POST':
+		f = carburetion_tank_maintenanceForm(request.POST, request.FILES, instance=CarburetionTankMaintenance)
+
+		if f.is_valid():
+			created_maintenance = f.save(commit=False)
+			fs, fsg =   carburetion_tankServiceFS(request.POST,prefix='carburation_tankServiceFS', instance=CarburetionTankMaintenance), carburetion_tankServiceGroupFS(request.POST, prefix="carburation_tankServiceFSG", instance=CarburetionTankMaintenance)
+
+
+        	if fs.is_valid() and fsg.is_valid():
+        		for form in fs:
+        			createdform = form.save(commit=False)
+        			createdform.carburetion_tank_maintenance = CarburetionTankMaintenance
+        			createdform.save()
+
+				for form in fsg:
+					createdform = form.save(commit=False)
+					createdform.carburetion_tank_maintenance = CarburetionTankMaintenance
+        			createdform.save()
+        		f.save()
+        		message = "Datos Guardados"
+            	return render_to_response('carburetion_tank_maintenance_MFS.html', {'fs': fs, 'fsg':fsg, 'f':f,'message':message,'CarburetionTankMaintenance': CarburetionTankMaintenance,}, context_instance = RequestContext(request))
+	else:
+		f  = carburetion_tank_maintenanceForm(instance=CarburetionTankMaintenance)
+    	fs = carburetion_tankServiceFS(prefix='carburation_tankServiceFS', instance=CarburetionTankMaintenance)
+    	fsg = carburetion_tankServiceGroupFS(prefix='carburation_tankServiceFSG', instance=CarburetionTankMaintenance)
+	return render_to_response('carburetion_tank_maintenance_MFS.html', {'fs': fs, 'fsg':fsg, 'f':f,'message':message,'CarburetionTankMaintenance':CarburetionTankMaintenance,}, context_instance = RequestContext(request))
+
+def storage_tank_maintenance_MFS(request, object_id=None):
+	storage_tankServiceFS, storage_tankServiceGroupFS = inlineformset_factory(storage_tank_maintenance, storage_tank_maintenance_S, extra = 1), inlineformset_factory(storage_tank_maintenance, storage_tank_maintenance_SG, extra = 1)
+	message = ""
+	if object_id:
+		StorageTankMaintenance = storage_tank_maintenance.objects.get(pk=object_id)
+	else:
+		StorageTankMaintenance = storage_tank_maintenance()
+
+	if request.method == 'POST':
+		f = storage_tank_maintenanceForm(request.POST, request.FILES, instance=StorageTankMaintenance)
+
+		if f.is_valid():
+			created_maintenance = f.save(commit=False)
+			fs, fsg = storage_tankServiceFS(request.POST,prefix='storage_tankServiceFS', instance=StorageTankMaintenance), storage_tankServiceGroupFS(request.POST, prefix="storage_tankServiceFSG", instance=StorageTankMaintenance)
+
+
+        	if fs.is_valid() and fsg.is_valid():
+        		for form in fs:
+        			createdform = form.save(commit=False)
+        			createdform.storage_tank_maintenance = StorageTankMaintenance
+        			createdform.save()
+
+				for form in fsg:
+					createdform = form.save(commit=False)
+					createdform.storage_tank_maintenance = StorageTankMaintenance
+        			createdform.save()
+        		f.save()
+        		message = "Datos Guardados"
+            	return render_to_response('storage_tank_maintenance_MFS.html', {'fs': fs, 'fsg':fsg, 'f':f,'message':message,'storageTankMaintenance': StorageTankMaintenance,}, context_instance = RequestContext(request))
+	else:
+		f  = storage_tank_maintenanceForm(instance=StorageTankMaintenance)
+    	fs = storage_tankServiceFS(prefix='carburation_tankServiceFS', instance=StorageTankMaintenance)
+    	fsg = storage_tankServiceGroupFS(prefix='carburation_tankServiceFSG', instance=StorageTankMaintenance)
+	return render_to_response('storage_tank_maintenance_MFS.html', {'fs': fs, 'fsg':fsg, 'f':f,'message':message,'storageTankMaintenance':StorageTankMaintenance,}, context_instance = RequestContext(request))
+
+def service_group_inlineView(request , id = None, template_name='service_group_inline.html'):
+	
+	if id:
+		ServicesGroup = get_object_or_404(services_group, pk=id)
+	else:
+		ServicesGroup = services_group()
+
+	ServiceGroupInlineFS = inlineformset_factory(services_group, services_group_items, extra=1)
+
+	if request.method == "POST":
+		SGFormset = ServiceGroupInlineFS(request.POST, request.FILES, instance=ServicesGroup)
+		
+		if SGFormset.is_valid():
+			SGFormset.save()
+    	 	return render_to_response(template_name, {"SGFormset": SGFormset,},context_instance = RequestContext(request))
+	else:
+		SGFormset = ServiceGroupInlineFS(instance=ServicesGroup)
+	
+	return render_to_response(template_name, {"SGFormset": SGFormset,},context_instance = RequestContext(request))

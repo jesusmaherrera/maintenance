@@ -10,11 +10,21 @@
   <p><label style="float:left;">Chasis </label> {{ carburetion_tank.series }}</p>
 
   <br>
-  <h3>Mantenimientos Realizados a Tanque de Almacenamiento</h3>
+  <h3>Mantenimientos Realizados a Tanque de Almacenamiento</h3><a class="btn" href="/carburetionTankMaintenanceFS/new/"><i class="icon-plus"></i> Nuevo Mantenimiento</a></h3>
+
   {% for carburetion_tank_maintenance in carburetion_tank_maintenances %}
   <article class="tarjeta">
-    <a href='#' ><header>{{ carburetion_tank_maintenance.date }} {{ carburetion_tank_maintenance.garage }}   </header></a>
+    <div class="btn-group btn-danger" style="width:100%;">
+          <a href='{% url maintenance.main.views.carburetion_tank_maintenance_MFS carburetion_tank_maintenance.id%}' style="width:75%;" class="btn btn-danger btn-primary">
+            {{ carburetion_tank_maintenance.garage }}
+          </a>
+          <a class="btn btn-danger btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-asterisk"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href=''><i class="icon-trash"></i> Eliminar</a></li>
+          </ul>
+        </div> 
     <section>
+      <label>{{ carburetion_tank_maintenance.date }}</label>
       {% for carburetion_tank_service in carburetion_tank_services %} 
         {% if carburetion_tank_service.carburetion_tank_maintenance == carburetion_tank_maintenance %}
             <p>{{ carburetion_tank_service.service.name }}</p>

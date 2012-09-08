@@ -10,7 +10,7 @@
   <p><label style="float:left;">Chasis </label> {{ storage_tank.series }}</p>
 
   <br>
-  <h3>Mantenimientos Realizados a Tanque de Almacenamiento</h3>
+  <h3>Mantenimientos Realizados a Tanque de Almacenamiento</h3><a class="btn" href="/storageTankMaintenanceFS/new/"><i class="icon-plus"></i> Nuevo Mantenimiento</a></h3>
   {% for storage_tank_maintenance in storage_tank_maintenances %}
   <article class="tarjeta">
     <a href='#' ><header>{{ storage_tank_maintenance.date }} {{ storage_tank_maintenance.garage }}   </header></a>

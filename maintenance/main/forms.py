@@ -1,5 +1,5 @@
 from django import forms
-from maintenance.main.models import vehicle, chassis, storage_tank, carburetion_tank, radio, chassis_maintenance, chassis_maintenance_S
+from maintenance.main.models import *
 
 class new_vehicleForm(forms.ModelForm):
 	class Meta:
@@ -35,6 +35,18 @@ class chassis_maintenance_Form(forms.ModelForm):
     class Meta:
     	model=chassis_maintenance
 
+class carburetion_tank_maintenanceForm(forms.ModelForm):
+	class Meta:
+		model = carburetion_tank_maintenance
 
+class storage_tank_maintenanceForm(forms.ModelForm):
+	class Meta:
+		model = storage_tank_maintenance
 
-		
+class services_groupForm(forms.ModelForm):
+	class Meta:
+		model = services_group
+
+class serviceForm(forms.ModelForm):
+	class Meta:
+		model = service
