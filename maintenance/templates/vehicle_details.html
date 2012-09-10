@@ -13,9 +13,6 @@
            CHASIS
         </a>
         <a class="btn btn-danger btn-danger btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-edit icon-white"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href=''><i class="icon-pencil"></i> Editar</a></li>
-        </ul>
       </div>
     <section>
       <p><label>{{ vehicle.chassis.name }}</label></p>
@@ -34,10 +31,7 @@
         <a href='{% url maintenance.main.views.storage_tank_maintenanceView vehicle.storage_tank.id %}' style="width:75%;" class="btn btn-danger btn-primary">
            TANQUE DE ALMACENAMIENTO
         </a>
-        <a class="btn btn-primary btn-danger dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-edit icon-white"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href='{% url maintenance.main.views.storage_tank_manageView vehicle.storage_tank.id %}'><i class="icon-pencil"></i> Editar</a></li>
-        </ul>
+        <a class="btn btn-primary btn-danger dropdown-toggle" data-toggle="dropdown" href="{% url maintenance.main.views.storage_tank_manageView vehicle.storage_tank.id %}"><span class="icon-edit icon-white"></span></a>
       </div>
     <section>
       <p><label>{{ vehicle.storage_tank.series }} </label></p>
@@ -55,10 +49,7 @@
         <a href='{% url maintenance.main.views.carburetion_tank_maintenanceView vehicle.carburetion_tank.id %}' style="width:75%;" class="btn btn-danger btn-primary">
           TANQUE DE CARBURACION
         </a>
-        <a class="btn btn-danger btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-edit icon-white"></span></a>
-        <ul class="dropdown-menu">
-          <li><a href='{% url maintenance.main.views.carburetion_tank_manageView vehicle.carburetion_tank.id %}'><i class="icon-pencil"></i> Editar</a></li>
-        </ul>
+        <a class="btn btn-danger btn-primary dropdown-toggle" data-toggle="dropdown" href="{% url maintenance.main.views.carburetion_tank_manageView vehicle.carburetion_tank.id %}"><span class="icon-edit icon-white"></span></a>
       </div>
     <section>
       <p><label>{{ vehicle.carburetion_tank.series }}</label></p>

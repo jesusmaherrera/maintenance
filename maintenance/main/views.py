@@ -417,6 +417,14 @@ def services_groupInline_formset(request, id = None, template= "services_groupIn
 	return render_to_response(template, {'form': form, 'formset': formset},
         context_instance=RequestContext(request))
 
+def delete_services_group(request, id = None):
+	ServicesGroup = get_object_or_404(services_group, pk=id)
+	ServicesGroup.delete()
+	services = service.objects.all()
+	servicesGroups = services_group.objects.all()
+	c = {'services':services,'servicesGroups':servicesGroups,}
+	return render_to_response('services.html', c, context_instance = RequestContext(request))
+
 def service_manageView(request, id = None, template_name='service.html'):
 	if id:
 		Service = get_object_or_404(service, pk=id)
@@ -433,6 +441,32 @@ def service_manageView(request, id = None, template_name='service.html'):
 			return render_to_response('services.html', c, context_instance = RequestContext(request))
 	else:
 	 	Form = serviceForm(instance=Service)
+
+	return render_to_response(template_name, {'Form': Form,}
+			,context_instance = RequestContext(request))
+
+def delete_service(request, id = None):
+	Service = get_object_or_404(service, pk=id)
+	Service.delete()
+	services = service.objects.all()
+	servicesGroups = services_group.objects.all()
+	c = {'services':services,'servicesGroups':servicesGroups,}
+	return render_to_response('services.html', c, context_instance = RequestContext(request))
+
+def garage_manageView(request, id = None, template_name='garage_manage.html'):
+	if id:
+		Garage = get_object_or_404(garage, pk=id)
+	else:
+		Garage = garage()
+
+	if request.method == 'POST':
+		Form = garage_manageForm(request.POST, instance = Garage)
+		if Form.is_valid():
+			Form.save()
+			vehicles = vehicle.objects.all()
+			return render_to_response('index.html',context_instance = RequestContext(request))
+	else:
+	 	Form = serviceForm(instance=Garage)
 
 	return render_to_response(template_name, {'Form': Form,}
 			,context_instance = RequestContext(request))

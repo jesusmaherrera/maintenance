@@ -7,6 +7,10 @@ class new_vehicleForm(forms.ModelForm):
 	class Meta:
 		model = vehicle
 
+class garage_manageForm(forms.ModelForm):
+	class Meta:
+		model = garage
+		
 class chassis_manageForm(forms.ModelForm):
 	class Meta:
 		model = chassis

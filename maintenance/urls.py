@@ -8,9 +8,16 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    #inlineform set
+    # SERVICES GROUPS
     (r'^ServicesGroup/New/$', views.services_groupInline_formset),
     (r'^ServicesGroup/(?P<id>\d+)/$', views.services_groupInline_formset),
+    (r'^ServicesGroup/Delete/(?P<id>\d+)/$', views.delete_services_group),
+    #SERVICES
+    (r'^Service/new/$', views.service_manageView, {}, 'service_new'),
+    (r'^Service/edit/(?P<id>\d+)/$', views.service_manageView, {}, 'service_edit'),
+    (r'^Service/Delete/(?P<id>\d+)/$', views.delete_service),
+    #GARAGES
+    (r'^Garage/New/$', views.garage_manageView),
     (r'^servicesView/$', views.servicesView),
 	(r'^$', views.index),
 	(r'^detalles_veiculo/(.*)', views.vehicle_details),
@@ -23,8 +30,6 @@ urlpatterns = patterns('',
     (r'^MantenimientoChasis/edit/(?P<id>\d+)/$', views.chassis_maintenance_manageView, {}, 'article_edit'),
     (r'^Radio/new/$', views.radio_manageView, {}, 'radio_new'),
     (r'^Radio/edit/(?P<id>\d+)/$', views.radio_manageView, {}, 'radio_edit'),
-    (r'^Service/new/$', views.service_manageView, {}, 'service_new'),
-    (r'^Service/edit/(?P<id>\d+)/$', views.service_manageView, {}, 'service_edit'),
     (r'^TanqueCarburacion/new/$', views.carburetion_tank_manageView, {}, 'carburetion_tank_new'),
     (r'^TanqueCarburacion/edit/(?P<id>\d+)/$', views.carburetion_tank_manageView, {}, 'carburetion_tank_edit'),
     (r'^TanqueAlmacenamiento/new/$', views.storage_tank_manageView, {}, 'storage_tank_new'),
