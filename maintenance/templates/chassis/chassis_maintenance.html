@@ -14,19 +14,18 @@
   <p><label style="float:left;">Kilometraje:</label> {{ chassis.mileage}}</p>
 
   <br>
-  <h3>Mantenimientos Realizados a Chasis <a class="btn" href="/ChasisMaintenenceFS/new/"><i class="icon-plus"></i> Nuevo Mantenimiento</a></h3>
+  <h3>Mantenimientos Realizados a Chasis <a class="btn" href="/ChassisMaintenance/New/"><i class="icon-plus"></i> Nuevo Mantenimiento</a></h3>
   {% for chassis_maintenance in chassis_maintenances %}
   <article class="tarjeta">
         <div class="btn-group btn-danger" style="width:100%;">
-          <a href='/ChassisMaintenance1-2/{{ chassis_maintenance.id }}' style="width:75%;" class="btn btn-danger btn-primary">
-            {{ chassis_maintenance.date }} 
+          <a href='/ChassisMaintenance/{{ chassis_maintenance.id }}' style="width:75%;" class="btn btn-danger btn-primary">
+            {{ chassis_maintenance.garage }} 
           </a>
-          <a class="btn btn-danger btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-asterisk"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="{% url maintenance.main.views.delete_chassis_maintenance chassis_maintenance.id %}"><i class="icon-trash"></i> Eliminar</a></li>
-          </ul>
+          <a class="btn btn-danger btn-primary dropdown-toggle" data-toggle="dropdown" href="/ChassisMaintenance/delete/{{ chassis_maintenance.id }}"><span class="icon-trash"></span></a>
         </div>  
     <section>
+      <label>{{ chassis_maintenance.date }} </label>
+      <hr>
       {% for chassis_service in chassis_services %} 
         {% if chassis_service.chassis_maintenance == chassis_maintenance %}
             <p>{{ chassis_service.service.name }}</p>

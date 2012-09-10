@@ -35,7 +35,7 @@
 </script>
 {% endblock %}
 {% block content %}
-<h2> Mantenimientos a Chasis</h2>
+<h2> Mantenimientos a Tanque de Carburacion</h2>
 <br>
 <div>
     <div style="margin:0 auto 0 auto;">
@@ -60,12 +60,8 @@
                 {{ form.garage }}
             </span>
             <span class="span3">
-                Chassis:
-                {{ form.chassis }}
-            </span>
-            <span class="span3" style="clear:both;">
-                Kilometraje:
-                {{ form.mileage }}
+                Tanque de Carburacion:
+                {{ form.carburetion_tank }}
             </span>
             </fieldset>
         </div>
@@ -74,7 +70,7 @@
             <table class="table table-hover span4" id="id_orders_table" border="0" cellpadding="0" cellspacing="5">
                 <thead>
                     <tr>
-                        <th scope="col">Servicios</th>
+                        <th scope="col">SERVICIOS</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -90,7 +86,7 @@
                 </tbody>
             </table>
             <div class="span4">
-            <div style="text-align:left;"><b>Grupos de Servicios</b></div>
+            <div style="text-align:left;">SERVICE GROUPS</div>
             {% for form in formsetSG.forms %}
             <table class="table table-hover span4 form-container " id="{{ form.prefix }}-row">
                 <tbody>
@@ -105,7 +101,7 @@
             </table>
             {% endfor %}
             </div>
-        </fieldset>
+        <fieldset>
             <div style="clear:both;">
                 <br>
             <br>

@@ -36,26 +36,10 @@ class chassis_maintenanceForm(forms.ModelForm):
 	class Meta:
 		model = chassis_maintenance
 
-class chassis_maintenance_sForm(forms.ModelForm):
-	class Meta:
-		model = chassis_maintenance_S
-
-class chassis_maintenance_sgForm(forms.ModelForm):
-	class Meta:
-		model = chassis_maintenance_SG
-
 class chassis_maintenance_S_manageForm(forms.ModelForm):
 	class Meta:
 		model = chassis_maintenance_S
 		exclude = ('chassis_maintenance',)
-
-class chassis_maintenance_Form(forms.ModelForm):
-    class Meta:
-    	model=chassis_maintenance
-
-class carburetion_tank_maintenanceForm(forms.ModelForm):
-	class Meta:
-		model = carburetion_tank_maintenance
 
 class storage_tank_maintenanceForm(forms.ModelForm):
 	class Meta:
@@ -75,9 +59,61 @@ class serviceForm(forms.ModelForm):
 
 def  get_services_group_items_formset(form, formset=models.BaseInlineFormSet, **kwargs):
 	return inlineformset_factory(services_group, services_group_items, form, formset, **kwargs)
+###    CHASSIS
+class chassis_maintenance_Form(forms.ModelForm):
+    class Meta:
+    	model=chassis_maintenance
+
+class chassis_maintenance_sForm(forms.ModelForm):
+	class Meta:
+		model = chassis_maintenance_S
+
+class chassis_maintenance_sgForm(forms.ModelForm):
+	class Meta:
+		model = chassis_maintenance_SG
 
 def  get_chassis_maintenace_Sitems_formset(form, formset=models.BaseInlineFormSet, **kwargs):
 	return inlineformset_factory(chassis_maintenance, chassis_maintenance_S, form, formset, **kwargs)
 
 def  get_chassis_maintenace_SGitems_formset(form, formset=models.BaseInlineFormSet, **kwargs):
 	return inlineformset_factory(chassis_maintenance, chassis_maintenance_SG, form, formset, **kwargs)
+
+### CARBURATION TANK
+
+class carburetion_tank_maintenanceForm(forms.ModelForm):
+	class Meta:
+		model = carburetion_tank_maintenance
+
+class carburetion_tank_maintenance_sForm(forms.ModelForm):
+	class Meta:
+		model = carburetion_tank_S
+
+class carburetion_tank_maintenance_sgForm(forms.ModelForm):
+	class Meta:
+		model = carburetion_tank_SG
+
+def  get_carburetion_tank_maintenace_Sitems_formset(form, formset=models.BaseInlineFormSet, **kwargs):
+	return inlineformset_factory(carburetion_tank_maintenance, carburetion_tank_S, form, formset, **kwargs)
+
+def  get_carburetion_tank_maintenace_SGitems_formset(form, formset=models.BaseInlineFormSet, **kwargs):
+	return inlineformset_factory(carburetion_tank_maintenance, carburetion_tank_SG, form, formset, **kwargs)
+
+### STORAGE TANK
+
+class storage_tank_maintenanceForm(forms.ModelForm):
+	class Meta:
+		model = storage_tank_maintenance
+
+class storage_tank_maintenance_sForm(forms.ModelForm):
+	class Meta:
+		model = storage_tank_maintenance_S
+
+class storage_tank_maintenance_sgForm(forms.ModelForm):
+	class Meta:
+		model = storage_tank_maintenance_SG
+
+def  get_storage_tank_maintenace_Sitems_formset(form, formset=models.BaseInlineFormSet, **kwargs):
+	return inlineformset_factory(storage_tank_maintenance, storage_tank_maintenance_S, form, formset, **kwargs)
+
+def  get_storage_tank_maintenace_SGitems_formset(form, formset=models.BaseInlineFormSet, **kwargs):
+	return inlineformset_factory(storage_tank_maintenance, storage_tank_maintenance_SG, form, formset, **kwargs)
