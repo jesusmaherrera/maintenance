@@ -1,11 +1,17 @@
 from django.conf.urls import patterns, include, url
 from maintenance.main import views
 from django.conf import settings
+from django.views.generic.simple import direct_to_template
+from maintenance.main.forms import *
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    #inlineform set
+    (r'^ServicesGroup/New/$', views.services_groupInline_formset),
+    (r'^ServicesGroup/(?P<id>\d+)/$', views.services_groupInline_formset),
+    (r'^servicesView/$', views.servicesView),
 	(r'^$', views.index),
 	(r'^detalles_veiculo/(.*)', views.vehicle_details),
 	(r'^mantenimientos_chasis/(.*)', views.chassis_maintenanceView),

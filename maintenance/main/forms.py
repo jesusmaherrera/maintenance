@@ -1,5 +1,7 @@
 from django import forms
 from maintenance.main.models import *
+from django.forms import models
+from django.forms.models import BaseInlineFormSet, inlineformset_factory
 
 class new_vehicleForm(forms.ModelForm):
 	class Meta:
@@ -47,6 +49,13 @@ class services_groupForm(forms.ModelForm):
 	class Meta:
 		model = services_group
 
+class services_group_itemsForm(models.ModelForm):
+	class Meta:
+		model = services_group_items
+
 class serviceForm(forms.ModelForm):
 	class Meta:
 		model = service
+
+def  get_services_group_items_formset(form, formset=models.BaseInlineFormSet, **kwargs):
+	return inlineformset_factory(services_group, services_group_items, form, formset, **kwargs)

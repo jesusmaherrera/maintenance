@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h2 >SERVICIOS</h2> 
+<br>
+<br>
+<table class="table table-hover span4">
+  <thead>
+    <tr>
+      <th>SERVICIOS</th>
+      <th>OPCIONES</th>
+    </tr> 
+  </thead>
+  <tbody>
+    {% for service in services %}
+      <tr>
+          <td>
+            <a href='/Service/edit/{{ service.id }}'>
+              {{ service.name }}
+            </a>
+          </td>
+        <td style="text-align:center;">
+          <a href='' class="btn btn-mini btn-danger"><i class="icon-trash"></i></a>
+        </td>
+      </tr>
+    {% endfor%}
+    <tr>
+      <td>
+        <a class="btn btn-small btn-success" href="/Service/new/">Nuevo Servicio</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<table class="table table-hover span4">
+  <thead>
+    <tr>
+      <th>GRUPOS DE SERVICIOS</th>
+      <th>OPCIONES</th>
+    </tr>             
+  </thead>
+  <tbody>
+    {% for servicesGroup in servicesGroups %}
+      <tr>
+        <td>
+          <a href='/ServicesGroup/{{servicesGroup.id}}'>
+            {{ servicesGroup.name }}
+          </a>
+          <td style="text-align:center;">
+            <a href='' class="btn btn-mini btn-danger"><i class="icon-trash"></i></a>
+          </td>
+        </td>
+      </tr>    
+    {% endfor%}
+    <tr>
+      <td>
+        <a class="btn btn-small btn-success" href="/ServicesGroup/New/">Nuevo Grupo</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br><br><br><br><br>
+<br><br><br><br><br>
+<br><br><br><br><br>
+{% endblock %}
+

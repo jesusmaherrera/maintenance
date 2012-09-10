@@ -135,24 +135,6 @@ def radio_manageView(request, id = None, template_name='radio_manage.html'):
 	return render_to_response(template_name, {'radioForm': radioForm,}
 			,context_instance = RequestContext(request))
 
-def service_manageView(request, id = None, template_name='service.html'):
-	if id:
-		Service = get_object_or_404(service, pk=id)
-	else:
-		Service = service()
-
-	if request.method == 'POST':
-		Form = serviceForm(request.POST, instance=Service)
-		if Form.is_valid():
-			Form.save()
-			vehicles = vehicle.objects.all()
-			return render_to_response('index.html',context_instance = RequestContext(request))
-	else:
-	 	Form = serviceForm(instance=Service)
-
-	return render_to_response(template_name, {'Form': Form,}
-			,context_instance = RequestContext(request))
-
 def delete_chassis_maintenance(request, id = None):
 	chassis_maintenanceInstance = get_object_or_404(chassis_maintenance, pk=id)
 	chassis_maintenanceInstance.delete()
@@ -400,3 +382,57 @@ def service_group_inlineView(request , id = None, template_name='service_group_i
 		SGFormset = ServiceGroupInlineFS(instance=ServicesGroup)
 	
 	return render_to_response(template_name, {"SGFormset": SGFormset,},context_instance = RequestContext(request))
+
+##########################################
+## 										##
+##           FORMSET BIEN 100%          ##
+##										##
+##########################################
+def servicesView(request, template="services.html"):
+	services = service.objects.all()
+	servicesGroups = services_group.objects.all()
+	c = {'services':services,'servicesGroups':servicesGroups,}
+	return render_to_response(template, c, context_instance=RequestContext(request))
+	
+def services_groupInline_formset(request, id = None, template= "services_groupInline.html"):
+	Services_groupItemsformSet = get_services_group_items_formset(services_group_itemsForm, extra=1, can_delete=True)
+	if id:
+		servicesgroup = get_object_or_404(services_group, pk=id)
+	else:
+		servicesgroup = services_group()
+	
+	if request.method == 'POST':
+		form = services_groupForm(request.POST, instance=servicesgroup)
+		formset = Services_groupItemsformSet(request.POST, instance=servicesgroup)
+		if form.is_valid() and formset.is_valid():
+			form.save()
+			formset.save()
+			services = service.objects.all()
+			servicesGroups = services_group.objects.all()
+			c = {'services':services,'servicesGroups':servicesGroups,}
+			return render_to_response('services.html', c, context_instance = RequestContext(request))
+	else:
+		form = services_groupForm(instance= servicesgroup)
+		formset = Services_groupItemsformSet(instance = servicesgroup)
+	return render_to_response(template, {'form': form, 'formset': formset},
+        context_instance=RequestContext(request))
+
+def service_manageView(request, id = None, template_name='service.html'):
+	if id:
+		Service = get_object_or_404(service, pk=id)
+	else:
+		Service = service()
+
+	if request.method == 'POST':
+		Form = serviceForm(request.POST, instance=Service)
+		if Form.is_valid():
+			Form.save()
+			services = service.objects.all()
+			servicesGroups = services_group.objects.all()
+			c = {'services':services,'servicesGroups':servicesGroups,}
+			return render_to_response('services.html', c, context_instance = RequestContext(request))
+	else:
+	 	Form = serviceForm(instance=Service)
+
+	return render_to_response(template_name, {'Form': Form,}
+			,context_instance = RequestContext(request))
