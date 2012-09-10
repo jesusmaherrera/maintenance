@@ -2,11 +2,13 @@
 {% block title %}Nuevo Vehiculo{% endblock %}
 {% block js_code %}{% endblock %}
 {% block content %}
-  <h2>Nuevo Vehiculo</h2>
+  <h2>Taller</h2>
   <section>
-    <form method="post" action="" width="400px">
-      {% csrf_token %}
-      {{ Form }}
+    <form method="post" action="" width="400px">{% csrf_token %}
+      Nombre:
+      {{ Form.name }}
+      Telefono:
+      {{ Form.office_phone }}
       <br>
       <p style="clear:both;">
         <input type="submit" class="btn btn-large" value="Guardar y Salir" />

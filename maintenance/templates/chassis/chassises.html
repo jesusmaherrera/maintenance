@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h2 >CHASIS</h2> 
+<br>
+<br>
+<table class="table table-hover span4">
+  <thead>
+    <tr>
+      <th>CHASIS</th>
+      <th>OPCIONES</th>
+    </tr> 
+  </thead>
+  <tbody>
+    {% for chassis in Chassises %}
+      <tr>
+          <td>
+            <a href='/Chassis/{{ chassis.id }}'>
+              {{ chassis.name }}
+            </a>
+          </td>
+        <td style="text-align:center;">
+          <a href='/Chassis/Delete/{{ chassis.id }}' class="btn btn-mini btn-danger"><i class="icon-trash"></i></a>
+        </td>
+      </tr>
+    {% endfor%}
+    <tr>
+      <td>
+        <a class="btn btn-small btn-success" href="/Chassis/New/">Nuevo Chassis</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br><br><br><br><br>
+<br><br><br><br><br>
+<br><br><br><br><br>
+{% endblock %}
+

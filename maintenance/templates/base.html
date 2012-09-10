@@ -19,10 +19,21 @@
 </head>
 <body>
   <header>
-    <div id="banner">
-      <img id="logo" src='{{STATIC_URL}}img/gas-k19-logo.png' />
+    <div id="banner" style="">
+      <div>
+      <div class="span3">
+        <img id="logo" src='{{STATIC_URL}}img/gas-k19-logo.png'/>
+      </div>
+      <div style="text-align:right; height:2em; clear:both;">
+      {% if user.username %}
+       {{ user.first_name }} {{ user.last_name }} <a class="btn btn-small btn-danger" href="/logout/">  Cerrar Sesión</a>
+      {% else %}
+        <a class="btn btn-small btn-success" href="/login/">Iniciar Sesión</a>
+      {% endif %}
+    </div>
+  </div>
       <!-- Menu de Navegacion -->
-      <nav>
+      <nav style="clear:both;">
         <div id="navbar-example" class="navbar navbar-static">
             <div class="navbar-inner">
               <div class="container" style="width: auto;">
@@ -31,15 +42,14 @@
                   <li class="dropdown">
                     <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Nuevo <b class="caret"></b></a>
                     <ul class="dropdown-menu " role="menu" aria-labelledby="drop1">
-                      <li><a tabindex="-1" href="{% url maintenance.main.views.chassis_manageView %}">Chasis</a></li>
                       <li><a tabindex="-1" href="{% url maintenance.main.views.storage_tank_manageView %}">Tanque de Almacenamiento</a></li>
                       <li><a tabindex="-1" href="{% url maintenance.main.views.carburetion_tank_manageView %}">Tanque de Carburacion</a></li>
                       <li><a tabindex="-1" href="{% url maintenance.main.views.radio_manageView %}">Radio</a></li>
                       <li><a tabindex="-1" href="{% url maintenance.main.views.new_vehicleView %}">Vehiculo</a></li>
-                      <li><a tabindex="-1" href="/Garage/New/">Taller</a></li>
-
                     </ul>
                   </li>
+                  <li><a tabindex="-1" href="/Chassises/">Chasis</a></li>
+                  <li><a tabindex="-1" href="/Garages/">Talleres</a></li>
                   <li><a tabindex="-1" href="/servicesView/">Servicios</a></li>
                 </ul>
               </div>

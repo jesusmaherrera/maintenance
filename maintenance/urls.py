@@ -8,17 +8,27 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    #LOGIN
+    url(r'^login/$',views.ingresar),
+    url(r'^logout/$', views.logoutUser),
     # SERVICES GROUPS
     (r'^ServicesGroup/New/$', views.services_groupInline_formset),
     (r'^ServicesGroup/(?P<id>\d+)/$', views.services_groupInline_formset),
     (r'^ServicesGroup/Delete/(?P<id>\d+)/$', views.delete_services_group),
     #SERVICES
+    (r'^servicesView/$', views.servicesView),
     (r'^Service/new/$', views.service_manageView, {}, 'service_new'),
     (r'^Service/edit/(?P<id>\d+)/$', views.service_manageView, {}, 'service_edit'),
     (r'^Service/Delete/(?P<id>\d+)/$', views.delete_service),
     #GARAGES
+    (r'^Garages/$', views.garagesView),
     (r'^Garage/New/$', views.garage_manageView),
+    (r'^Garage/(?P<id>\d+)/$', views.garage_manageView),
+    #(r'^Garage/Delete/(?P<id>\d+)/$', views.garage_manageView),
     #MANTENIMIENTOS A CHASIS
+    (r'^Chassises/$', views.chassisesView),
+    (r'^Chassis/(?P<id>\d+)/$', views.chassis_manageView),
+    (r'^Chassis/New/$', views.chassis_manageView),
     (r'^mantenimientos_chasis/(.*)', views.chassis_maintenanceView),
     (r'^ChassisMaintenance/New/$', views.chassis_maintenace_Inline_formset),
     (r'^ChassisMaintenance/(?P<id>\d+)/$', views.chassis_maintenace_Inline_formset),
@@ -35,11 +45,11 @@ urlpatterns = patterns('',
     (r'^StorageTankMaintenace/(?P<id>\d+)/$', views.storage_tank_maintenance_Inline_formset),
     (r'^StorageTankMaintenace/Delete/(?P<id>\d+)/$', views.delete_storage_maintenance),
 
-    (r'^servicesView/$', views.servicesView),
+    
 	(r'^$', views.index),
 	(r'^detalles_veiculo/(.*)', views.vehicle_details),
     (r'^nuevoVehiculo/', views.new_vehicleView),
-    (r'^Chasis/', views.chassis_manageView),
+    
     (r'^Radio/new/$', views.radio_manageView, {}, 'radio_new'),
     (r'^Radio/edit/(?P<id>\d+)/$', views.radio_manageView, {}, 'radio_edit'),
     (r'^TanqueCarburacion/new/$', views.carburetion_tank_manageView, {}, 'carburetion_tank_new'),
