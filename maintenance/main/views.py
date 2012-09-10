@@ -487,10 +487,12 @@ def chassis_maintenace_Inline_formset(request, id = None, template= "chassis/cha
 	
 	if request.method == 'POST':
 		form = chassis_maintenanceForm(request.POST, instance=chassismaintenance)
-		formset = ChassisMaintenace_SGItems_formset(request.POST, instance=chassismaintenance)
-		if form.is_valid() and formset.is_valid():
+		formset = ChassisMaintenace_SItems_formset(request.POST, instance=chassismaintenance)
+		formsetSG = ChassisMaintenace_SGItems_formset(request.POST, instance=chassismaintenance)
+		if form.is_valid() and formset.is_valid() and formsetSG.is_valid():
 			form.save()
 			formset.save()
+			formsetSG.save()
 			########## CAMBIAR PRIMERO ESTO :P###################################
 			services = service.objects.all()
 			servicesGroups = services_group.objects.all()
