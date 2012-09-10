@@ -18,7 +18,7 @@
   {% for chassis_maintenance in chassis_maintenances %}
   <article class="tarjeta">
         <div class="btn-group btn-danger" style="width:100%;">
-          <a href='{% url maintenance.main.views.chassis_maintenance_manageFormSet chassis_maintenance.id%}' style="width:75%;" class="btn btn-danger btn-primary">
+          <a href='/ChassisMaintenance1-2/{{ chassis_maintenance.id }}' style="width:75%;" class="btn btn-danger btn-primary">
             {{ chassis_maintenance.date }} 
           </a>
           <a class="btn btn-danger btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-asterisk"></span></a>

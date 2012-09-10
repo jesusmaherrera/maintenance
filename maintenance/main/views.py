@@ -470,3 +470,35 @@ def garage_manageView(request, id = None, template_name='garage_manage.html'):
 
 	return render_to_response(template_name, {'Form': Form,}
 			,context_instance = RequestContext(request))
+
+##########################################
+## 										##
+##           CHASSIS MAINTENACE         ##
+##										##
+##########################################
+
+def chassis_maintenace_Inline_formset(request, id = None, template= "chassis/chassis_maintenance_Inline.html"):
+	ChassisMaintenace_SItems_formset = get_chassis_maintenace_Sitems_formset(chassis_maintenance_sForm, extra=1, can_delete=True)
+	ChassisMaintenace_SGItems_formset = get_chassis_maintenace_SGitems_formset(chassis_maintenance_sgForm, extra=1, can_delete=True)
+	if id:
+		chassismaintenance = get_object_or_404(chassis_maintenance, pk=id)
+	else:
+		chassismaintenance = chassis_maintenance()
+	
+	if request.method == 'POST':
+		form = chassis_maintenanceForm(request.POST, instance=chassismaintenance)
+		formset = ChassisMaintenace_SGItems_formset(request.POST, instance=chassismaintenance)
+		if form.is_valid() and formset.is_valid():
+			form.save()
+			formset.save()
+			########## CAMBIAR PRIMERO ESTO :P###################################
+			services = service.objects.all()
+			servicesGroups = services_group.objects.all()
+			c = {'services':services,'servicesGroups':servicesGroups,}
+			return render_to_response('services.html', c, context_instance = RequestContext(request))
+	else:
+		form = chassis_maintenanceForm(instance= chassismaintenance)
+		formset = ChassisMaintenace_SItems_formset(instance = chassismaintenance)
+		formsetSG = ChassisMaintenace_SGItems_formset(instance = chassismaintenance)
+	return render_to_response(template, {'form': form, 'formset': formset,'formsetSG': formsetSG},
+        context_instance=RequestContext(request))

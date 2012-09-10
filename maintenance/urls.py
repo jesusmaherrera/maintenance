@@ -18,6 +18,11 @@ urlpatterns = patterns('',
     (r'^Service/Delete/(?P<id>\d+)/$', views.delete_service),
     #GARAGES
     (r'^Garage/New/$', views.garage_manageView),
+    #MANTENIMIENTOS
+    (r'^ChassisMaintenance1-2/New/$', views.chassis_maintenace_Inline_formset),
+    (r'^ChassisMaintenance1-2/(?P<id>\d+)/$', views.chassis_maintenace_Inline_formset),
+    #(r'^ChassisMaintenance1-2/Delete/(?P<id>\d+)/$', views.delete_services_group),
+
     (r'^servicesView/$', views.servicesView),
 	(r'^$', views.index),
 	(r'^detalles_veiculo/(.*)', views.vehicle_details),
