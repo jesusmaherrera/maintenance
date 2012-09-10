@@ -67,25 +67,6 @@ def delete_vehicle(request, id = None):
   	return render_to_response('index.html',{'vehicles':vehicles},context_instance=RequestContext(request))
 
 @login_required(login_url='/login/')
-def carburetion_tank_manageView(request, id = None, template_name='carburetion_tank/carburetion_tank_manage.html'):
-	if id:
-		carburetion_tankI = get_object_or_404(carburetion_tank, pk=id)
-	else:
-		carburetion_tankI = carburetion_tank()
-
-	if request.method == 'POST':
-		carburetion_tankForm = carburetion_tank_manageForm(request.POST, instance= carburetion_tankI)
-		if carburetion_tankForm.is_valid():
-			carburetion_tankForm.save()
-			vehicles = vehicle.objects.all()
-			return render_to_response('index.html',context_instance = RequestContext(request))
-	else:
-	 	carburetion_tankForm = carburetion_tank_manageForm(instance= carburetion_tankI)
-
-	return render_to_response(template_name, {'carburetion_tankForm': carburetion_tankForm,}
-			,context_instance = RequestContext(request))
-
-@login_required(login_url='/login/')
 def radio_manageView(request, id = None, template_name='radio_manage.html'):
 	if id:
 		radioI = get_object_or_404(radio, pk=id)
@@ -255,6 +236,30 @@ def delete_chassis_maintenance(request, id = None):
 ##      CARBURATION TANK MAINTENACE     ##
 ##										##
 ##########################################
+@login_required(login_url='/login/')
+def carburetion_tanksView(request, template="carburetion_tank/carburetion_tanks.html"):
+	CarburetionTanks = carburetion_tank.objects.all()
+	c = {'carburetion_tanks':CarburetionTanks}
+	return render_to_response(template, c, context_instance=RequestContext(request))
+
+@login_required(login_url='/login/')
+def carburetion_tank_manageView(request, id = None, template_name='carburetion_tank/carburetion_tank_manage.html'):
+	if id:
+		carburetion_tankI = get_object_or_404(carburetion_tank, pk=id)
+	else:
+		carburetion_tankI = carburetion_tank()
+
+	if request.method == 'POST':
+		carburetion_tankForm = carburetion_tank_manageForm(request.POST, instance= carburetion_tankI)
+		if carburetion_tankForm.is_valid():
+			carburetion_tankForm.save()
+			vehicles = vehicle.objects.all()
+			return render_to_response('index.html',context_instance = RequestContext(request))
+	else:
+	 	carburetion_tankForm = carburetion_tank_manageForm(instance= carburetion_tankI)
+
+	return render_to_response(template_name, {'carburetion_tankForm': carburetion_tankForm,}
+			,context_instance = RequestContext(request))
 
 @login_required(login_url='/login/')
 def carburetion_tank_maintenance_Inline_formset(request, id = None, template= "carburetion_tank/carburetion_tank_maintenance_Inline.html"):
