@@ -44,7 +44,7 @@
                     <ul class="dropdown-menu " role="menu" aria-labelledby="drop1">
                       <li><a tabindex="-1" href="{% url maintenance.main.views.storage_tank_manageView %}">Tanque de Almacenamiento</a></li>
                       <li><a tabindex="-1" href="{% url maintenance.main.views.radio_manageView %}">Radio</a></li>
-                      <li><a tabindex="-1" href="{% url maintenance.main.views.new_vehicleView %}">Vehiculo</a></li>
+                      <li><a tabindex="-1" href="/Vehicle/New/">Vehiculo</a></li>
                     </ul>
                   </li>
                   <li><a tabindex="-1" href="/CarburetionTanks/">Tanque de Carburacion</a></li>
@@ -58,6 +58,9 @@
         </nav>
     </div>
   </header>
+  <div id="breadcrumbs">
+    {% block breadcrumb %}<a href="/">Home</a>{% endblock %}
+  </div>
   <section id="content">
     <br>
     {% block content %}{% endblock %}

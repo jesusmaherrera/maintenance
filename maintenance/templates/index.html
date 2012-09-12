@@ -8,13 +8,13 @@
   {% for vehicle in vehicles %}
     <article class="tarjeta" >
             <div class="btn-group btn-danger" style="width:100%;">
-              <a href='{% url maintenance.main.views.vehicle_details vehicle.id %}' style="width:75%;" class="btn btn-danger btn-primary">
+              <a href='/VehicleDetails/{{ vehicle.id }}' style="width:75%;" class="btn btn-danger btn-primary">
                 {{ vehicle.name }}
               </a>
               <a class="btn btn-danger btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-asterisk icon-white"></span></a>
               <ul class="dropdown-menu">
-                <li><a href='{% url maintenance.main.views.vehicle_details vehicle.id %}'><i class="icon-pencil"></i> Editar</a></li>
-                <li><a href="{% url maintenance.main.views.delete_vehicle vehicle.id %}"><i class="icon-trash"></i> Eliminar</a></li>
+                <li><a href='/Vehicle/{{ vehicle.id }}'><i class="icon-pencil"></i> Editar</a></li>
+                <li><a href="/Vehicle/Delete/{{ vehicle.id }}"><i class="icon-trash"></i> Eliminar</a></li>
               </ul>
             </div>
         </a>

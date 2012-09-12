@@ -33,7 +33,7 @@ urlpatterns = patterns('',
     (r'^ChassisMaintenance/New/$', views.chassis_maintenace_Inline_formset),
     (r'^ChassisMaintenance/(?P<id>\d+)/$', views.chassis_maintenace_Inline_formset),
     (r'^ChassisMaintenance/delete/(?P<id>\d+)/$', views.delete_chassis_maintenance, {}, 'chassis_maintenance_delete'),
-    #MANTENIMIENTOS A TANQUE DE CARBURACION
+    #TANQUE DE CARBURACION
     (r'^CarburetionTanks/$', views.carburetion_tanksView),
     (r'^mantenimientos_TanqueCarburacion/(.*)', views.carburetion_tank_maintenanceView),
     (r'^CarburetionTank/New/$', views.carburetion_tank_manageView),
@@ -42,25 +42,31 @@ urlpatterns = patterns('',
     (r'^CarburetionTankMaintenace/(?P<id>\d+)/$', views.carburetion_tank_maintenance_Inline_formset),
     (r'^CarburetionTankMaintenace/Delete/(?P<id>\d+)/$', views.delete_carburetion_tank_maintenance),
 
-    #MANTENIMIENTOS A TANQUE DE ALMACENAMIENTO
+    #TANQUE DE ALMACENAMIENTO
     (r'^mantenimientos_TanqueAlmacenamiento/(.*)', views.storage_tank_maintenanceView),
     (r'^StorageTankMaintenace/New/$', views.storage_tank_maintenance_Inline_formset),
     (r'^StorageTankMaintenace/(?P<id>\d+)/$', views.storage_tank_maintenance_Inline_formset),
     (r'^StorageTankMaintenace/Delete/(?P<id>\d+)/$', views.delete_storage_maintenance),
+    
+    #VEHICULOS
+    (r'^Vehicle/(?P<id>\d+)/', views.vehicle_manageView),
+    (r'^Vehicle/New/', views.vehicle_manageView),
+	(r'^Vehicle/Delete/(?P<id>\d+)/$', views.delete_vehicle, {}, 'vehicle_delete'),
 
-    
-	(r'^$', views.index),
-	(r'^detalles_veiculo/(.*)', views.vehicle_details),
-    (r'^nuevoVehiculo/', views.new_vehicleView),
-    
-    (r'^Radio/new/$', views.radio_manageView, {}, 'radio_new'),
+    (r'^VehicleDetails/(.*)', views.vehicle_details),
+
+    (r'^$', views.index),
+
+    #RADIO
+	(r'^Radio/new/$', views.radio_manageView, {}, 'radio_new'),
     (r'^Radio/edit/(?P<id>\d+)/$', views.radio_manageView, {}, 'radio_edit'),
+    
     (r'^TanqueAlmacenamiento/new/$', views.storage_tank_manageView, {}, 'storage_tank_new'),
     (r'^TanqueAlmacenamiento/edit/(?P<id>\d+)/$', views.storage_tank_manageView, {}, 'storage_tank_edit'),
     (r'^Chasis/new/$', views.chassis_manageView, {}, 'chassis_new'),
     (r'^Chasis/edit/(?P<id>\d+)/$', views.chassis_manageView, {}, 'chassis_edit'),
     (r'^ChasisMaintenanceS/delete/(?P<id>\d+)/$', views.delete_chassis_maintenanceS, {}, 'delete_chassis_maintenanceS'),
-    (r'^Vehicle/delete/(?P<id>\d+)/$', views.delete_vehicle, {}, 'vehicle_delete'),
+    
     (r'^ServicesGroup/(?P<id>\d+)/$', views.service_group_inlineView ,{},'Service_group_inlineView'),
     
 	url(r'^media/(?P<path>.*)$','django.views.static.serve',

@@ -1,6 +1,7 @@
-{% extends "base.html" %}
+{% extends "vehicle/base.html" %}
 {% block title %}Home{% endblock %}
-
+{% block vehicle %} {{ vehicle }} {% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; {{ object.title|title }}{% endblock %}
 {% block content %}     
   <h2>Detalles de Vehiculo</h2>
   <br>

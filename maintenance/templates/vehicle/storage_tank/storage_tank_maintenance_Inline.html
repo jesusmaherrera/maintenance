@@ -23,12 +23,12 @@
             deleteText:'',
         });
 
-        $('table.form-container').formset({
-            prefix: '{{ formsetSG.prefix }}',
-            addCssClass:'btn btn-success',
-            addText:'Agregar Servicio',
-            deleteText:'',
-        });
+        // $('table.form-container').formset({
+        //     prefix: '{{ formsetSG.prefix }}',
+        //     addCssClass:'btn btn-success',
+        //     addText:'Agregar Servicio',
+        //     deleteText:'',
+        // });
 
         $('#id_date').datetimepicker({ dateFormat: 'dd/mm/yy',});
     })
@@ -60,8 +60,8 @@
                 {{ form.garage }}
             </span>
             <span class="span3">
-                Tanque de Carburacion:
-                {{ form.carburetion_tank }}
+                Tanque de Almacenamiento:
+                {{ form.storage_tank }}
             </span>
             </fieldset>
         </div>
@@ -85,7 +85,7 @@
                     {% endfor %}
                 </tbody>
             </table>
-            <div class="span4">
+            <!-- <div class="span4">
             <div style="text-align:left;">SERVICE GROUPS</div>
             {% for form in formsetSG.forms %}
             <table class="table table-hover span4 form-container " id="{{ form.prefix }}-row">
@@ -100,13 +100,13 @@
                 </tbody>
             </table>
             {% endfor %}
-            </div>
-        <fieldset>
+            </div> -->
+        </fieldset>
             <div style="clear:both;">
                 <br>
             <br>
-            <br>
-                {{ formsetSG.management_form }}
+            <br  >
+                <!-- {{ formsetSG.management_form }} -->
                 {{ formset.management_form }}
                 <input class="btn" type="submit" value="Guardar y Salir" />
             </div>

@@ -1,20 +1,33 @@
-{% extends "base.html" %}
+{% extends "vehicle/chassis/base.html" %}
 {% block title %}Home{% endblock %}
-
-{% block content %}     
-  <h2>Detalles de Chasis 
+{% block breadcrumb %}{{ block.super }} &raquo;<a href="">{{ chassis }}</a>{% endblock %} 
+{% block content %}  
+  
+  <h2>Chasis 
   </h2>
   <br>
-  {{ chassis.name}} <br>
-  <br>
-  <p><label>{{ chassis.brand }} {{ chassis.line}} {{ chassis.model}}</label></p>
-  <p><label style="float:left;">Chasis </label> {{ chassis.name }}</p>
-  <p><label style="float:left;">Placas:</label> {{ chassis.license_plates}}</p>
-  <p><label style="float:left;">Color:</label> {{ chassis.color}}</p>
-  <p><label style="float:left;">Kilometraje:</label> {{ chassis.mileage}}</p>
-
-  <br>
-  <h3>Mantenimientos Realizados a Chasis <a class="btn" href="/ChassisMaintenance/New/"><i class="icon-plus"></i> Nuevo Mantenimiento</a></h3>
+  <div class="span3">
+    {{ chassis.name}} <br>
+    <br>
+    <p><label>{{ chassis.brand }} {{ chassis.line}} {{ chassis.model}}</label></p>
+    <p><label style="float:left;">Chasis </label> {{ chassis.name }}</p>
+    <p><label style="float:left;">Placas:</label> {{ chassis.license_plates}}</p>
+    <p><label style="float:left;">Color:</label> {{ chassis.color}}</p>
+    <p><label style="float:left;">Kilometraje:</label> {{ chassis.mileage}}</p>
+    <br>
+  </div>
+  {% for ServiceGroup in ServicesGroups %}
+  <div class="span3" style="text-align:left;">
+    <b>{{ ServiceGroup.name }}</b>
+    <hr>
+    {% for ServiceGroupItem in ServicesGroupItems %}
+      {% if ServiceGroupItem.services_group == ServiceGroup %}
+        {{ ServiceGroupItem.services.name }} <br>
+      {% endif %}
+    {% endfor %}
+  </div>
+  {% endfor %}
+  <h3 style="clear:both;">Mantenimientos Realizados a Chasis <a class="btn" href="/ChassisMaintenance/New/"><i class="icon-plus"></i> Nuevo Mantenimiento</a></h3>
   {% for chassis_maintenance in chassis_maintenances %}
   <article class="tarjeta">
         <div class="btn-group btn-danger" style="width:100%;">

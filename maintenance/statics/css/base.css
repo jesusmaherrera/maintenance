@@ -14,6 +14,10 @@ body #content{
 	padding-right: 5%;
 }
 
+#breadcrumbs{
+  text-align: left;
+}
+
 body section h2{
 	margin: 0;
 }
