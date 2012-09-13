@@ -1,33 +1,35 @@
-{% extends "vehicle/garage/base.html" %}
+{% extends "vehicle/storage_tank/base.html" %}
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<h2 >TALLERES</h2> 
+<h2 >RADIOS</h2> 
 <br>
 <br>
 <table class="table table-hover span4">
   <thead>
     <tr>
-      <th>TALLER</th>
+      <th>RADIO</th>
       <th>OPCIONES</th>
     </tr> 
   </thead>
   <tbody>
-    {% for garage in Garages %}
+    {% for radio in Radios %}
       <tr>
           <td>
-            <a href='/Garage/{{ garage.id }}'>
-              {{ garage.name }}
+            <a href='/Radio/edit/{{ radio.id }}'>
+              {{ radio.series }}
+              {{ radio.brand }}
+              {{ radio.model }}
             </a>
           </td>
         <td style="text-align:center;">
-          <a href='/Garage/Delete/{{ garage.id }}' class="btn btn-mini btn-danger"><i class="icon-trash"></i></a>
+          <a href='/Radio/Delete/{{ radio.id }}' class="btn btn-mini btn-danger"><i class="icon-trash"></i></a>
         </td>
       </tr>
     {% endfor%}
     <tr>
       <td>
-        <a class="btn btn-small btn-success" href="/Garage/New/">Nuevo Taller</a>
+        <a class="btn btn-small btn-success" href="/Radio/new/">Nuevo Radio</a>
       </td>
     </tr>
   </tbody>

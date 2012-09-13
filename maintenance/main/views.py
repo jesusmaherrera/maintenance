@@ -21,15 +21,6 @@ def index(request):
   	return render_to_response('index.html',{'vehicles':vehicles},context_instance=RequestContext(request))
 
 @login_required(login_url='/login/')
-def carburetion_tank_maintenanceView(request, query):
- 	carburetion_tankD = get_object_or_404(carburetion_tank, pk=query)
- 	carburetion_tank_maintenances = carburetion_tank_maintenance.objects.filter(carburetion_tank = carburetion_tankD)
-	carburetion_tank_services = carburetion_tank_S.objects.filter(carburetion_tank_maintenance__carburetion_tank = carburetion_tankD)
-	carburetion_tank_services_groups = carburetion_tank_SG.objects.filter(carburetion_tank_maintenance__carburetion_tank = carburetion_tankD)
-	context = {'carburetion_tank': carburetion_tankD, 'carburetion_tank_services': carburetion_tank_services, 'carburetion_tank_services_groups':carburetion_tank_services_groups, 'carburetion_tank_maintenances': carburetion_tank_maintenances}
-	return render_to_response('carburetion_tank/carburetion_tank_maintenance.html', context,context_instance=RequestContext(request))
-
-@login_required(login_url='/login/')
 def new_vehicleView(request):
 	if request.method == 'POST':
 		vehicleForm = new_vehicleForm(request.POST, request.FILES)
@@ -43,26 +34,7 @@ def new_vehicleView(request):
 	return render_to_response('new_vehicle.html', {'vehicleForm': vehicleForm,}
 			,context_instance = RequestContext(request))
 
-@login_required(login_url='/login/')
-def radio_manageView(request, id = None, template_name='radio_manage.html'):
-	if id:
-		radioI = get_object_or_404(radio, pk=id)
-	else:
-		radioI = radio()
-
-	if request.method == 'POST':
-		radioForm = radio_manageForm(request.POST, instance=radioI)
-		if radioForm.is_valid():
-			radioForm.save()
-			vehicles = vehicle.objects.all()
-			return render_to_response('index.html',context_instance = RequestContext(request))
-	else:
-	 	radioForm = radio_manageForm(instance=radioI)
-
-	return render_to_response(template_name, {'radioForm': radioForm,}
-			,context_instance = RequestContext(request))
-
-@login_required(login_url='/login/')
+@permission_required('chassis_maintenance_S.can_delete_chassis_maintenance_S', login_url="/login/")
 def delete_chassis_maintenanceS(request, id = None):
 	chassis_maintenanceS = get_object_or_404(chassis_maintenance_S, pk=id)
 	chassis_maintenanceS.delete()
@@ -129,7 +101,7 @@ def services_groupInline_formset(request, id = None, template= "services_groupIn
 	return render_to_response(template, {'form': form, 'formset': formset},
         context_instance=RequestContext(request))
 
-@login_required(login_url='/login/')
+@permission_required('services_group.can_delete_services_group', login_url="/login/")
 def delete_services_group(request, id = None):
 	ServicesGroup = get_object_or_404(services_group, pk=id)
 	ServicesGroup.delete()
@@ -159,7 +131,7 @@ def service_manageView(request, id = None, template_name='service.html'):
 	return render_to_response(template_name, {'Form': Form,}
 			,context_instance = RequestContext(request))
 
-@login_required(login_url='/login/')
+@permission_required('service.can_delete_radio_maintenance', login_url="/login/")
 def delete_service(request, id = None):
 	Service = get_object_or_404(service, pk=id)
 	Service.delete()
@@ -174,6 +146,31 @@ def delete_service(request, id = None):
 ##										##
 ##########################################
 @login_required(login_url='/login/')
+def chassisesView(request, template="vehicle/chassis/chassises.html"):
+	Chassises = chassis.objects.all()
+	c = {'Chassises':Chassises}
+	return render_to_response(template, c, context_instance=RequestContext(request))
+
+@login_required(login_url='/login/')
+def chassis_manageView(request, id= None, template_name = 'vehicle/chassis/chassis_manage.html'):
+	if id:
+	  	chassisI = get_object_or_404(chassis, pk=id)
+	else:
+		chassisI = chassis()
+
+	if request.method == 'POST':
+		chassisForm = chassis_manageForm(request.POST, instance= chassisI)
+		if chassisForm.is_valid():
+			chassisForm.save()
+			vehicles = vehicle.objects.all()
+			return render_to_response('index.html',context_instance = RequestContext(request))
+	else:
+	 	chassisForm = chassis_manageForm(instance= chassisI)
+
+	return render_to_response(template_name, {'chassisForm': chassisForm,}
+			,context_instance = RequestContext(request))
+
+@login_required(login_url='/login/')
 def chassis_maintenanceView(request, query):
  	chassisD = get_object_or_404(chassis, pk=query)
  	chassis_maintenances = chassis_maintenance.objects.filter(chassis = chassisD)
@@ -185,7 +182,8 @@ def chassis_maintenanceView(request, query):
 	return render_to_response('vehicle/chassis/chassis_maintenance.html', context,context_instance=RequestContext(request))
 
 @login_required(login_url='/login/')
-def chassis_maintenace_Inline_formset(request, id = None, template= "chassis/chassis_maintenance_Inline.html"):
+def chassis_maintenace_Inline_formset(request, id = None, chassis_id = None, template= "vehicle/chassis/chassis_maintenance_Inline.html"):
+	Chassis = get_object_or_404( chassis, pk =  chassis_id)
 	ChassisMaintenace_SItems_formset = get_chassis_maintenace_Sitems_formset(chassis_maintenance_sForm, extra=1, can_delete=True)
 	ChassisMaintenace_SGItems_formset = get_chassis_maintenace_SGitems_formset(chassis_maintenance_sgForm, extra=1, can_delete=True)
 	message = ""
@@ -203,14 +201,14 @@ def chassis_maintenace_Inline_formset(request, id = None, template= "chassis/cha
 			formset.save()
 			formsetSG.save()
 			message = "Datos Guardados"
-			return render_to_response(template, {'form': form, 'formset': formset,'formsetSG': formsetSG,'message':message}, context_instance=RequestContext(request))
+			return render_to_response(template, {'Chassis':Chassis,'form': form, 'formset': formset,'formsetSG': formsetSG,'message':message}, context_instance=RequestContext(request))
 	else:
 		form = chassis_maintenanceForm(instance= chassismaintenance)
 		formset = ChassisMaintenace_SItems_formset(instance = chassismaintenance)
 		formsetSG = ChassisMaintenace_SGItems_formset(instance = chassismaintenance)
-	return render_to_response(template, {'form': form, 'formset': formset,'formsetSG': formsetSG, 'message':message}, context_instance=RequestContext(request))
+	return render_to_response(template, {'Chassis':Chassis,'form': form, 'formset': formset,'formsetSG': formsetSG, 'message':message}, context_instance=RequestContext(request))
 
-@login_required(login_url='/login/')
+@permission_required('chassis.can_delete_chassis', login_url="/login/")
 def delete_chassis_maintenance(request, id = None):
 	chassis_maintenanceInstance = get_object_or_404(chassis_maintenance, pk=id)
 	chassis_maintenanceInstance.delete()
@@ -224,13 +222,22 @@ def delete_chassis_maintenance(request, id = None):
 ##										##
 ##########################################
 @login_required(login_url='/login/')
-def carburetion_tanksView(request, template="carburetion_tank/carburetion_tanks.html"):
+def carburetion_tanksView(request, template="vehicle/carburetion_tank/carburetion_tanks.html"):
 	CarburetionTanks = carburetion_tank.objects.all()
 	c = {'carburetion_tanks':CarburetionTanks}
 	return render_to_response(template, c, context_instance=RequestContext(request))
 
 @login_required(login_url='/login/')
-def carburetion_tank_manageView(request, id = None, template_name='carburetion_tank/carburetion_tank_manage.html'):
+def carburetion_tank_maintenanceView(request, query):
+ 	carburetion_tankD = get_object_or_404(carburetion_tank, pk=query)
+ 	carburetion_tank_maintenances = carburetion_tank_maintenance.objects.filter(carburetion_tank = carburetion_tankD)
+	carburetion_tank_services = carburetion_tank_S.objects.filter(carburetion_tank_maintenance__carburetion_tank = carburetion_tankD)
+	carburetion_tank_services_groups = carburetion_tank_SG.objects.filter(carburetion_tank_maintenance__carburetion_tank = carburetion_tankD)
+	context = {'carburetion_tank': carburetion_tankD, 'carburetion_tank_services': carburetion_tank_services, 'carburetion_tank_services_groups':carburetion_tank_services_groups, 'carburetion_tank_maintenances': carburetion_tank_maintenances}
+	return render_to_response('vehicle/carburetion_tank/carburetion_tank_maintenance.html', context,context_instance=RequestContext(request))
+
+@login_required(login_url='/login/')
+def carburetion_tank_manageView(request, id = None, template_name='vehicle/carburetion_tank/carburetion_tank_manage.html'):
 	if id:
 		carburetion_tankI = get_object_or_404(carburetion_tank, pk=id)
 	else:
@@ -249,7 +256,8 @@ def carburetion_tank_manageView(request, id = None, template_name='carburetion_t
 			,context_instance = RequestContext(request))
 
 @login_required(login_url='/login/')
-def carburetion_tank_maintenance_Inline_formset(request, id = None, template= "carburetion_tank/carburetion_tank_maintenance_Inline.html"):
+def carburetion_tank_maintenance_Inline_formset(request, id = None, carburetion_tank_id= None , template= "vehicle/carburetion_tank/carburetion_tank_maintenance_Inline.html"):
+	CarburetionTank = get_object_or_404(carburetion_tank, pk = carburetion_tank_id)
 	CarburetionTank_SItems_formset = get_carburetion_tank_maintenace_Sitems_formset(carburetion_tank_maintenance_sForm, extra=1, can_delete=True)
 	#CarburetionTank_SGItems_formset = get_carburetion_tank_maintenace_SGitems_formset(carburetion_tank_maintenance_sgForm, extra=1, can_delete=True)
 	message = ""
@@ -268,14 +276,14 @@ def carburetion_tank_maintenance_Inline_formset(request, id = None, template= "c
 			formset.save()
 			#formsetSG.save()
 			message = "Datos Guardados"
-			return render_to_response(template, {'form': form, 'formset': formset,'message':message}, context_instance=RequestContext(request))
+			return render_to_response(template, {'CarburetionTank':CarburetionTank,'form': form, 'formset': formset,'message':message}, context_instance=RequestContext(request))
 	else:
 		form = carburetion_tank_maintenanceForm(instance=carburetiontankmaintenance)
 		formset = CarburetionTank_SItems_formset(instance=carburetiontankmaintenance)
 		#formsetSG = CarburetionTank_SGItems_formset(instance=carburetiontankmaintenance)
-	return render_to_response(template, {'form': form, 'formset': formset, 'message':message}, context_instance=RequestContext(request))
+	return render_to_response(template, {'CarburetionTank':CarburetionTank,'form': form, 'formset': formset, 'message':message}, context_instance=RequestContext(request))
 
-@login_required(login_url='/login/')
+@permission_required('carburetion_tank.can_delete_carburetion_tank', login_url="/login/")
 def delete_carburetion_tank_maintenance(request, id = None):
 	carburetion_tank_maintenanceInstance = get_object_or_404(carburetion_tank_maintenance, pk=id)
 	carburetion_tank_maintenanceInstance.delete()
@@ -287,9 +295,15 @@ def delete_carburetion_tank_maintenance(request, id = None):
 ##      STORAGE TANK MAINTENACE         ##
 ##										##
 ##########################################
+@login_required(login_url='/login/')
+def storage_tanksView(request, template="vehicle/storage_tank/storage_tanks.html"):
+	StorageTanks = storage_tank.objects.all()
+	c = {'StorageTanks':StorageTanks}
+	return render_to_response(template, c, context_instance=RequestContext(request))
 
 @login_required(login_url='/login/')
-def storage_tank_maintenance_Inline_formset(request, id = None, template= "storage_tank/storage_tank_maintenance_Inline.html"):
+def storage_tank_maintenance_Inline_formset(request, id = None, storage_tank_id = None, template= "vehicle/storage_tank/storage_tank_maintenance_Inline.html"):
+	StorageTank = get_object_or_404(storage_tank, pk = storage_tank_id)
 	StorageTank_SItems_formset = get_storage_tank_maintenace_Sitems_formset(storage_tank_maintenance_sForm, extra=1, can_delete=True)
 	#StorageTank_SGItems_formset = get_storage_tank_maintenace_SGitems_formset(storage_tank_maintenance_sgForm, extra=1, can_delete=True)
 	message = ""
@@ -308,12 +322,12 @@ def storage_tank_maintenance_Inline_formset(request, id = None, template= "stora
 			formset.save()
 			#formsetSG.save()
 			message = "Datos Guardados"
-			return render_to_response(template, {'form': form, 'formset': formset,'message':message}, context_instance=RequestContext(request))
+			return render_to_response(template, {'StorageTank':StorageTank,'form': form, 'formset': formset,'message':message}, context_instance=RequestContext(request))
 	else:
 		form = storage_tank_maintenanceForm(instance=storagetankmaintenance)
 		formset = StorageTank_SItems_formset(instance=storagetankmaintenance)
 		#formsetSG = StorageTank_SGItems_formset(instance=storagetankmaintenance)
-	return render_to_response(template, {'form': form, 'formset': formset, 'message':message}, context_instance=RequestContext(request))
+	return render_to_response(template, {'StorageTank':StorageTank,'form': form, 'formset': formset, 'message':message}, context_instance=RequestContext(request))
 
 @login_required(login_url='/login/')
 def storage_tank_maintenanceView(request, query):
@@ -322,10 +336,10 @@ def storage_tank_maintenanceView(request, query):
 	storage_tank_services = storage_tank_maintenance_S.objects.filter(storage_tank_maintenance__storage_tank = storage_tankD)
 	storage_tank_services_groups = storage_tank_maintenance_SG.objects.filter(storage_tank_maintenance__storage_tank = storage_tankD)
 	context = {'storage_tank': storage_tankD, 'storage_tank_services': storage_tank_services, 'storage_tank_services_groups':storage_tank_services_groups, 'storage_tank_maintenances': storage_tank_maintenances}
-	return render_to_response('storage_tank/storage_tank_maintenance.html', context,context_instance=RequestContext(request))
+	return render_to_response('vehicle/storage_tank/storage_tank_maintenance.html', context,context_instance=RequestContext(request))
 
 @login_required(login_url='/login/')
-def storage_tank_manageView(request, id = None, template_name='storage_tank/storage_tank_manage.html'):
+def storage_tank_manageView(request, id = None, template_name='vehicle/storage_tank/storage_tank_manage.html'):
 	if id:
 	  	storage_tankI = get_object_or_404(storage_tank, pk=id)
 	else:
@@ -343,10 +357,18 @@ def storage_tank_manageView(request, id = None, template_name='storage_tank/stor
 	return render_to_response(template_name, {'storage_tankForm': storage_tankForm,}
 			,context_instance = RequestContext(request))
 
-@login_required(login_url='/login/')
+@permission_required('storage_maintenanc.can_delete_storage_maintenance', login_url="/login/")
 def delete_storage_maintenance(request, id = None):
 	storage_maintenanceInstance = get_object_or_404(storage_tank_maintenance, pk=id)
 	storage_maintenanceInstance.delete()
+	vehicles = vehicle.objects.all()
+  	return render_to_response('index.html',{'vehicles':vehicles},context_instance=RequestContext(request))
+
+@permission_required('storagetank.can_delete_storage_tank', login_url="/login/")
+def delete_storage_tank(request, id = None):
+	storagetankInstance = get_object_or_404(storage_tank, pk=id)
+	storagetankInstance.delete()
+
 	vehicles = vehicle.objects.all()
   	return render_to_response('index.html',{'vehicles':vehicles},context_instance=RequestContext(request))
 
@@ -387,13 +409,13 @@ def logoutUser(request):
 ##########################################
 
 @login_required(login_url='/login/')
-def garagesView(request, template="garage/garages.html"):
+def garagesView(request, template="vehicle/garage/garages.html"):
 	Garages = garage.objects.all()
 	c = {'Garages':Garages}
 	return render_to_response(template, c, context_instance=RequestContext(request))
 
 @login_required(login_url='/login/')
-def garage_manageView(request, id = None, template_name='garage/garage_manage.html'):
+def garage_manageView(request, id = None, template_name='vehicle/garage/garage_manage.html'):
 	if id:
 		Garage = get_object_or_404(garage, pk=id)
 	else:
@@ -409,36 +431,6 @@ def garage_manageView(request, id = None, template_name='garage/garage_manage.ht
 	 	Form = serviceForm(instance=Garage)
 
 	return render_to_response(template_name, {'Form': Form,}
-			,context_instance = RequestContext(request))
-
-##########################################
-## 										##
-##               CHASSIS  			    ##
-##										##
-##########################################
-@login_required(login_url='/login/')
-def chassisesView(request, template="vehicle/chassis/chassises.html"):
-	Chassises = chassis.objects.all()
-	c = {'Chassises':Chassises}
-	return render_to_response(template, c, context_instance=RequestContext(request))
-
-@login_required(login_url='/login/')
-def chassis_manageView(request, id= None, template_name = 'vehicle/chassis/chassis_manage.html'):
-	if id:
-	  	chassisI = get_object_or_404(chassis, pk=id)
-	else:
-		chassisI = chassis()
-
-	if request.method == 'POST':
-		chassisForm = chassis_manageForm(request.POST, instance= chassisI)
-		if chassisForm.is_valid():
-			chassisForm.save()
-			vehicles = vehicle.objects.all()
-			return render_to_response('index.html',context_instance = RequestContext(request))
-	else:
-	 	chassisForm = chassis_manageForm(instance= chassisI)
-
-	return render_to_response(template_name, {'chassisForm': chassisForm,}
 			,context_instance = RequestContext(request))
 
 ##########################################
@@ -479,3 +471,90 @@ def delete_vehicle(request, id = None):
 
 	vehicles = vehicle.objects.all()
   	return render_to_response('index.html',{'vehicles':vehicles},context_instance=RequestContext(request))
+
+##########################################
+## 										##
+##                RADIO                 ##
+##										##
+##########################################
+
+@login_required(login_url='/login/')
+def radiosView(request, template="vehicle/radio/radios.html"):
+	Radios = radio.objects.all()
+	c = {'Radios':Radios}
+	return render_to_response(template, c, context_instance=RequestContext(request))
+
+@login_required(login_url='/login/')
+def radio_maintenanceView(request, query):
+ 	radioD = get_object_or_404(radio, pk=query)
+ 	radio_maintenances = radio_maintenance.objects.filter(radio = radioD)
+	radio_services = radio_maintenance_S.objects.filter(radio_maintenance__radio = radioD)
+	radio_services_groups = radio_maintenance_SG.objects.filter(radio_maintenance__radio = radioD)
+	context = {'radio': radioD, 'radio_services': radio_services, 'radio_services_groups':radio_services_groups, 'radio_maintenances': radio_maintenances}
+	return render_to_response('vehicle/radio/radio_maintenance.html', context,context_instance=RequestContext(request))
+
+@login_required(login_url='/login/')
+def radio_manageView(request, id = None, template_name='radio_manage.html'):
+	if id:
+		radioI = get_object_or_404(radio, pk=id)
+	else:
+		radioI = radio()
+
+	if request.method == 'POST':
+		radioForm = radio_manageForm(request.POST, instance=radioI)
+		if radioForm.is_valid():
+			radioForm.save()
+			vehicles = vehicle.objects.all()
+			return render_to_response('index.html',context_instance = RequestContext(request))
+	else:
+	 	radioForm = radio_manageForm(instance=radioI)
+
+	return render_to_response(template_name, {'radioForm': radioForm,}
+			,context_instance = RequestContext(request))
+
+@login_required(login_url='/login/')
+def radio_maintenance_Inline_formset(request, id = None, radio_id = None, template= "vehicle/radio/radio_maintenance_Inline.html"):
+	Radio = get_object_or_404(radio, pk = radio_id)
+
+	Radio_SItems_formset = get_radio_maintenace_Sitems_formset(radio_maintenance_sForm, extra=1, can_delete=True)
+	#StorageTank_SGItems_formset = get_storage_tank_maintenace_SGitems_formset(storage_tank_maintenance_sgForm, extra=1, can_delete=True)
+	message = ""
+
+	if id:
+	  	radiomaintenance = get_object_or_404(radio_maintenance, pk=id)
+	else:
+		radiomaintenance = radio_maintenance()
+	
+	if request.method == 'POST':
+		form = radio_maintenanceForm(request.POST, instance=radiomaintenance)
+		formset = Radio_SItems_formset(request.POST, instance=radiomaintenance)
+		#formsetSG = StorageTank_SGItems_formset(request.POST, instance=storagetankmaintenance)
+		#if form.is_valid() and formset.is_valid() and formsetSG.is_valid():
+		if form.is_valid() and formset.is_valid():
+			form.save()
+			formset.save()
+			#formsetSG.save()
+			message = "Datos Guardados"
+			return render_to_response(template, {'Radio':Radio,'form': form, 'formset': formset,'message':message}, context_instance=RequestContext(request))
+	else:
+		form = radio_maintenanceForm(instance=radiomaintenance)
+		formset = Radio_SItems_formset(instance=radiomaintenance)
+
+		#formsetSG = StorageTank_SGItems_formset(instance=storagetankmaintenance)
+	return render_to_response(template, {'Radio':Radio,'form': form, 'formset': formset, 'message':message}, context_instance=RequestContext(request))
+
+@permission_required('radio.can_delete_radio_maintenance', login_url="/login/")
+def delete_radio_maintenance(request, id = None):
+	radio_maintenanceInstance = get_object_or_404(radio_maintenance, pk=id)
+	radio_maintenanceInstance.delete()
+
+	vehicles = vehicle.objects.all()
+  	return render_to_response('index.html',{'vehicles':vehicles},context_instance=RequestContext(request))
+
+@permission_required('radio.can_delete_radio', login_url="/login/")
+def delete_radio(request, id = None):
+	radioInstance = get_object_or_404(radio, pk=id)
+	radioInstance.delete()
+
+	vehicles = vehicle.objects.all()
+  	return render_to_response('index.html',context_instance=RequestContext(request))

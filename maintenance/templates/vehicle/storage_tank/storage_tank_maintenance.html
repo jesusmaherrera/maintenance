@@ -1,6 +1,6 @@
-{% extends "base.html" %}
+{% extends "vehicle/storage_tank/base.html" %}
 {% block title %}Home{% endblock %}
-
+{% block breadcrumb %}{{ block.super }} &raquo; Tanque Almacenamiento ({{ storage_tank }}){% endblock %} 
 {% block content %}     
   <h2>Detalles de Tanque de Almacenamiento </h2>
   <br>
@@ -10,11 +10,11 @@
   <p><label style="float:left;">Chasis </label> {{ storage_tank.series }}</p>
 
   <br>
-  <h3>Mantenimientos Realizados a Tanque de Almacenamiento</h3><a class="btn" href="/StorageTankMaintenace/New/"><i class="icon-plus"></i> Nuevo Mantenimiento</a></h3>
+  <h3>Mantenimientos Realizados a Tanque de Almacenamiento</h3><a class="btn" href="/StorageTankMaintenace/New/{{ storage_tank.id }}"><i class="icon-plus"></i> Nuevo Mantenimiento</a></h3>
   {% for storage_tank_maintenance in storage_tank_maintenances %}
   <article class="tarjeta">
     <div class="btn-group btn-danger" style="width:100%;">
-          <a href='/StorageTankMaintenace/{{ storage_tank_maintenance.id }}' style="width:75%;" class="btn btn-danger btn-primary">
+          <a href='/StorageTankMaintenace/{{ storage_tank_maintenance.id }}/{{ storage_tank.id }}' style="width:75%;" class="btn btn-danger btn-primary">
              {{ storage_tank_maintenance.garage }}
           </a>
           <a class="btn btn-danger btn-primary dropdown-toggle" data-toggle="dropdown" href="/StorageTankMaintenace/Delete/{{ storage_tank_maintenance.id }}"><span class="icon-trash"></span></a>

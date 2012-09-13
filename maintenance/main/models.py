@@ -2,9 +2,9 @@
 from django.db import models
 
 class chassis(models.Model):
-    name = models.CharField(max_length=50)
-    brand = models.CharField(max_length=30)
-    line = models.CharField(max_length=30)
+    name = models.CharField('Serie',max_length=50)
+    brand = models.CharField('Marca',max_length=30)
+    line = models.CharField('Linea',max_length=30)
     color = models.CharField(max_length=15)
     model = models.CharField(max_length=4)
     license_plates = models.CharField(max_length=15)
@@ -65,7 +65,7 @@ class radio(models.Model):
         return self.series
 
 class vehicle(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField('Numero Econimico', max_length=50)
     chassis = models.ForeignKey(chassis)
     storage_tank = models.ForeignKey(storage_tank, blank=True, null=True)
     carburetion_tank = models.ForeignKey(carburetion_tank, blank=True, null=True)
@@ -75,7 +75,7 @@ class vehicle(models.Model):
         ('PI', 'PIPA'),
         ('TR', 'TROCA'),
     )
-    vehicle_type = models.CharField(max_length=10, choices=VEHICLE_TYPE_CHOICES,
+    vehicle_type = models.CharField('Tipo',max_length=10, choices=VEHICLE_TYPE_CHOICES,
                                       default='TR')
     image = models.ImageField(blank=True, null=True, upload_to='vehicles', verbose_name='Imágen')
 
@@ -89,6 +89,14 @@ class garage(models.Model):
 
     def __unicode__(self):
         return self.name
+
+class radio_maintenance(models.Model):
+    date = models.DateTimeField()
+    garage = models.ForeignKey(garage)
+    radio = models.ForeignKey(radio)
+
+    def __unicode__(self):
+        return u'%s %s'% (self.date, self.garage)
 
 class chassis_maintenance(models.Model):
     date = models.DateTimeField()
@@ -146,6 +154,20 @@ class chassis_maintenance_S(models.Model):
 
 class chassis_maintenance_SG(models.Model):
     chassis_maintenance = models.ForeignKey(chassis_maintenance)
+    services_group = models.ForeignKey(services_group)
+
+    def __unicode__(self):
+        return unicode(self.id)
+#RADIO
+class radio_maintenance_S(models.Model):
+    radio_maintenance = models.ForeignKey(radio_maintenance)
+    service = models.ForeignKey(service)
+
+    def __unicode__(self):
+        return u'%s'% (self.id)
+
+class radio_maintenance_SG(models.Model):
+    radio_maintenance = models.ForeignKey(radio_maintenance)
     services_group = models.ForeignKey(services_group)
 
     def __unicode__(self):

@@ -34,6 +34,9 @@
     })
 </script>
 {% endblock %}
+
+{% block breadcrumb %}{{ block.super }} &raquo; <a href="/mantenimientos_chasis/{{ Chassis.id }}">Chasis ({{ Chassis }})</a> &raquo; Mantenimiento a Chasis {% endblock %} 
+
 {% block content %}
 <h2> Mantenimientos a Chasis</h2>
 <br>

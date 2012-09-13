@@ -1,6 +1,6 @@
 {% extends "vehicle/chassis/base.html" %}
 {% block title %}Home{% endblock %}
-{% block breadcrumb %}{{ block.super }} &raquo;<a href="">{{ chassis }}</a>{% endblock %} 
+{% block breadcrumb %}{{ block.super }} &raquo; Chasis ({{ chassis }}){% endblock %} 
 {% block content %}  
   
   <h2>Chasis 
@@ -27,11 +27,11 @@
     {% endfor %}
   </div>
   {% endfor %}
-  <h3 style="clear:both;">Mantenimientos Realizados a Chasis <a class="btn" href="/ChassisMaintenance/New/"><i class="icon-plus"></i> Nuevo Mantenimiento</a></h3>
+  <h3 style="clear:both;">Mantenimientos Realizados a Chasis <a class="btn" href="/ChassisMaintenance/New/{{ chassis.id}}"><i class="icon-plus"></i> Nuevo Mantenimiento</a></h3>
   {% for chassis_maintenance in chassis_maintenances %}
   <article class="tarjeta">
         <div class="btn-group btn-danger" style="width:100%;">
-          <a href='/ChassisMaintenance/{{ chassis_maintenance.id }}' style="width:75%;" class="btn btn-danger btn-primary">
+          <a href='/ChassisMaintenance/{{ chassis_maintenance.id }}/{{ chassis.id }}/' style="width:75%;" class="btn btn-danger btn-primary">
             {{ chassis_maintenance.garage }} 
           </a>
           <a class="btn btn-danger btn-primary dropdown-toggle" data-toggle="dropdown" href="/ChassisMaintenance/delete/{{ chassis_maintenance.id }}"><span class="icon-trash"></span></a>

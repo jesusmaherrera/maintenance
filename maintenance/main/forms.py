@@ -117,3 +117,16 @@ def  get_storage_tank_maintenace_Sitems_formset(form, formset=models.BaseInlineF
 
 def  get_storage_tank_maintenace_SGitems_formset(form, formset=models.BaseInlineFormSet, **kwargs):
 	return inlineformset_factory(storage_tank_maintenance, storage_tank_maintenance_SG, form, formset, **kwargs)
+
+#RADIO
+
+class radio_maintenanceForm(forms.ModelForm):
+	class Meta:
+		model = radio_maintenance
+
+class radio_maintenance_sForm(forms.ModelForm):
+	class Meta:
+		model = radio_maintenance_S
+
+def  get_radio_maintenace_Sitems_formset(form, formset=models.BaseInlineFormSet, **kwargs):
+	return inlineformset_factory(radio_maintenance, radio_maintenance_S, form, formset, **kwargs)

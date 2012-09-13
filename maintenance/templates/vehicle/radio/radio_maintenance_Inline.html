@@ -1,4 +1,4 @@
-{% extends "vehicle/storage_tank/base.html" %}
+{% extends "vehicle/radio/base.html" %}
 {% block title %}Home{% endblock %}
 {% block style_css %}
 <style type="text/css">
@@ -34,9 +34,10 @@
     })
 </script>
 {% endblock %}
-{% block breadcrumb %}{{ block.super }} &raquo; <a href="/mantenimientos_TanqueAlmacenamiento/{{ StorageTank.id }}">Tanque de Almacenamiento ({{ StorageTank }})</a> &raquo; Mantenimiento a Tanque de Almacenamiento {% endblock %} 
+
+{% block breadcrumb %}{{ block.super }} &raquo; <a href="/RadioMaintenances/{{ Radio.id }}">Radio ({{ Radio }})</a> &raquo; Mantenimiento a Radio {% endblock %} 
 {% block content %}
-<h2> Mantenimientos a Tanque de Carburacion</h2>
+<h2> Mantenimientos a Radio</h2>
 <br>
 <div>
     <div style="margin:0 auto 0 auto;">
@@ -61,8 +62,8 @@
                 {{ form.garage }}
             </span>
             <span class="span3">
-                Tanque de Almacenamiento:
-                {{ form.storage_tank }}
+                Radio:
+                {{ form.radio }}
             </span>
             </fieldset>
         </div>
@@ -71,7 +72,7 @@
             <table class="table table-hover span4" id="id_orders_table" border="0" cellpadding="0" cellspacing="5">
                 <thead>
                     <tr>
-                        <th scope="col">SERVICIOS</th>
+                        <th scope="col">Servicios</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -87,7 +88,7 @@
                 </tbody>
             </table>
             <!-- <div class="span4">
-            <div style="text-align:left;">SERVICE GROUPS</div>
+            <div style="text-align:left;"><b>Grupos de Servicios</b></div>
             {% for form in formsetSG.forms %}
             <table class="table table-hover span4 form-container " id="{{ form.prefix }}-row">
                 <tbody>
@@ -106,7 +107,7 @@
             <div style="clear:both;">
                 <br>
             <br>
-            <br  >
+            <br>
                 <!-- {{ formsetSG.management_form }} -->
                 {{ formset.management_form }}
                 <input class="btn" type="submit" value="Guardar y Salir" />

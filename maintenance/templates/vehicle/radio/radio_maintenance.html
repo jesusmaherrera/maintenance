@@ -1,0 +1,48 @@
+{% extends "vehicle/radio/base.html" %}
+{% block title %}Home{% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; Radio ({{ radio }}){% endblock %} 
+{% block content %}  
+  
+  <h2>Chasis 
+  </h2>
+  <br>
+  <div class="span3">
+    {{ radio.name}} <br>
+    <br>
+    <p><label>{{ radio.series }} {{ radio.brand}} </label></p>
+    <p><label style="float:left;">Modelo:</label> {{ radio.model}}</p>
+    <p><label style="float:left;">Estado </label> {{ radio.state }}</p>
+    <br>
+  </div>
+  <h3 style="clear:both;">Mantenimientos Realizados a Radio <a class="btn" href="/RadioMaintenance/New/{{ radio.id }}"><i class="icon-plus"></i> Nuevo Mantenimiento</a></h3>
+  {% for radio_maintenance in radio_maintenances %}
+  <article class="tarjeta">
+        <div class="btn-group btn-danger" style="width:100%;">
+          <a href='/RadioMaintenance/{{ radio_maintenance.id }}/{{ radio.id }}' style="width:75%;" class="btn btn-danger btn-primary">
+            {{ radio_maintenance.garage }} 
+          </a>
+          <a class="btn btn-danger btn-primary dropdown-toggle" data-toggle="dropdown" href="/RadioMaintenance/Delete/{{ radio_maintenance.id }}"><span class="icon-trash"></span></a>
+        </div>  
+    <section>
+      <label>{{ radio_maintenance.date }} </label>
+      <hr>
+      {% for radio_service in radio_services %} 
+        {% if radio_service.radio_maintenance == radio_maintenance %}
+            <p>{{ radio_service.service.name }}</p>
+        {% endif%}
+      {% endfor %}
+
+      {% for radio_service_group in radio_services_groups %} 
+        {% if radio_service_group.radio_maintenance == radio_maintenance %}
+            <p style="font-weight:bold;">{{ radio_service_group.services_group.name }}</p>
+        {% endif%}
+      {% endfor %}
+    </section>
+  </article>  
+  {% endfor %}
+  <br>
+  <br>
+  
+  <br><br><br><br><br><br><br><br><br><br>
+{% endblock %}
+

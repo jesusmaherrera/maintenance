@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "vehicle/carburetion_tank/base.html" %}
 {% block title %}Home{% endblock %}
 {% block style_css %}
 <style type="text/css">
@@ -34,6 +34,9 @@
     })
 </script>
 {% endblock %}
+
+{% block breadcrumb %}{{ block.super }} &raquo; <a href="/mantenimientos_TanqueCarburacion/{{ CarburetionTank.id }}">Tanque de Carburación ({{ CarburetionTank }})</a> &raquo; Mantenimiento a Tanque de Carburacion {% endblock %} 
+
 {% block content %}
 <h2> Mantenimientos a Tanque de Carburacion</h2>
 <br>

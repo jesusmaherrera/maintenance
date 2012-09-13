@@ -1,6 +1,6 @@
-{% extends "base.html" %}
+{% extends "vehicle/carburetion_tank/base.html" %}
 {% block title %}Home{% endblock %}
-
+{% block breadcrumb %}{{ block.super }} &raquo; Tanque de Carburacion ({{ carburetion_tank }}){% endblock %} 
 {% block content %}     
   <h2>Detalles de Tanque de Carburacion</h2>
   <br>
@@ -10,12 +10,12 @@
   <p><label style="float:left;">Chasis </label> {{ carburetion_tank.series }}</p>
 
   <br>
-  <h3>Mantenimientos Realizados</h3><a class="btn" href="/CarburetionTankMaintenace/New/"><i class="icon-plus"></i> Nuevo Mantenimiento</a></h3>
+  <h3>Mantenimientos Realizados</h3><a class="btn" href="/CarburetionTankMaintenace/New/{{ carburetion_tank.id }}/"><i class="icon-plus"></i> Nuevo Mantenimiento</a></h3>
 
   {% for carburetion_tank_maintenance in carburetion_tank_maintenances %}
   <article class="tarjeta">
     <div class="btn-group btn-danger" style="width:100%;">
-          <a href='/CarburetionTankMaintenace/{{ carburetion_tank_maintenance.id }}' style="width:75%;" class="btn btn-danger btn-primary">
+          <a href='/CarburetionTankMaintenace/{{ carburetion_tank_maintenance.id }}/{{ carburetion_tank.id }}/' style="width:75%;" class="btn btn-danger btn-primary">
             {{ carburetion_tank_maintenance.garage }}
           </a>
           <a class="btn btn-danger btn-primary dropdown-toggle" data-toggle="dropdown" href="/CarburetionTankMaintenace/Delete/{{ carburetion_tank_maintenance.id }}"><span class="icon-trash"></span></a>

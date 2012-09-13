@@ -2,18 +2,31 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-  <h2 >Vehiculos en Uso </h2> 
+  <h2 >Vehiculos <a tabindex="-1" class="btn" href="/Vehicle/New/"><i class="icon-plus"></i></a></h2> 
   <br>
   <br>
   {% for vehicle in vehicles %}
     <article class="tarjeta" >
             <div class="btn-group btn-danger" style="width:100%;">
-              <a href='/VehicleDetails/{{ vehicle.id }}' style="width:75%;" class="btn btn-danger btn-primary">
+              <a href='/Vehicle/{{ vehicle.id }}' style="width:75%;" class="btn btn-danger btn-primary">
                 {{ vehicle.name }}
               </a>
               <a class="btn btn-danger btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-asterisk icon-white"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href='/Vehicle/{{ vehicle.id }}'><i class="icon-pencil"></i> Editar</a></li>
+              <ul class="dropdown-menu" style="text-align:left;">
+                {% if vehicle.chassis %}
+                <li><a href='/mantenimientos_chasis/{{ vehicle.chassis.id }}'><i class="icon-pencil"></i> Chasis</a></li>
+                {% endif%}
+                {% if vehicle.carburetion_tank %}
+                <li><a href='/mantenimientos_TanqueCarburacion/{{ vehicle.carburetion_tank.id }}'><i class="icon-pencil"></i> Tanque de Carburacion</a></li>
+                {% endif%}
+                {% if vehicle.storage_tank %}
+                <li><a href='/mantenimientos_TanqueAlmacenamiento/{{ vehicle.storage_tank.id }}'><i class="icon-pencil"></i> Tanque de Almacenamiento</a></li>
+                {% endif%}
+                {% if vehicle.radio %}
+                <li><a href='/RadioMaintenances/{{ vehicle.radio.id }}'><i class="icon-pencil"></i> 
+                  Radio</a></li>
+                {% endif%}
+                <li class="divider"></li>
                 <li><a href="/Vehicle/Delete/{{ vehicle.id }}"><i class="icon-trash"></i> Eliminar</a></li>
               </ul>
             </div>

@@ -1,0 +1,41 @@
+{% extends "vehicle/storage_tank/base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h2 >Tanques de Almacenamiento</h2> 
+<br>
+<br>
+<table class="table table-hover span4">
+  <thead>
+    <tr>
+      <th>TANQUE</th>
+      <th>OPCIONES</th>
+    </tr> 
+  </thead>
+  <tbody>
+    {% for storage_tank in StorageTanks %}
+      <tr>
+          <td>
+            <a href='/TanqueAlmacenamiento/edit/{{ storage_tank.id }}'>
+              {{ storage_tank.series }}
+              {{ storage_tank.brand }}
+            </a>
+          </td>
+        <td style="text-align:center;">
+          <a href='/CarburetionTank/Delete/{{ storage_tank.id }}' class="btn btn-mini btn-danger"><i class="icon-trash"></i></a>
+        </td>
+      </tr>
+    {% endfor%}
+    <tr>
+      <td>
+        <a class="btn btn-small btn-success" href="/TanqueAlmacenamiento/new/">Nuevo Tanque de Almacenamiento</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br><br><br><br><br>
+<br><br><br><br><br>
+<br><br><br><br><br>
+{% endblock %}
+
