@@ -1,37 +1,32 @@
-{% extends "vehicle/carburetion_tank/base.html" %}
-{% block title %}Tanque de Almacenamiento{% endblock %}
+{% extends "vehicle/radio/base.html" %}
+{% block title %}Radio de comunicacion{% endblock %}
 {% block js_code %}{% endblock %}
 {% block content %}
-  <h2>Tanque de Carburacion</h2>
-  <br>
+  <h2>Radio de Comunicacion</h2>
   <section>
     <form method="post" action="." width="400px">
       {% csrf_token %}
+      <br>
       <div style="text-align:left;">
         <span class="span3">
           Serie:
           <br>
-          {{ carburetion_tankForm.series }}
+          {{ radioForm.series }}
         </span>
         <span class="span3">
           Marca:
           <br>
-          {{ carburetion_tankForm.brand }}
+          {{ radioForm.brand }}
         </span>
         <span class="span3">
           Modelo:
           <br>
-          {{ carburetion_tankForm.model }}
-        </span>
-        <span class="span3">
-          Capacidad:
-          <br>
-          {{ carburetion_tankForm.capacity }}
+          {{ radioForm.model }}
         </span>
         <span class="span3">
           Estado:
           <br>
-          {{ carburetion_tankForm.state }}
+          {{ radioForm.state }}
         </span>
       </div>
       <br>

@@ -5,13 +5,19 @@
   <h2>Taller</h2>
   <section>
     <form method="post" action="" width="400px">{% csrf_token %}
-      Nombre:
-      {{ Form.name }}
-      Telefono:
-      {{ Form.office_phone }}
+      <div style="text-align:left;">
+        <span class="span3">
+          Nombre:<br>
+          {{ Form.name }}
+        </span>
+        <span class="span3">
+          Telefono:<br>
+          {{ Form.office_phone }}
+        </span>
+      </div>
       <br>
-      <p style="clear:both;">
-        <input type="submit" class="btn btn-large" value="Guardar y Salir" />
+      <p class="form-actions" style="clear:both;">
+        <input type="submit" class="btn btn-primary" value="Guardar y Salir" />
       </p>  
     </form>
   </section>

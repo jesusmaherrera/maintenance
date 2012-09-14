@@ -3,13 +3,50 @@
 {% block js_code %}{% endblock %}
 {% block content %}
   <h2>Tanque de Almacentamiento</h2>
+  <br>
   <section>
     <form method="post" action="." width="400px">
       {% csrf_token %}
-      {{ storage_tankForm }}
+      <div style="text-align:left;">
+        <span class="span3">
+          Serie:
+          <br>
+          {{ storage_tankForm.series }}
+        </span>
+        <span class="span3">
+          Marca:
+          <br>
+          {{ storage_tankForm.brand }}
+        </span>
+        <span class="span3">
+          Modelo:
+          <br>
+          {{ storage_tankForm.model }}
+        </span>
+        <span class="span3">
+          Capacidad Nominal:
+          <br>
+          {{ storage_tankForm.water_nominal_cap }}
+        </span>
+        <span class="span3">
+          Capacidad:
+          <br>
+          {{ storage_tankForm.capArt }}
+        </span>
+        <span class="span3">
+          Contenido:
+          <br>
+          {{ storage_tankForm.content }}
+        </span>
+        <span class="span3">
+          Estado:
+          <br>
+          {{ storage_tankForm.state }}
+        </span>
+      </div>
       <br>
-      <p style="clear:both;">
-        <input type="submit" class="btn btn-large" value="Guardar y Salir" />
+      <p class="form-actions" style="clear:both;">
+        <input type="submit" class="btn btn-primary" value="Guardar y Salir" />
       </p>  
     </form>
   </section>

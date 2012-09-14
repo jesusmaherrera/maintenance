@@ -162,8 +162,9 @@ def chassis_manageView(request, id= None, template_name = 'vehicle/chassis/chass
 		chassisForm = chassis_manageForm(request.POST, instance= chassisI)
 		if chassisForm.is_valid():
 			chassisForm.save()
-			vehicles = vehicle.objects.all()
-			return render_to_response('index.html',context_instance = RequestContext(request))
+			Chassises = chassis.objects.all()
+			c = {'Chassises':Chassises}
+			return render_to_response('vehicle/chassis/chassises.html', c, context_instance=RequestContext(request))
 	else:
 	 	chassisForm = chassis_manageForm(instance= chassisI)
 
@@ -247,8 +248,9 @@ def carburetion_tank_manageView(request, id = None, template_name='vehicle/carbu
 		carburetion_tankForm = carburetion_tank_manageForm(request.POST, instance= carburetion_tankI)
 		if carburetion_tankForm.is_valid():
 			carburetion_tankForm.save()
-			vehicles = vehicle.objects.all()
-			return render_to_response('index.html',context_instance = RequestContext(request))
+			CarburetionTanks = carburetion_tank.objects.all()
+			c = {'carburetion_tanks':CarburetionTanks}
+			return render_to_response('vehicle/carburetion_tank/carburetion_tanks.html', c, context_instance=RequestContext(request))
 	else:
 	 	carburetion_tankForm = carburetion_tank_manageForm(instance= carburetion_tankI)
 
@@ -349,8 +351,9 @@ def storage_tank_manageView(request, id = None, template_name='vehicle/storage_t
 		storage_tankForm = storage_tank_manageForm(request.POST, instance= storage_tankI)
 		if storage_tankForm.is_valid():
 			storage_tankForm.save()
-			vehicles = vehicle.objects.all()
-			return render_to_response('index.html',context_instance = RequestContext(request))
+			StorageTanks = storage_tank.objects.all()
+			c = {'StorageTanks':StorageTanks}
+			return render_to_response('vehicle/storage_tank/storage_tanks.html', c, context_instance=RequestContext(request))
 	else:
 	 	storage_tankForm = storage_tank_manageForm(instance= storage_tankI)
 
@@ -425,8 +428,9 @@ def garage_manageView(request, id = None, template_name='vehicle/garage/garage_m
 		Form = garage_manageForm(request.POST, instance = Garage)
 		if Form.is_valid():
 			Form.save()
-			vehicles = vehicle.objects.all()
-			return render_to_response('index.html',context_instance = RequestContext(request))
+			Garages = garage.objects.all()
+			c = {'Garages':Garages}
+			return render_to_response('vehicle/garage/garages.html', c, context_instance=RequestContext(request))
 	else:
 	 	Form = serviceForm(instance=Garage)
 
@@ -494,7 +498,7 @@ def radio_maintenanceView(request, query):
 	return render_to_response('vehicle/radio/radio_maintenance.html', context,context_instance=RequestContext(request))
 
 @login_required(login_url='/login/')
-def radio_manageView(request, id = None, template_name='radio_manage.html'):
+def radio_manageView(request, id = None, template_name='vehicle/radio/radio_manage.html'):
 	if id:
 		radioI = get_object_or_404(radio, pk=id)
 	else:
@@ -504,8 +508,9 @@ def radio_manageView(request, id = None, template_name='radio_manage.html'):
 		radioForm = radio_manageForm(request.POST, instance=radioI)
 		if radioForm.is_valid():
 			radioForm.save()
-			vehicles = vehicle.objects.all()
-			return render_to_response('index.html',context_instance = RequestContext(request))
+			Radios = radio.objects.all()
+			c = {'Radios':Radios}
+			return render_to_response('vehicle/radio/radios.html', c, context_instance=RequestContext(request))
 	else:
 	 	radioForm = radio_manageForm(instance=radioI)
 
