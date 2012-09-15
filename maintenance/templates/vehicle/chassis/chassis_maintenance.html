@@ -41,7 +41,7 @@
       <hr>
       {% for chassis_service in chassis_services %} 
         {% if chassis_service.chassis_maintenance == chassis_maintenance %}
-            <p>{{ chassis_service.service.name }}</p>
+            <p>{{ chassis_service.service }}</p>
         {% endif%}
       {% endfor %}
 

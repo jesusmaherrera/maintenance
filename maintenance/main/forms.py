@@ -68,9 +68,16 @@ class chassis_maintenance_sForm(forms.ModelForm):
 	class Meta:
 		model = chassis_maintenance_S
 
+class chassis_maintenance_serviceForm(forms.ModelForm):
+	class Meta:
+		model = chassis_maintenance_Service
+
 class chassis_maintenance_sgForm(forms.ModelForm):
 	class Meta:
 		model = chassis_maintenance_SG
+
+def  get_chassis_maintenace_Serviceitems_formset(form, formset=models.BaseInlineFormSet, **kwargs):
+	return inlineformset_factory(chassis_maintenance, chassis_maintenance_Service, form, formset, **kwargs)
 
 def  get_chassis_maintenace_Sitems_formset(form, formset=models.BaseInlineFormSet, **kwargs):
 	return inlineformset_factory(chassis_maintenance, chassis_maintenance_S, form, formset, **kwargs)

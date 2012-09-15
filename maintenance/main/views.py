@@ -175,7 +175,7 @@ def chassis_manageView(request, id= None, template_name = 'vehicle/chassis/chass
 def chassis_maintenanceView(request, query):
  	chassisD = get_object_or_404(chassis, pk=query)
  	chassis_maintenances = chassis_maintenance.objects.filter(chassis = chassisD)
-	chassis_services = chassis_maintenance_S.objects.filter(chassis_maintenance__chassis = chassisD)
+	chassis_services = chassis_maintenance_Service.objects.filter(chassis_maintenance__chassis = chassisD)
 	chassis_services_groups = chassis_maintenance_SG.objects.filter(chassis_maintenance__chassis = chassisD)
 	ServicesGroups = services_group.objects.all()
 	ServicesGroupItems = services_group_items.objects.all()
@@ -185,7 +185,7 @@ def chassis_maintenanceView(request, query):
 @login_required(login_url='/login/')
 def chassis_maintenace_Inline_formset(request, id = None, chassis_id = None, template= "vehicle/chassis/chassis_maintenance_Inline.html"):
 	Chassis = get_object_or_404( chassis, pk =  chassis_id)
-	ChassisMaintenace_SItems_formset = get_chassis_maintenace_Sitems_formset(chassis_maintenance_sForm, extra=1, can_delete=True)
+	ChassisMaintenace_SItems_formset = get_chassis_maintenace_Serviceitems_formset(chassis_maintenance_serviceForm, extra=1, can_delete=True)
 	ChassisMaintenace_SGItems_formset = get_chassis_maintenace_SGitems_formset(chassis_maintenance_sgForm, extra=1, can_delete=True)
 	message = ""
 	if id:
