@@ -35,15 +35,12 @@ class chassis_maintenance_manageForm(forms.ModelForm):
 class chassis_maintenanceForm(forms.ModelForm):
 	class Meta:
 		model = chassis_maintenance
+		exclude = ('chassis',)
 
 class chassis_maintenance_S_manageForm(forms.ModelForm):
 	class Meta:
 		model = chassis_maintenance_S
 		exclude = ('chassis_maintenance',)
-
-class storage_tank_maintenanceForm(forms.ModelForm):
-	class Meta:
-		model = storage_tank_maintenance
 
 class services_groupForm(forms.ModelForm):
 	class Meta:
@@ -90,10 +87,14 @@ def  get_chassis_maintenace_SGitems_formset(form, formset=models.BaseInlineFormS
 class carburetion_tank_maintenanceForm(forms.ModelForm):
 	class Meta:
 		model = carburetion_tank_maintenance
+		exclude = ('carburetion_tank',)
 
 class carburetion_tank_maintenance_sForm(forms.ModelForm):
+	service =  forms.ModelChoiceField(queryset=service.objects.filter(service_type='TC'))
+
 	class Meta:
 		model = carburetion_tank_S
+
 
 class carburetion_tank_maintenance_sgForm(forms.ModelForm):
 	class Meta:
@@ -110,8 +111,11 @@ def  get_carburetion_tank_maintenace_SGitems_formset(form, formset=models.BaseIn
 class storage_tank_maintenanceForm(forms.ModelForm):
 	class Meta:
 		model = storage_tank_maintenance
+		exclude = ('storage_tank',)
 
 class storage_tank_maintenance_sForm(forms.ModelForm):
+	service =  forms.ModelChoiceField(queryset=service.objects.filter(service_type='TA'))
+
 	class Meta:
 		model = storage_tank_maintenance_S
 
@@ -132,6 +136,8 @@ class radio_maintenanceForm(forms.ModelForm):
 		model = radio_maintenance
 
 class radio_maintenance_sForm(forms.ModelForm):
+	service =  forms.ModelChoiceField(queryset=service.objects.filter(service_type='R'))
+
 	class Meta:
 		model = radio_maintenance_S
 

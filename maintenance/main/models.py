@@ -131,15 +131,15 @@ class carburetion_tank_maintenance(models.Model):
 class service(models.Model):
     name = models.CharField(max_length=60)
     
-    # SERVICE_TYPE_CHOICES = (
-    #     ('CH', 'CHASIS'),
-    #     ('TC', 'TANQUE DE CARBURACION'),
-    #     ('TA', 'TANQUE DE ALMACENAMIENTO'),
-    #     ('R', 'RADIO'),
-    # )
+    SERVICE_TYPE_CHOICES = (
+        ('CH', 'CHASIS'),
+        ('TC', 'TANQUE DE CARBURACION'),
+        ('TA', 'TANQUE DE ALMACENAMIENTO'),
+        ('R', 'RADIO'),
+    )
 
-    # service_type = models.CharField('Tipo',max_length=10, choices=SERVICE_TYPE_CHOICES,
-    #                                   default='CH')
+    service_type = models.CharField('Tipo',max_length=10, choices=SERVICE_TYPE_CHOICES,
+                                      default='CH')
     def __unicode__(self):
         return self.name
 

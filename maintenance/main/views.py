@@ -198,7 +198,11 @@ def chassis_maintenace_Inline_formset(request, id = None, chassis_id = None, tem
 		formset = ChassisMaintenace_SItems_formset(request.POST, instance=chassismaintenance)
 		formsetSG = ChassisMaintenace_SGItems_formset(request.POST, instance=chassismaintenance)
 		if form.is_valid() and formset.is_valid() and formsetSG.is_valid():
-			form.save()
+			
+			ch = form.save(commit = False)
+			ch.chassis = Chassis
+			ch.save()
+
 			formset.save()
 			formsetSG.save()
 			message = "Datos Guardados"
@@ -274,7 +278,11 @@ def carburetion_tank_maintenance_Inline_formset(request, id = None, carburetion_
 		#formsetSG = CarburetionTank_SGItems_formset(request.POST, instance=carburetiontankmaintenance)
 		#if form.is_valid() and formset.is_valid() and formsetSG.is_valid():
 		if form.is_valid() and formset.is_valid():
-			form.save()
+			
+			ct = form.save(commit = False)
+			ct.carburetion_tank = CarburetionTank
+			ct.save()
+
 			formset.save()
 			#formsetSG.save()
 			message = "Datos Guardados"
@@ -320,7 +328,9 @@ def storage_tank_maintenance_Inline_formset(request, id = None, storage_tank_id 
 		#formsetSG = StorageTank_SGItems_formset(request.POST, instance=storagetankmaintenance)
 		#if form.is_valid() and formset.is_valid() and formsetSG.is_valid():
 		if form.is_valid() and formset.is_valid():
-			form.save()
+			st = form.save(commit = False)
+			st.storage_tank = StorageTank
+			st.save()
 			formset.save()
 			#formsetSG.save()
 			message = "Datos Guardados"
