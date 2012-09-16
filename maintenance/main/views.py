@@ -18,16 +18,6 @@ from django.contrib.auth.decorators import login_required, permission_required
 from reportlab.platypus import Table, TableStyle, SimpleDocTemplate
 from reportlab.lib import colors
 
-def chassis_maintenanceReportView(request, query):
- 	chassisD = get_object_or_404(chassis, pk=query)
- 	chassis_maintenances = chassis_maintenance.objects.filter(chassis = chassisD)
-	chassis_services = chassis_maintenance_Service.objects.filter(chassis_maintenance__chassis = chassisD)
-	chassis_services_groups = chassis_maintenance_SG.objects.filter(chassis_maintenance__chassis = chassisD)
-	ServicesGroups = services_group.objects.all()
-	ServicesGroupItems = services_group_items.objects.all()
-	context = {'chassis': chassisD, 'chassis_services': chassis_services, 'chassis_services_groups':chassis_services_groups, 'chassis_maintenances': chassis_maintenances,'ServicesGroups':ServicesGroups,'ServicesGroupItems':ServicesGroupItems}
-	return render_to_response('vehicle/chassis/chassis_maintenanceReport.html', context,context_instance=RequestContext(request))
-
 from django import http
 import xhtml2pdf.pisa as pisa   
 
@@ -252,6 +242,16 @@ def delete_chassis_maintenance(request, id = None):
 
   	return render_to_response('index.html',{'vehicles':vehicles},context_instance=RequestContext(request))
 
+def chassis_maintenanceReportView(request, query):
+ 	chassisD = get_object_or_404(chassis, pk=query)
+ 	chassis_maintenances = chassis_maintenance.objects.filter(chassis = chassisD)
+	chassis_services = chassis_maintenance_Service.objects.filter(chassis_maintenance__chassis = chassisD)
+	chassis_services_groups = chassis_maintenance_SG.objects.filter(chassis_maintenance__chassis = chassisD)
+	ServicesGroups = services_group.objects.all()
+	ServicesGroupItems = services_group_items.objects.all()
+	context = {'chassis': chassisD, 'chassis_services': chassis_services, 'chassis_services_groups':chassis_services_groups, 'chassis_maintenances': chassis_maintenances,'ServicesGroups':ServicesGroups,'ServicesGroupItems':ServicesGroupItems}
+	return render_to_response('vehicle/chassis/chassis_maintenanceReport.html', context,context_instance=RequestContext(request))
+
 ##########################################
 ## 										##
 ##      CARBURATION TANK MAINTENACE     ##
@@ -331,6 +331,14 @@ def delete_carburetion_tank_maintenance(request, id = None):
 	vehicles = vehicle.objects.all()
   	return render_to_response('index.html',{'vehicles':vehicles},context_instance=RequestContext(request))
 
+@login_required(login_url='/login/')
+def carburetion_tank_maintenanceReportView(request, query):
+ 	carburetion_tankD = get_object_or_404(carburetion_tank, pk=query)
+ 	carburetion_tank_maintenances = carburetion_tank_maintenance.objects.filter(carburetion_tank = carburetion_tankD)
+	carburetion_tank_services = carburetion_tank_S.objects.filter(carburetion_tank_maintenance__carburetion_tank = carburetion_tankD)
+	carburetion_tank_services_groups = carburetion_tank_SG.objects.filter(carburetion_tank_maintenance__carburetion_tank = carburetion_tankD)
+	context = {'carburetion_tank': carburetion_tankD, 'carburetion_tank_services': carburetion_tank_services, 'carburetion_tank_services_groups':carburetion_tank_services_groups, 'carburetion_tank_maintenances': carburetion_tank_maintenances}
+	return render_to_response('vehicle/carburetion_tank/carburetion_tank_maintenanceReport.html', context,context_instance=RequestContext(request))
 ##########################################
 ## 										##
 ##      STORAGE TANK MAINTENACE         ##
@@ -415,6 +423,16 @@ def delete_storage_tank(request, id = None):
 
 	vehicles = vehicle.objects.all()
   	return render_to_response('index.html',{'vehicles':vehicles},context_instance=RequestContext(request))
+
+@login_required(login_url='/login/')
+def storage_tank_maintenanceReportView(request, query):
+ 	storage_tankD = get_object_or_404(storage_tank, pk=query)
+ 	storage_tank_maintenances = storage_tank_maintenance.objects.filter(storage_tank = storage_tankD)
+	storage_tank_services = storage_tank_maintenance_S.objects.filter(storage_tank_maintenance__storage_tank = storage_tankD)
+	storage_tank_services_groups = storage_tank_maintenance_SG.objects.filter(storage_tank_maintenance__storage_tank = storage_tankD)
+	context = {'storage_tank': storage_tankD, 'storage_tank_services': storage_tank_services, 'storage_tank_services_groups':storage_tank_services_groups, 'storage_tank_maintenances': storage_tank_maintenances}
+	return render_to_response('vehicle/storage_tank/storage_tank_maintenanceReport.html', context,context_instance=RequestContext(request))
+
 
 ##########################################
 ## 										##
@@ -604,3 +622,12 @@ def delete_radio(request, id = None):
 
 	vehicles = vehicle.objects.all()
   	return render_to_response('index.html',context_instance=RequestContext(request))
+
+@login_required(login_url='/login/')
+def radio_maintenanceReportView(request, query):
+ 	radioD = get_object_or_404(radio, pk=query)
+ 	radio_maintenances = radio_maintenance.objects.filter(radio = radioD)
+	radio_services = radio_maintenance_S.objects.filter(radio_maintenance__radio = radioD)
+	radio_services_groups = radio_maintenance_SG.objects.filter(radio_maintenance__radio = radioD)
+	context = {'radio': radioD, 'radio_services': radio_services, 'radio_services_groups':radio_services_groups, 'radio_maintenances': radio_maintenances}
+	return render_to_response('vehicle/radio/radio_maintenanceReport.html', context,context_instance=RequestContext(request))

@@ -12,6 +12,9 @@ urlpatterns = patterns('',
     url(r'^login/$',views.ingresar),
     url(r'^logout/$', views.logoutUser),
     url(r'^reporte/(.*)$', views.chassis_maintenanceReportView),
+    url(r'^CarburetionTankReport/(.*)$', views.carburetion_tank_maintenanceReportView),
+    url(r'^StorageTankReport/(.*)$', views.storage_tank_maintenanceReportView),
+    url(r'^RadioReport/(.*)$', views.radio_maintenanceReportView),
     
     # SERVICES GROUPS
     (r'^ServicesGroup/New/$', views.services_groupInline_formset),

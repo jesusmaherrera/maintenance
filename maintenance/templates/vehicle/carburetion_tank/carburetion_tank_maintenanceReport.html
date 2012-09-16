@@ -1,0 +1,64 @@
+{% extends "baseR.html" %}
+
+{% block content %}  
+  
+  <h2>Reporte de mantenimientos de Tanque de carburacion
+  </h2>
+  <br>
+  <div class="span3" style="text-align:left;">
+    <b>{{ carburetion_tank.series}} </b><br>
+    <br>
+    <p><label><b>{{ carburetion_tank.brand }}{{ carburetion_tank.model}}</b></label></p>
+    <p><label style="float:left;"><b>Capacidad Nominal  &nbsp; </b> </label> {{ carburetion_tank.water_nominal_cap }}</p>
+    <br>
+  </div>
+  {% for ServiceGroup in carburetion_tank_services_groups %}
+  
+  <div class="span3" style="text-align:left;">
+    <b>{{ ServiceGroup.name }}</b>
+    <hr>
+    {% for ServiceGroupItem in ServicesGroupItems %}
+      {% if ServiceGroupItem.services_group == ServiceGroup %}
+        {{ ServiceGroupItem.services.name }} <br>
+      {% endif %}
+    {% endfor %}
+  </div>
+  {% endfor %}
+  
+  <br><br>
+   <table class="table table-condensed">
+    <thead>
+      <tr COLSPAN="4">
+        <th>MANTENIMIENTOS</th>
+      </tr> 
+    </thead>
+    <tbody>
+      {% for carburetion_tank_maintenance in carburetion_tank_maintenances %}
+      <tr style="font-weight:bold; background-color:gray;">
+        <td>{{ carburetion_tank_maintenance.garage }}</td>
+        <td>{{ carburetion_tank_maintenance.date }}</td>
+      </tr>
+            {% for carburetion_tank_service in carburetion_tank_services %} 
+              {% if carburetion_tank_service.carburetion_tank_maintenance == carburetion_tank_maintenance %}
+                <tr colspan="4">
+                  <td>
+                    {{ carburetion_tank_service.service }}
+                  </td>
+                </tr>
+              {% endif %}
+            {% endfor %}
+            {% for carburetion_tank_services_group in carburetion_tank_services_groups %} 
+              {% if carburetion_tank_services_groups.carburetion_tank_maintenance == carburetion_tank_maintenance  %}
+                <tr>
+                  <td>
+                    {{ carburetion_tank_services_group.services_group.name }}
+                  </td>
+                </tr>
+              {% endif %}
+            {% endfor %}
+      {% endfor %}
+    </tbody>
+  </table>
+  <br><br><br><br><br><br><br><br>
+{% endblock %}
+

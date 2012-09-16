@@ -2,7 +2,7 @@
 {% block title %}Home{% endblock %}
 {% block breadcrumb %}{{ block.super }} &raquo; Tanque de Carburacion ({{ carburetion_tank }}){% endblock %} 
 {% block content %}     
-  <h2>Detalles de Tanque de Carburacion</h2>
+  <h2>Detalles de Tanque de Carburacion <a class="btn" href="/CarburetionTankReport/{{ carburetion_tank.id}}" target="_blank">Reporte</a></h2>
   <br>
   {{ carburetion_tank.series}}<br>
   <br>
@@ -10,7 +10,7 @@
   <p><label style="float:left;">Chasis </label> {{ carburetion_tank.series }}</p>
 
   <br>
-  <h3>Mantenimientos Realizados</h3><a class="btn" href="/CarburetionTankMaintenace/New/{{ carburetion_tank.id }}/"><i class="icon-plus"></i> Nuevo Mantenimiento</a></h3>
+  <h3>Mantenimientos Realizados  &nbsp; &nbsp;<a class="btn" href="/CarburetionTankMaintenace/New/{{ carburetion_tank.id }}/"><i class="icon-plus"></i></a></h3>
 
   {% for carburetion_tank_maintenance in carburetion_tank_maintenances %}
   <article class="tarjeta">

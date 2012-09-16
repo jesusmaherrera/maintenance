@@ -1,21 +1,22 @@
-{% extends "vehicle/chassis/baseR.html" %}
+{% extends "baseR.html" %}
 
 {% block content %}  
   
-  <h2>Chasis 
+  <h2>Reporte de mantenimientos de Chasis
   </h2>
   <br>
-  <div class="span3">
-    {{ chassis.name}} <br>
+  <div class="span3" style="text-align:left;">
+    <b>{{ chassis.name}} </b><br>
     <br>
-    <p><label>{{ chassis.brand }} {{ chassis.line}} {{ chassis.model}}</label></p>
-    <p><label style="float:left;">Chasis </label> {{ chassis.name }}</p>
-    <p><label style="float:left;">Placas:</label> {{ chassis.license_plates}}</p>
-    <p><label style="float:left;">Color:</label> {{ chassis.color}}</p>
-    <p><label style="float:left;">Kilometraje:</label> {{ chassis.mileage}}</p>
+    <p><label><b>{{ chassis.brand }} {{ chassis.line}} {{ chassis.model}}</b></label></p>
+    <p><label style="float:left;"><b>Chasis  &nbsp; </b> </label> {{ chassis.name }}</p>
+    <p><label style="float:left;"><b>Placas: &nbsp;</b></label> {{ chassis.license_plates}}</p>
+    <p><label style="float:left;"><b>Color:  &nbsp;</b></label> {{ chassis.color}}</p>
+    <p><label style="float:left;"><b>Kilometraje: &nbsp; </b></label> {{ chassis.mileage}}</p>
     <br>
   </div>
   {% for ServiceGroup in ServicesGroups %}
+  
   <div class="span3" style="text-align:left;">
     <b>{{ ServiceGroup.name }}</b>
     <hr>
@@ -26,32 +27,41 @@
     {% endfor %}
   </div>
   {% endfor %}
-  <h3 style="clear:both;">Mantenimientos Realizados a Chasis </h3>
-  {% for chassis_maintenance in chassis_maintenances %}
-  <div>
-    <br>
-    {{ chassis_maintenance.garage }} 
-    <label>{{ chassis_maintenance.date }} </label>
-    <hr>
-    <div class="span3">
-      {% for chassis_service in chassis_services %} 
-        {% if chassis_service.chassis_maintenance == chassis_maintenance %}
-            <p>{{ chassis_service.service }}</p>
-        {% endif%}
-      {% endfor %}
-
-      {% for chassis_service_group in chassis_services_groups %} 
-        {% if chassis_service_group.chassis_maintenance == chassis_maintenance %}
-            <p style="font-weight:bold;">{{ chassis_service_group.services_group.name }}</p>
-        {% endif%}
-      {% endfor %}
-      <hr style="clear:both;">
-    </div>  
-  </div>
-  {% endfor %}
-  <br>
-  <br>
   
-  <br><br><br><br><br><br><br><br><br><br>
+  <br><br>
+   <table class="table table-condensed">
+    <thead>
+      <tr COLSPAN="4">
+        <th>MANTENIMIENTOS</th>
+      </tr> 
+    </thead>
+    <tbody>
+      {% for chassis_maintenance in chassis_maintenances %}
+      <tr style="font-weight:bold; background-color:gray;">
+        <td>{{ chassis_maintenance.garage }}</td>
+        <td>{{ chassis_maintenance.date }}</td>
+      </tr>
+            {% for chassis_service in chassis_services %} 
+              {% if chassis_service.chassis_maintenance == chassis_maintenance %}
+                <tr colspan="4">
+                  <td>
+                    {{ chassis_service.service }}
+                  </td>
+                </tr>
+              {% endif %}
+            {% endfor %}
+            {% for chassis_service_group in chassis_services_groups %} 
+              {% if chassis_service_group.chassis_maintenance == chassis_maintenance %}
+                <tr>
+                  <td>
+                    {{ chassis_service_group.services_group.name }}
+                  </td>
+                </tr>
+              {% endif %}
+            {% endfor %}
+      {% endfor %}
+    </tbody>
+  </table>
+  <br><br><br><br><br><br><br><br>
 {% endblock %}
 

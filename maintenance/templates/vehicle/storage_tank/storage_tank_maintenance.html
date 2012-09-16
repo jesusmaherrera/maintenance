@@ -2,7 +2,7 @@
 {% block title %}Home{% endblock %}
 {% block breadcrumb %}{{ block.super }} &raquo; Tanque Almacenamiento ({{ storage_tank }}){% endblock %} 
 {% block content %}     
-  <h2>Detalles de Tanque de Almacenamiento </h2>
+  <h2>Detalles de Tanque de Almacenamiento <a class="btn" href="/StorageTankReport/{{ storage_tank.id}}" target="_blank">Reporte</a></h2>
   <br>
   {{ storage_tank.series}}<br>
   <br>
@@ -10,7 +10,7 @@
   <p><label style="float:left;">Chasis </label> {{ storage_tank.series }}</p>
 
   <br>
-  <h3>Mantenimientos Realizados a Tanque de Almacenamiento</h3><a class="btn" href="/StorageTankMaintenace/New/{{ storage_tank.id }}"><i class="icon-plus"></i> Nuevo Mantenimiento</a></h3>
+  <h3>Mantenimientos Realizados a Tanque de Almacenamiento <a class="btn" href="/StorageTankMaintenace/New/{{ storage_tank.id }}"><i class="icon-plus"></i></a></h3>
   {% for storage_tank_maintenance in storage_tank_maintenances %}
   <article class="tarjeta">
     <div class="btn-group btn-danger" style="width:100%;">
