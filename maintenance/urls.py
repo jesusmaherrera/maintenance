@@ -11,6 +11,8 @@ urlpatterns = patterns('',
     #LOGIN
     url(r'^login/$',views.ingresar),
     url(r'^logout/$', views.logoutUser),
+    url(r'^reporte/(.*)$', views.chassis_maintenanceReportView),
+    
     # SERVICES GROUPS
     (r'^ServicesGroup/New/$', views.services_groupInline_formset),
     (r'^ServicesGroup/(?P<id>\d+)/$', views.services_groupInline_formset),

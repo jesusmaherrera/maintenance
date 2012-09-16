@@ -1,6 +1,6 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from maintenance.main.models import *
 from maintenance.main.forms import *
 
@@ -13,6 +13,37 @@ from django.forms.models import inlineformset_factory
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required, permission_required
+
+#REPORTES
+from reportlab.platypus import Table, TableStyle, SimpleDocTemplate
+from reportlab.lib import colors
+
+def chassis_maintenanceReportView(request, query):
+ 	chassisD = get_object_or_404(chassis, pk=query)
+ 	chassis_maintenances = chassis_maintenance.objects.filter(chassis = chassisD)
+	chassis_services = chassis_maintenance_Service.objects.filter(chassis_maintenance__chassis = chassisD)
+	chassis_services_groups = chassis_maintenance_SG.objects.filter(chassis_maintenance__chassis = chassisD)
+	ServicesGroups = services_group.objects.all()
+	ServicesGroupItems = services_group_items.objects.all()
+	context = {'chassis': chassisD, 'chassis_services': chassis_services, 'chassis_services_groups':chassis_services_groups, 'chassis_maintenances': chassis_maintenances,'ServicesGroups':ServicesGroups,'ServicesGroupItems':ServicesGroupItems}
+	return render_to_response('vehicle/chassis/chassis_maintenanceReport.html', context,context_instance=RequestContext(request))
+
+from django import http
+import xhtml2pdf.pisa as pisa   
+
+def helloWorld(request):
+	filename = "reporte.pdf"                
+  	pdf = pisa.CreatePDF(            
+    	"Hello <strong>World</strong>",
+    
+    file(filename, "wb"))
+  	
+  	if not pdf.err:         
+  		return http.HttpResponse(
+                'Hello <strong>World</strong>',
+                mimetype='application/pdf')                
+
+	return http.HttpResponse('We had some errors')
 
 # Create your views here.
 @login_required(login_url='/login/')

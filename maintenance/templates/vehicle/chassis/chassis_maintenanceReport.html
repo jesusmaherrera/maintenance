@@ -1,0 +1,57 @@
+{% extends "vehicle/chassis/baseR.html" %}
+
+{% block content %}  
+  
+  <h2>Chasis 
+  </h2>
+  <br>
+  <div class="span3">
+    {{ chassis.name}} <br>
+    <br>
+    <p><label>{{ chassis.brand }} {{ chassis.line}} {{ chassis.model}}</label></p>
+    <p><label style="float:left;">Chasis </label> {{ chassis.name }}</p>
+    <p><label style="float:left;">Placas:</label> {{ chassis.license_plates}}</p>
+    <p><label style="float:left;">Color:</label> {{ chassis.color}}</p>
+    <p><label style="float:left;">Kilometraje:</label> {{ chassis.mileage}}</p>
+    <br>
+  </div>
+  {% for ServiceGroup in ServicesGroups %}
+  <div class="span3" style="text-align:left;">
+    <b>{{ ServiceGroup.name }}</b>
+    <hr>
+    {% for ServiceGroupItem in ServicesGroupItems %}
+      {% if ServiceGroupItem.services_group == ServiceGroup %}
+        {{ ServiceGroupItem.services.name }} <br>
+      {% endif %}
+    {% endfor %}
+  </div>
+  {% endfor %}
+  <h3 style="clear:both;">Mantenimientos Realizados a Chasis </h3>
+  {% for chassis_maintenance in chassis_maintenances %}
+  <div>
+    <br>
+    {{ chassis_maintenance.garage }} 
+    <label>{{ chassis_maintenance.date }} </label>
+    <hr>
+    <div class="span3">
+      {% for chassis_service in chassis_services %} 
+        {% if chassis_service.chassis_maintenance == chassis_maintenance %}
+            <p>{{ chassis_service.service }}</p>
+        {% endif%}
+      {% endfor %}
+
+      {% for chassis_service_group in chassis_services_groups %} 
+        {% if chassis_service_group.chassis_maintenance == chassis_maintenance %}
+            <p style="font-weight:bold;">{{ chassis_service_group.services_group.name }}</p>
+        {% endif%}
+      {% endfor %}
+      <hr style="clear:both;">
+    </div>  
+  </div>
+  {% endfor %}
+  <br>
+  <br>
+  
+  <br><br><br><br><br><br><br><br><br><br>
+{% endblock %}
+
