@@ -29,15 +29,16 @@ urlpatterns = patterns('',
     (r'^Garages/$', views.garagesView),
     (r'^Garage/New/$', views.garage_manageView),
     (r'^Garage/(?P<id>\d+)/$', views.garage_manageView),
-    #(r'^Garage/Delete/(?P<id>\d+)/$', views.garage_manageView),
+    (r'^Garage/Delete/(?P<id>\d+)/$', views.delete_garageView),
     #MANTENIMIENTOS A CHASIS
     (r'^Chassises/$', views.chassisesView),
     (r'^Chassis/(?P<id>\d+)/$', views.chassis_manageView),
     (r'^Chassis/New/$', views.chassis_manageView),
+    (r'^Chassis/Delete/(?P<id>\d+)/$', views.delete_chassis),
     (r'^mantenimientos_chasis/(.*)', views.chassis_maintenanceView),
     (r'^ChassisMaintenance/New/(?P<chassis_id>\d+)/$', views.chassis_maintenace_Inline_formset),
     (r'^ChassisMaintenance/(?P<id>\d+)/(?P<chassis_id>\d+)/$', views.chassis_maintenace_Inline_formset),
-    (r'^ChassisMaintenance/delete/(?P<id>\d+)/$', views.delete_chassis_maintenance, {}, 'chassis_maintenance_delete'),
+    (r'^ChassisMaintenance/delete/(?P<id>\d+)/(?P<chassis_id>\d+)/$', views.delete_chassis_maintenance),
     #TANQUE DE CARBURACION
     (r'^CarburetionTanks/$', views.carburetion_tanksView),
     (r'^mantenimientos_TanqueCarburacion/(.*)', views.carburetion_tank_maintenanceView),
@@ -45,15 +46,16 @@ urlpatterns = patterns('',
     (r'^CarburetionTank/(?P<id>\d+)/$', views.carburetion_tank_manageView),
     (r'^CarburetionTankMaintenace/New/(?P<carburetion_tank_id>\d+)/$', views.carburetion_tank_maintenance_Inline_formset),
     (r'^CarburetionTankMaintenace/(?P<id>\d+)/(?P<carburetion_tank_id>\d+)/$', views.carburetion_tank_maintenance_Inline_formset),
-    (r'^CarburetionTankMaintenace/Delete/(?P<id>\d+)/$', views.delete_carburetion_tank_maintenance),
-    (r'^CarburetionTank/Delete/(?P<id>\d+)/$', views.delete_storage_tank),
+    (r'^CarburetionTankMaintenace/Delete/(?P<id>\d+)/(?P<carburetion_tank_id>\d+)/$', views.delete_carburetion_tank_maintenance),
+    (r'^CarburetionTank/Delete/(?P<id>\d+)/$', views.delete_carburetion_tank),
 
     #TANQUE DE ALMACENAMIENTO
     (r'^StorageTanks/$', views.storage_tanksView),
     (r'^mantenimientos_TanqueAlmacenamiento/(.*)', views.storage_tank_maintenanceView),
     (r'^StorageTankMaintenace/New/(?P<storage_tank_id>\d+)/$', views.storage_tank_maintenance_Inline_formset),
     (r'^StorageTankMaintenace/(?P<id>\d+)/(?P<storage_tank_id>\d+)/', views.storage_tank_maintenance_Inline_formset),
-    (r'^StorageTankMaintenace/Delete/(?P<id>\d+)/$', views.delete_storage_maintenance),
+    (r'^StorageTankMaintenace/Delete/(?P<id>\d+)/(?P<storage_tank_id>\d+)/$', views.delete_storage_maintenance),
+    (r'^StorageTank/Delete/(?P<id>\d+)/$', views.delete_storage_tank),
     
     #VEHICULOS
     (r'^Vehicle/(?P<id>\d+)/', views.vehicle_manageView),
@@ -74,7 +76,7 @@ urlpatterns = patterns('',
 
     (r'^RadioMaintenance/(?P<id>\d+)/(?P<radio_id>\d+)/$', views.radio_maintenance_Inline_formset),
     (r'^RadioMaintenance/New/(?P<radio_id>\d+)/$', views.radio_maintenance_Inline_formset),
-    (r'^RadioMaintenance/Delete/(?P<id>\d+)/$', views.delete_radio_maintenance),
+    (r'^RadioMaintenance/Delete/(?P<id>\d+)/(?P<radio_id>\d+)/$', views.delete_radio_maintenance),
     
 
     (r'^TanqueAlmacenamiento/new/$', views.storage_tank_manageView, {}, 'storage_tank_new'),

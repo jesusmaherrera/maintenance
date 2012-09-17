@@ -2,10 +2,28 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
+
+          
   <h2 >Vehiculos <a tabindex="-1" class="btn" href="/Vehicle/New/"><i class="icon-plus"></i></a></h2> 
   <br>
   <br>
   {% for vehicle in vehicles %}
+  <div id="myModal{{ vehicle.id }}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h3 id="myModalLabel">Seguro que Deseas Eliminar</h3>
+            </div>
+            <div class="modal-body">
+              <h4>Al eliminar un un veiculo</h4>
+              <p>Ya no sera posible recuperarlo de nuevo </p>
+              
+            </div>
+            <div class="modal-footer">
+              <button class="btn" data-dismiss="modal">Close</button>
+              <a href="/Vehicle/Delete/{{ vehicle.id }}" class="btn btn-primary">Estoy Seguro</a>
+            </div>
+          </div>
+
     <article class="tarjeta" >
             <div class="btn-group btn-danger" style="width:100%;">
               <a href='/Vehicle/{{ vehicle.id }}' style="width:75%;" class="btn btn-danger btn-primary">
@@ -27,12 +45,12 @@
                   Radio</a></li>
                 {% endif%}
                 <li class="divider"></li>
-                <li><a href="/Vehicle/Delete/{{ vehicle.id }}"><i class="icon-trash"></i> Eliminar</a></li>
+                <li><a data-toggle="modal" href="#myModal{{ vehicle.id }}"><i class="icon-trash"></i> Eliminar</a></li>
               </ul>
             </div>
         </a>
   		  <section>
-          <img src='{{MEDIA_URL}}{{vehicle.image}}' style="wheight: 130px; width: 200px; margin-top:.5em; margin-bottom:.5em;"/>
+          <img src='{{MEDIA_URL}}{{vehicle.image}}' style="height: 130px; width: 200px; margin-top:.5em; margin-bottom:.5em;"/>
           <p><label>{{ vehicle.chassis.brand }} {{ vehicle.chassis.line}} {{ vehicle.chassis.model}}</label></p>
           <p><label style="float:left;">Chasis </label> {{ vehicle.chassis.name }}</p>
           <p><label style="float:left;">Placas:</label> {{ vehicle.chassis.license_plates}}</p>
