@@ -18,23 +18,6 @@ from django.contrib.auth.decorators import login_required, permission_required
 from reportlab.platypus import Table, TableStyle, SimpleDocTemplate
 from reportlab.lib import colors
 
-from django import http
-import xhtml2pdf.pisa as pisa   
-
-def helloWorld(request):
-	filename = "reporte.pdf"                
-  	pdf = pisa.CreatePDF(            
-    	"Hello <strong>World</strong>",
-    
-    file(filename, "wb"))
-  	
-  	if not pdf.err:         
-  		return http.HttpResponse(
-                'Hello <strong>World</strong>',
-                mimetype='application/pdf')                
-
-	return http.HttpResponse('We had some errors')
-
 # Create your views here.
 @login_required(login_url='/login/')
 def index(request):
