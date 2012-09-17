@@ -15,7 +15,6 @@ class chassis_manageForm(forms.ModelForm):
 	class Meta:
 		model = chassis
 
-
 class storage_tank_manageForm(forms.ModelForm):
 	class Meta:
 		model = storage_tank
@@ -29,13 +28,11 @@ class radio_manageForm(forms.ModelForm):
 		model = radio
 
 class chassis_maintenance_manageForm(forms.ModelForm):
-	description = forms.CharField( widget=forms.Textarea(attrs={'cols': 400, 'rows': 5}) )
 	class Meta:
 		model = chassis_maintenance
 		exclude = ('chassis',)
 
 class chassis_maintenanceForm(forms.ModelForm):
-	description = forms.CharField( widget=forms.Textarea(attrs={'cols': 400, 'rows': 5}) )
 	class Meta:
 		model = chassis_maintenance
 		exclude = ('chassis',)
@@ -61,16 +58,14 @@ def  get_services_group_items_formset(form, formset=models.BaseInlineFormSet, **
 	return inlineformset_factory(services_group, services_group_items, form, formset, **kwargs)
 ###    CHASSIS
 class chassis_maintenance_Form(forms.ModelForm):
-	description = forms.CharField( widget=forms.Textarea(attrs={'cols': 400, 'rows': 5}))
-	class Meta:
-		model=chassis_maintenance
+    class Meta:
+    	model=chassis_maintenance
 
 class chassis_maintenance_sForm(forms.ModelForm):
 	class Meta:
 		model = chassis_maintenance_S
 
 class chassis_maintenance_serviceForm(forms.ModelForm):
-	service = forms.CharField( widget=forms.Textarea(attrs={'cols': 400, 'rows': 5}) )
 	class Meta:
 		model = chassis_maintenance_Service
 
@@ -90,7 +85,6 @@ def  get_chassis_maintenace_SGitems_formset(form, formset=models.BaseInlineFormS
 ### CARBURATION TANK
 
 class carburetion_tank_maintenanceForm(forms.ModelForm):
-	description = forms.CharField( widget=forms.Textarea(attrs={'cols': 400, 'rows': 5}) )
 	class Meta:
 		model = carburetion_tank_maintenance
 		exclude = ('carburetion_tank',)
@@ -115,7 +109,6 @@ def  get_carburetion_tank_maintenace_SGitems_formset(form, formset=models.BaseIn
 ### STORAGE TANK
 
 class storage_tank_maintenanceForm(forms.ModelForm):
-	description = forms.CharField( widget=forms.Textarea(attrs={'cols': 400, 'rows': 5}) )
 	class Meta:
 		model = storage_tank_maintenance
 		exclude = ('storage_tank',)
@@ -139,7 +132,6 @@ def  get_storage_tank_maintenace_SGitems_formset(form, formset=models.BaseInline
 #RADIO
 
 class radio_maintenanceForm(forms.ModelForm):
-	description = forms.CharField( widget=forms.Textarea(attrs={'cols': 400, 'rows': 5}) )
 	class Meta:
 		model = radio_maintenance
 

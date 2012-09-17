@@ -97,7 +97,7 @@ class garage(models.Model):
 class radio_maintenance(models.Model):
     date = models.DateTimeField()
     garage = models.ForeignKey(garage, on_delete=models.SET_NULL, blank=True, null=True)
-    radio = models.ForeignKey(radio, blank=True, null=True)
+    radio = models.ForeignKey(radio, on_delete=models.SET_NULL, blank=True, null=True)
     description = models.CharField(max_length=150)
     
     def __unicode__(self):
@@ -106,7 +106,7 @@ class radio_maintenance(models.Model):
 class chassis_maintenance(models.Model):
     date = models.DateTimeField()
     garage = models.ForeignKey(garage, on_delete=models.SET_NULL, blank=True, null=True)
-    chassis = models.ForeignKey(chassis, blank=True, null=True)
+    chassis = models.ForeignKey(chassis, on_delete=models.SET_NULL, blank=True, null=True)
     mileage = models.CharField(max_length=10, blank=True, null=True)
     description = models.CharField(max_length=150, blank=True, null=True)
 
@@ -116,7 +116,7 @@ class chassis_maintenance(models.Model):
 class storage_tank_maintenance(models.Model):
     date = models.DateTimeField()
     garage = models.ForeignKey(garage, on_delete=models.SET_NULL, blank=True, null=True)
-    storage_tank = models.ForeignKey(storage_tank, blank=True, null=True)
+    storage_tank = models.ForeignKey(storage_tank, on_delete=models.SET_NULL, blank=True, null=True)
     description = models.CharField(max_length=150, blank=True, null=True)
 
     def __unicode__(self):
@@ -125,7 +125,7 @@ class storage_tank_maintenance(models.Model):
 class carburetion_tank_maintenance(models.Model):
     date = models.DateTimeField()
     garage = models.ForeignKey(garage, on_delete=models.SET_NULL, blank=True, null=True)
-    carburetion_tank = models.ForeignKey(carburetion_tank, blank=True, null=True)
+    carburetion_tank = models.ForeignKey(carburetion_tank, on_delete=models.SET_NULL, blank=True, null=True)
     description = models.CharField(max_length=150, blank=True, null=True)
 
     def __unicode__(self):

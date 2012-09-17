@@ -637,11 +637,6 @@ def radio_maintenance_Inline_formset(request, id = None, radio_id = None, templa
 		#formsetSG = StorageTank_SGItems_formset(request.POST, instance=storagetankmaintenance)
 		#if form.is_valid() and formset.is_valid() and formsetSG.is_valid():
 		if form.is_valid() and formset.is_valid():
-
-			r = form.save(commit = False)
-			r.radio = Radio
-			r.save()
-
 			form.save()
 			formset.save()
 			#formsetSG.save()

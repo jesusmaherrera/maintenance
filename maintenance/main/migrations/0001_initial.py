@@ -12,12 +12,12 @@ class Migration(SchemaMigration):
         db.create_table('main_chassis', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=50)),
-            ('brand', self.gf('django.db.models.fields.CharField')(max_length=30)),
-            ('line', self.gf('django.db.models.fields.CharField')(max_length=30)),
-            ('color', self.gf('django.db.models.fields.CharField')(max_length=15)),
-            ('model', self.gf('django.db.models.fields.CharField')(max_length=4)),
-            ('license_plates', self.gf('django.db.models.fields.CharField')(max_length=15)),
-            ('mileage', self.gf('django.db.models.fields.CharField')(max_length=10)),
+            ('brand', self.gf('django.db.models.fields.CharField')(max_length=30, null=True, blank=True)),
+            ('line', self.gf('django.db.models.fields.CharField')(max_length=30, null=True, blank=True)),
+            ('color', self.gf('django.db.models.fields.CharField')(max_length=15, null=True, blank=True)),
+            ('model', self.gf('django.db.models.fields.CharField')(max_length=4, null=True, blank=True)),
+            ('license_plates', self.gf('django.db.models.fields.CharField')(max_length=15, null=True, blank=True)),
+            ('mileage', self.gf('django.db.models.fields.CharField')(max_length=10, null=True, blank=True)),
             ('state', self.gf('django.db.models.fields.CharField')(default='N', max_length=10)),
         ))
         db.send_create_signal('main', ['chassis'])
@@ -26,11 +26,11 @@ class Migration(SchemaMigration):
         db.create_table('main_storage_tank', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('series', self.gf('django.db.models.fields.CharField')(max_length=30)),
-            ('brand', self.gf('django.db.models.fields.CharField')(max_length=30)),
-            ('model', self.gf('django.db.models.fields.CharField')(max_length=4)),
-            ('water_nominal_cap', self.gf('django.db.models.fields.CharField')(max_length=10)),
-            ('capArt', self.gf('django.db.models.fields.CharField')(max_length=10)),
-            ('content', self.gf('django.db.models.fields.CharField')(max_length=30)),
+            ('brand', self.gf('django.db.models.fields.CharField')(max_length=30, null=True, blank=True)),
+            ('model', self.gf('django.db.models.fields.CharField')(max_length=4, null=True, blank=True)),
+            ('water_nominal_cap', self.gf('django.db.models.fields.CharField')(max_length=10, null=True, blank=True)),
+            ('capArt', self.gf('django.db.models.fields.CharField')(max_length=10, null=True, blank=True)),
+            ('content', self.gf('django.db.models.fields.CharField')(max_length=30, null=True, blank=True)),
             ('state', self.gf('django.db.models.fields.CharField')(default='N', max_length=10)),
         ))
         db.send_create_signal('main', ['storage_tank'])
@@ -39,9 +39,9 @@ class Migration(SchemaMigration):
         db.create_table('main_carburetion_tank', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('series', self.gf('django.db.models.fields.CharField')(max_length=30)),
-            ('brand', self.gf('django.db.models.fields.CharField')(max_length=30)),
-            ('model', self.gf('django.db.models.fields.CharField')(max_length=4)),
-            ('capacity', self.gf('django.db.models.fields.CharField')(max_length=10)),
+            ('brand', self.gf('django.db.models.fields.CharField')(max_length=30, null=True, blank=True)),
+            ('model', self.gf('django.db.models.fields.CharField')(max_length=4, null=True, blank=True)),
+            ('capacity', self.gf('django.db.models.fields.CharField')(max_length=10, null=True, blank=True)),
             ('state', self.gf('django.db.models.fields.CharField')(default='N', max_length=10)),
         ))
         db.send_create_signal('main', ['carburetion_tank'])
@@ -50,8 +50,8 @@ class Migration(SchemaMigration):
         db.create_table('main_radio', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('series', self.gf('django.db.models.fields.CharField')(max_length=30)),
-            ('brand', self.gf('django.db.models.fields.CharField')(max_length=30)),
-            ('model', self.gf('django.db.models.fields.CharField')(max_length=10)),
+            ('brand', self.gf('django.db.models.fields.CharField')(max_length=30, null=True, blank=True)),
+            ('model', self.gf('django.db.models.fields.CharField')(max_length=10, null=True, blank=True)),
             ('state', self.gf('django.db.models.fields.CharField')(default='N', max_length=10)),
         ))
         db.send_create_signal('main', ['radio'])
@@ -60,10 +60,10 @@ class Migration(SchemaMigration):
         db.create_table('main_vehicle', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=50)),
-            ('chassis', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.chassis'])),
-            ('storage_tank', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.storage_tank'], null=True, blank=True)),
-            ('carburetion_tank', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.carburetion_tank'], null=True, blank=True)),
-            ('radio', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.radio'], null=True, blank=True)),
+            ('chassis', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.chassis'], null=True, on_delete=models.SET_NULL, blank=True)),
+            ('storage_tank', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.storage_tank'], null=True, on_delete=models.SET_NULL, blank=True)),
+            ('carburetion_tank', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.carburetion_tank'], null=True, on_delete=models.SET_NULL, blank=True)),
+            ('radio', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.radio'], null=True, on_delete=models.SET_NULL, blank=True)),
             ('vehicle_type', self.gf('django.db.models.fields.CharField')(default='TR', max_length=10)),
             ('image', self.gf('django.db.models.fields.files.ImageField')(max_length=100, null=True, blank=True)),
         ))
@@ -73,7 +73,7 @@ class Migration(SchemaMigration):
         db.create_table('main_garage', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=60)),
-            ('office_phone', self.gf('django.db.models.fields.CharField')(max_length=60)),
+            ('office_phone', self.gf('django.db.models.fields.CharField')(max_length=60, null=True, blank=True)),
         ))
         db.send_create_signal('main', ['garage'])
 
@@ -81,8 +81,8 @@ class Migration(SchemaMigration):
         db.create_table('main_radio_maintenance', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('date', self.gf('django.db.models.fields.DateTimeField')()),
-            ('garage', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.garage'])),
-            ('radio', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.radio'])),
+            ('garage', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.garage'], null=True, on_delete=models.SET_NULL, blank=True)),
+            ('radio', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.radio'], null=True, on_delete=models.SET_NULL, blank=True)),
             ('description', self.gf('django.db.models.fields.CharField')(max_length=150)),
         ))
         db.send_create_signal('main', ['radio_maintenance'])
@@ -91,10 +91,10 @@ class Migration(SchemaMigration):
         db.create_table('main_chassis_maintenance', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('date', self.gf('django.db.models.fields.DateTimeField')()),
-            ('garage', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.garage'])),
-            ('chassis', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.chassis'])),
-            ('mileage', self.gf('django.db.models.fields.CharField')(max_length=10)),
-            ('description', self.gf('django.db.models.fields.CharField')(max_length=150)),
+            ('garage', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.garage'], null=True, on_delete=models.SET_NULL, blank=True)),
+            ('chassis', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.chassis'], null=True, on_delete=models.SET_NULL, blank=True)),
+            ('mileage', self.gf('django.db.models.fields.CharField')(max_length=10, null=True, blank=True)),
+            ('description', self.gf('django.db.models.fields.CharField')(max_length=150, null=True, blank=True)),
         ))
         db.send_create_signal('main', ['chassis_maintenance'])
 
@@ -102,9 +102,9 @@ class Migration(SchemaMigration):
         db.create_table('main_storage_tank_maintenance', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('date', self.gf('django.db.models.fields.DateTimeField')()),
-            ('garage', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.garage'])),
-            ('storage_tank', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.storage_tank'])),
-            ('description', self.gf('django.db.models.fields.CharField')(max_length=150)),
+            ('garage', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.garage'], null=True, on_delete=models.SET_NULL, blank=True)),
+            ('storage_tank', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.storage_tank'], null=True, on_delete=models.SET_NULL, blank=True)),
+            ('description', self.gf('django.db.models.fields.CharField')(max_length=150, null=True, blank=True)),
         ))
         db.send_create_signal('main', ['storage_tank_maintenance'])
 
@@ -112,9 +112,9 @@ class Migration(SchemaMigration):
         db.create_table('main_carburetion_tank_maintenance', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('date', self.gf('django.db.models.fields.DateTimeField')()),
-            ('garage', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.garage'])),
-            ('carburetion_tank', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.carburetion_tank'])),
-            ('description', self.gf('django.db.models.fields.CharField')(max_length=150)),
+            ('garage', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.garage'], null=True, on_delete=models.SET_NULL, blank=True)),
+            ('carburetion_tank', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.carburetion_tank'], null=True, on_delete=models.SET_NULL, blank=True)),
+            ('description', self.gf('django.db.models.fields.CharField')(max_length=150, null=True, blank=True)),
         ))
         db.send_create_signal('main', ['carburetion_tank_maintenance'])
 
@@ -122,7 +122,7 @@ class Migration(SchemaMigration):
         db.create_table('main_service', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=60)),
-            ('shrubberies', self.gf('django.db.models.fields.IntegerField')()),
+            ('service_type', self.gf('django.db.models.fields.CharField')(default='CH', max_length=10)),
         ))
         db.send_create_signal('main', ['service'])
 
@@ -145,7 +145,7 @@ class Migration(SchemaMigration):
         db.create_table('main_chassis_maintenance_s', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('chassis_maintenance', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.chassis_maintenance'])),
-            ('service', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.service'])),
+            ('service', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.service'], null=True, on_delete=models.SET_NULL, blank=True)),
         ))
         db.send_create_signal('main', ['chassis_maintenance_S'])
 
@@ -161,7 +161,7 @@ class Migration(SchemaMigration):
         db.create_table('main_chassis_maintenance_sg', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('chassis_maintenance', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.chassis_maintenance'])),
-            ('services_group', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.services_group'])),
+            ('services_group', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.services_group'], null=True, on_delete=models.SET_NULL, blank=True)),
         ))
         db.send_create_signal('main', ['chassis_maintenance_SG'])
 
@@ -169,7 +169,7 @@ class Migration(SchemaMigration):
         db.create_table('main_radio_maintenance_s', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('radio_maintenance', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.radio_maintenance'])),
-            ('service', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.service'])),
+            ('service', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.service'], null=True, on_delete=models.SET_NULL, blank=True)),
         ))
         db.send_create_signal('main', ['radio_maintenance_S'])
 
@@ -177,7 +177,7 @@ class Migration(SchemaMigration):
         db.create_table('main_radio_maintenance_sg', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('radio_maintenance', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.radio_maintenance'])),
-            ('services_group', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.services_group'])),
+            ('services_group', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.services_group'], null=True, on_delete=models.SET_NULL, blank=True)),
         ))
         db.send_create_signal('main', ['radio_maintenance_SG'])
 
@@ -185,7 +185,7 @@ class Migration(SchemaMigration):
         db.create_table('main_storage_tank_maintenance_s', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('storage_tank_maintenance', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.storage_tank_maintenance'])),
-            ('service', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.service'])),
+            ('service', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.service'], null=True, on_delete=models.SET_NULL, blank=True)),
         ))
         db.send_create_signal('main', ['storage_tank_maintenance_S'])
 
@@ -193,7 +193,7 @@ class Migration(SchemaMigration):
         db.create_table('main_storage_tank_maintenance_sg', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('storage_tank_maintenance', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.storage_tank_maintenance'])),
-            ('services_group', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.services_group'])),
+            ('services_group', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.services_group'], null=True, on_delete=models.SET_NULL, blank=True)),
         ))
         db.send_create_signal('main', ['storage_tank_maintenance_SG'])
 
@@ -201,7 +201,7 @@ class Migration(SchemaMigration):
         db.create_table('main_carburetion_tank_s', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('carburetion_tank_maintenance', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.carburetion_tank_maintenance'])),
-            ('service', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.service'])),
+            ('service', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.service'], null=True, on_delete=models.SET_NULL, blank=True)),
         ))
         db.send_create_signal('main', ['carburetion_tank_S'])
 
@@ -209,7 +209,7 @@ class Migration(SchemaMigration):
         db.create_table('main_carburetion_tank_sg', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('carburetion_tank_maintenance', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.carburetion_tank_maintenance'])),
-            ('services_group', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.services_group'])),
+            ('services_group', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.services_group'], null=True, on_delete=models.SET_NULL, blank=True)),
         ))
         db.send_create_signal('main', ['carburetion_tank_SG'])
 
@@ -285,59 +285,59 @@ class Migration(SchemaMigration):
     models = {
         'main.carburetion_tank': {
             'Meta': {'object_name': 'carburetion_tank'},
-            'brand': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
-            'capacity': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
+            'brand': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True', 'blank': 'True'}),
+            'capacity': ('django.db.models.fields.CharField', [], {'max_length': '10', 'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'model': ('django.db.models.fields.CharField', [], {'max_length': '4'}),
+            'model': ('django.db.models.fields.CharField', [], {'max_length': '4', 'null': 'True', 'blank': 'True'}),
             'series': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'state': ('django.db.models.fields.CharField', [], {'default': "'N'", 'max_length': '10'})
         },
         'main.carburetion_tank_maintenance': {
             'Meta': {'object_name': 'carburetion_tank_maintenance'},
-            'carburetion_tank': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.carburetion_tank']"}),
+            'carburetion_tank': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.carburetion_tank']", 'null': 'True', 'on_delete': 'models.SET_NULL', 'blank': 'True'}),
             'date': ('django.db.models.fields.DateTimeField', [], {}),
-            'description': ('django.db.models.fields.CharField', [], {'max_length': '150'}),
-            'garage': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.garage']"}),
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '150', 'null': 'True', 'blank': 'True'}),
+            'garage': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.garage']", 'null': 'True', 'on_delete': 'models.SET_NULL', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
         },
         'main.carburetion_tank_s': {
             'Meta': {'object_name': 'carburetion_tank_S'},
             'carburetion_tank_maintenance': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.carburetion_tank_maintenance']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'service': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.service']"})
+            'service': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.service']", 'null': 'True', 'on_delete': 'models.SET_NULL', 'blank': 'True'})
         },
         'main.carburetion_tank_sg': {
             'Meta': {'object_name': 'carburetion_tank_SG'},
             'carburetion_tank_maintenance': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.carburetion_tank_maintenance']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'services_group': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.services_group']"})
+            'services_group': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.services_group']", 'null': 'True', 'on_delete': 'models.SET_NULL', 'blank': 'True'})
         },
         'main.chassis': {
             'Meta': {'object_name': 'chassis'},
-            'brand': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
-            'color': ('django.db.models.fields.CharField', [], {'max_length': '15'}),
+            'brand': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True', 'blank': 'True'}),
+            'color': ('django.db.models.fields.CharField', [], {'max_length': '15', 'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'license_plates': ('django.db.models.fields.CharField', [], {'max_length': '15'}),
-            'line': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
-            'mileage': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
-            'model': ('django.db.models.fields.CharField', [], {'max_length': '4'}),
+            'license_plates': ('django.db.models.fields.CharField', [], {'max_length': '15', 'null': 'True', 'blank': 'True'}),
+            'line': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True', 'blank': 'True'}),
+            'mileage': ('django.db.models.fields.CharField', [], {'max_length': '10', 'null': 'True', 'blank': 'True'}),
+            'model': ('django.db.models.fields.CharField', [], {'max_length': '4', 'null': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
             'state': ('django.db.models.fields.CharField', [], {'default': "'N'", 'max_length': '10'})
         },
         'main.chassis_maintenance': {
             'Meta': {'object_name': 'chassis_maintenance'},
-            'chassis': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.chassis']"}),
+            'chassis': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.chassis']", 'null': 'True', 'on_delete': 'models.SET_NULL', 'blank': 'True'}),
             'date': ('django.db.models.fields.DateTimeField', [], {}),
-            'description': ('django.db.models.fields.CharField', [], {'max_length': '150'}),
-            'garage': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.garage']"}),
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '150', 'null': 'True', 'blank': 'True'}),
+            'garage': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.garage']", 'null': 'True', 'on_delete': 'models.SET_NULL', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'mileage': ('django.db.models.fields.CharField', [], {'max_length': '10'})
+            'mileage': ('django.db.models.fields.CharField', [], {'max_length': '10', 'null': 'True', 'blank': 'True'})
         },
         'main.chassis_maintenance_s': {
             'Meta': {'object_name': 'chassis_maintenance_S'},
             'chassis_maintenance': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.chassis_maintenance']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'service': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.service']"})
+            'service': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.service']", 'null': 'True', 'on_delete': 'models.SET_NULL', 'blank': 'True'})
         },
         'main.chassis_maintenance_service': {
             'Meta': {'object_name': 'chassis_maintenance_Service'},
@@ -349,19 +349,19 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'chassis_maintenance_SG'},
             'chassis_maintenance': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.chassis_maintenance']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'services_group': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.services_group']"})
+            'services_group': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.services_group']", 'null': 'True', 'on_delete': 'models.SET_NULL', 'blank': 'True'})
         },
         'main.garage': {
             'Meta': {'object_name': 'garage'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '60'}),
-            'office_phone': ('django.db.models.fields.CharField', [], {'max_length': '60'})
+            'office_phone': ('django.db.models.fields.CharField', [], {'max_length': '60', 'null': 'True', 'blank': 'True'})
         },
         'main.radio': {
             'Meta': {'object_name': 'radio'},
-            'brand': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
+            'brand': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'model': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
+            'model': ('django.db.models.fields.CharField', [], {'max_length': '10', 'null': 'True', 'blank': 'True'}),
             'series': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'state': ('django.db.models.fields.CharField', [], {'default': "'N'", 'max_length': '10'})
         },
@@ -369,27 +369,27 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'radio_maintenance'},
             'date': ('django.db.models.fields.DateTimeField', [], {}),
             'description': ('django.db.models.fields.CharField', [], {'max_length': '150'}),
-            'garage': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.garage']"}),
+            'garage': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.garage']", 'null': 'True', 'on_delete': 'models.SET_NULL', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'radio': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.radio']"})
+            'radio': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.radio']", 'null': 'True', 'on_delete': 'models.SET_NULL', 'blank': 'True'})
         },
         'main.radio_maintenance_s': {
             'Meta': {'object_name': 'radio_maintenance_S'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'radio_maintenance': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.radio_maintenance']"}),
-            'service': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.service']"})
+            'service': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.service']", 'null': 'True', 'on_delete': 'models.SET_NULL', 'blank': 'True'})
         },
         'main.radio_maintenance_sg': {
             'Meta': {'object_name': 'radio_maintenance_SG'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'radio_maintenance': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.radio_maintenance']"}),
-            'services_group': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.services_group']"})
+            'services_group': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.services_group']", 'null': 'True', 'on_delete': 'models.SET_NULL', 'blank': 'True'})
         },
         'main.service': {
             'Meta': {'object_name': 'service'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '60'}),
-            'shrubberies': ('django.db.models.fields.IntegerField', [], {})
+            'service_type': ('django.db.models.fields.CharField', [], {'default': "'CH'", 'max_length': '10'})
         },
         'main.services_group': {
             'Meta': {'object_name': 'services_group'},
@@ -404,44 +404,44 @@ class Migration(SchemaMigration):
         },
         'main.storage_tank': {
             'Meta': {'object_name': 'storage_tank'},
-            'brand': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
-            'capArt': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
-            'content': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
+            'brand': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True', 'blank': 'True'}),
+            'capArt': ('django.db.models.fields.CharField', [], {'max_length': '10', 'null': 'True', 'blank': 'True'}),
+            'content': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'model': ('django.db.models.fields.CharField', [], {'max_length': '4'}),
+            'model': ('django.db.models.fields.CharField', [], {'max_length': '4', 'null': 'True', 'blank': 'True'}),
             'series': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'state': ('django.db.models.fields.CharField', [], {'default': "'N'", 'max_length': '10'}),
-            'water_nominal_cap': ('django.db.models.fields.CharField', [], {'max_length': '10'})
+            'water_nominal_cap': ('django.db.models.fields.CharField', [], {'max_length': '10', 'null': 'True', 'blank': 'True'})
         },
         'main.storage_tank_maintenance': {
             'Meta': {'object_name': 'storage_tank_maintenance'},
             'date': ('django.db.models.fields.DateTimeField', [], {}),
-            'description': ('django.db.models.fields.CharField', [], {'max_length': '150'}),
-            'garage': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.garage']"}),
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '150', 'null': 'True', 'blank': 'True'}),
+            'garage': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.garage']", 'null': 'True', 'on_delete': 'models.SET_NULL', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'storage_tank': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.storage_tank']"})
+            'storage_tank': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.storage_tank']", 'null': 'True', 'on_delete': 'models.SET_NULL', 'blank': 'True'})
         },
         'main.storage_tank_maintenance_s': {
             'Meta': {'object_name': 'storage_tank_maintenance_S'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'service': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.service']"}),
+            'service': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.service']", 'null': 'True', 'on_delete': 'models.SET_NULL', 'blank': 'True'}),
             'storage_tank_maintenance': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.storage_tank_maintenance']"})
         },
         'main.storage_tank_maintenance_sg': {
             'Meta': {'object_name': 'storage_tank_maintenance_SG'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'services_group': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.services_group']"}),
+            'services_group': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.services_group']", 'null': 'True', 'on_delete': 'models.SET_NULL', 'blank': 'True'}),
             'storage_tank_maintenance': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.storage_tank_maintenance']"})
         },
         'main.vehicle': {
             'Meta': {'object_name': 'vehicle'},
-            'carburetion_tank': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.carburetion_tank']", 'null': 'True', 'blank': 'True'}),
-            'chassis': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.chassis']"}),
+            'carburetion_tank': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.carburetion_tank']", 'null': 'True', 'on_delete': 'models.SET_NULL', 'blank': 'True'}),
+            'chassis': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.chassis']", 'null': 'True', 'on_delete': 'models.SET_NULL', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'image': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
-            'radio': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.radio']", 'null': 'True', 'blank': 'True'}),
-            'storage_tank': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.storage_tank']", 'null': 'True', 'blank': 'True'}),
+            'radio': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.radio']", 'null': 'True', 'on_delete': 'models.SET_NULL', 'blank': 'True'}),
+            'storage_tank': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['main.storage_tank']", 'null': 'True', 'on_delete': 'models.SET_NULL', 'blank': 'True'}),
             'vehicle_type': ('django.db.models.fields.CharField', [], {'default': "'TR'", 'max_length': '10'})
         }
     }

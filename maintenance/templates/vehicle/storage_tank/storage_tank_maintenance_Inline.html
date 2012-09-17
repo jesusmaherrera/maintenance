@@ -36,7 +36,7 @@
 {% endblock %}
 {% block breadcrumb %}{{ block.super }} &raquo; <a href="/mantenimientos_TanqueAlmacenamiento/{{ StorageTank.id }}">Tanque de Almacenamiento ({{ StorageTank }})</a> &raquo; Mantenimiento a Tanque de Almacenamiento {% endblock %} 
 {% block content %}
-<h2> Mantenimientos a Tanque de Carburacion</h2>
+<h2> Mantenimientos a Tanque de Almacenamiento</h2>
 <br>
 <div>
     <div style="margin:0 auto 0 auto;">
@@ -59,10 +59,6 @@
             <span class="span3">
                 Taller:<br>
                 {{ form.garage }}
-            </span>
-            <span class="span3">
-                Tanque de Almacenamiento:
-                {{ form.storage_tank }}
             </span>
             <span class="span3">
                 Descripcion:
