@@ -6,6 +6,7 @@ from django.forms.models import BaseInlineFormSet, inlineformset_factory
 class new_vehicleForm(forms.ModelForm):
 	class Meta:
 		model = vehicle
+		exclude = ('state',)
 
 class garage_manageForm(forms.ModelForm):
 	class Meta:
@@ -14,19 +15,23 @@ class garage_manageForm(forms.ModelForm):
 class chassis_manageForm(forms.ModelForm):
 	class Meta:
 		model = chassis
+		exclude = ('state',)
 
 
 class storage_tank_manageForm(forms.ModelForm):
 	class Meta:
 		model = storage_tank
+		exclude = ('state',)
 
 class carburetion_tank_manageForm(forms.ModelForm):
 	class Meta:
 		model = carburetion_tank
+		exclude = ('state',)
 
 class radio_manageForm(forms.ModelForm):
 	class Meta:
 		model = radio
+		exclude = ('state',)
 
 class chassis_maintenance_manageForm(forms.ModelForm):
 	description = forms.CharField( widget=forms.Textarea(attrs={'cols': 400, 'rows': 5}) )
