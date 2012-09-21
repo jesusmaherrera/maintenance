@@ -178,7 +178,7 @@ def chassis_manageView(request, id= None, template_name = 'vehicle/chassis/chass
 @login_required(login_url='/login/')
 def chassis_maintenanceView(request, query):
  	chassisD = get_object_or_404(chassis, pk=query)
- 	chassis_maintenances = chassis_maintenance.objects.filter(chassis = chassisD)
+ 	chassis_maintenances = chassis_maintenance.objects.filter(chassis = chassisD).order_by('date')
 	chassis_services = chassis_maintenance_Service.objects.filter(chassis_maintenance__chassis = chassisD)
 	chassis_services_groups = chassis_maintenance_SG.objects.filter(chassis_maintenance__chassis = chassisD)
 	ServicesGroups = services_group.objects.all()
@@ -264,7 +264,7 @@ def carburetion_tanksView(request, template="vehicle/carburetion_tank/carburetio
 @login_required(login_url='/login/')
 def carburetion_tank_maintenanceView(request, query):
  	carburetion_tankD = get_object_or_404(carburetion_tank, pk=query)
- 	carburetion_tank_maintenances = carburetion_tank_maintenance.objects.filter(carburetion_tank = carburetion_tankD)
+ 	carburetion_tank_maintenances = carburetion_tank_maintenance.objects.filter(carburetion_tank = carburetion_tankD).order_by('date')
 	carburetion_tank_services = carburetion_tank_S.objects.filter(carburetion_tank_maintenance__carburetion_tank = carburetion_tankD)
 	carburetion_tank_services_groups = carburetion_tank_SG.objects.filter(carburetion_tank_maintenance__carburetion_tank = carburetion_tankD)
 	context = {'carburetion_tank': carburetion_tankD, 'carburetion_tank_services': carburetion_tank_services, 'carburetion_tank_services_groups':carburetion_tank_services_groups, 'carburetion_tank_maintenances': carburetion_tank_maintenances}
@@ -394,7 +394,7 @@ def storage_tank_maintenance_Inline_formset(request, id = None, storage_tank_id 
 @login_required(login_url='/login/')
 def storage_tank_maintenanceView(request, query):
  	storage_tankD = get_object_or_404(storage_tank, pk=query)
- 	storage_tank_maintenances = storage_tank_maintenance.objects.filter(storage_tank = storage_tankD)
+ 	storage_tank_maintenances = storage_tank_maintenance.objects.filter(storage_tank = storage_tankD).order_by('date')
 	storage_tank_services = storage_tank_maintenance_S.objects.filter(storage_tank_maintenance__storage_tank = storage_tankD)
 	storage_tank_services_groups = storage_tank_maintenance_SG.objects.filter(storage_tank_maintenance__storage_tank = storage_tankD)
 	context = {'storage_tank': storage_tankD, 'storage_tank_services': storage_tank_services, 'storage_tank_services_groups':storage_tank_services_groups, 'storage_tank_maintenances': storage_tank_maintenances}
@@ -575,7 +575,7 @@ def radiosView(request, template="vehicle/radio/radios.html"):
 @login_required(login_url='/login/')
 def radio_maintenanceView(request, query):
  	radioD = get_object_or_404(radio, pk=query)
- 	radio_maintenances = radio_maintenance.objects.filter(radio = radioD)
+ 	radio_maintenances = radio_maintenance.objects.filter(radio = radioD).order_by('date')
 	radio_services = radio_maintenance_S.objects.filter(radio_maintenance__radio = radioD)
 	radio_services_groups = radio_maintenance_SG.objects.filter(radio_maintenance__radio = radioD)
 	context = {'radio': radioD, 'radio_services': radio_services, 'radio_services_groups':radio_services_groups, 'radio_maintenances': radio_maintenances}

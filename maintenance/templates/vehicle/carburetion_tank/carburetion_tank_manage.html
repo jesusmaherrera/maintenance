@@ -1,33 +1,79 @@
 {% extends "vehicle/carburetion_tank/base.html" %}
 {% block title %}Tanque de Almacenamiento{% endblock %}
-{% block js_code %}{% endblock %}
+
+{% block style_css %}
+  <link rel='stylesheet' href='{{STATIC_URL}}css/redmond/jquery-ui-1.8.23.custom.css'/>
+{% endblock %}
+
+{% block js_code %}
+<script type="text/javascript">
+    $(function() {
+        $('#valvueFS input').datepicker({ dateFormat: 'dd/mm/yy',});
+    })
+</script>
+{% endblock %}
+
 {% block content %}
-  <h2>Tanque de Carburacion</h2>
+  <h2>Tanque de Combustible</h2>
   <br>
   <section>
     <form method="post" action="." width="400px">
       {% csrf_token %}
       <div style="text-align:left;">
-        <span class="span3">
-          Serie:
-          <br>
-          {{ carburetion_tankForm.series }}
-        </span>
-        <span class="span3">
-          Marca:
-          <br>
-          {{ carburetion_tankForm.brand }}
-        </span>
-        <span class="span3">
-          Modelo:
-          <br>
-          {{ carburetion_tankForm.model }}
-        </span>
-        <span class="span3">
-          Capacidad:
-          <br>
-          {{ carburetion_tankForm.capacity }}
-        </span>
+        <fieldset>
+          <legend>Datos Generales</legend>
+          <span class="span3">
+            {{ carburetion_tankForm.series.errors }}
+            Serie:
+            <br>
+            {{ carburetion_tankForm.series }}
+          </span>
+          <span class="span3">
+            {{ carburetion_tankForm.brand.errors }}
+            Marca:
+            <br>
+            {{ carburetion_tankForm.brand }}
+          </span>
+          <span class="span3">
+            {{ carburetion_tankForm.model.errors }}
+            Modelo:
+            <br>
+            {{ carburetion_tankForm.model }}
+          </span>
+          <span class="span3">
+            {{ carburetion_tankForm.capacity.errors }}
+            Capacidad:
+            <br>
+            {{ carburetion_tankForm.capacity }}
+          </span>
+        </fieldset>
+        <fieldset id="valvueFS">
+          <legend>Fechas de Caducidad de Valvulas</legend>
+          <span class="span3">
+            {{ carburetion_tankForm.service_valve.errors }}
+            Servicio:
+            <br>
+            {{ carburetion_tankForm.service_valve }}
+          </span>
+          <span class="span3">
+            {{ carburetion_tankForm.fill_valve.errors }}
+            Llenado:
+            <br>
+            {{ carburetion_tankForm.fill_valve }}
+          </span>
+          <span class="span3">
+            {{ carburetion_tankForm.safety_valve.errors }}
+            Seguridad:
+            <br>
+            {{ carburetion_tankForm.safety_valve }}
+          </span>
+          <span class="span3">
+            {{ carburetion_tankForm.ten_percent_valve.errors }}
+            10 %:
+            <br>
+            {{ carburetion_tankForm.ten_percent_valve }}
+          </span>
+        </fieldset>
         <!-- <span class="span3">
           Estado:
           <br>

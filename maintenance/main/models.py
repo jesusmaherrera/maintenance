@@ -33,6 +33,15 @@ class storage_tank(models.Model):
     state = models.CharField(max_length=10, choices=TYPE_CHOICES,
                                       default='N')
 
+    #VALVULAS
+    overfill_valve = models.DateField('Exceso de llenado', blank=True, null=True)
+    ten_percent_valve = models.DateField('10 %', blank=True, null=True)
+    fill_valve = models.DateField("Llenado", blank=True, null=True)
+    no_recoil_valve = models.DateField('No Retroceso', blank=True, null=True)
+    excess_steam_valve = models.DateField('Exceso de Vapor', blank=True, null=True)
+    safety_valve = models.DateField('Seguridad', blank=True, null=True)
+    check_look_valve = models.DateField('Check Look', blank=True, null=True)
+
     def __unicode__(self):
         return self.series
 
@@ -47,6 +56,13 @@ class carburetion_tank(models.Model):
     )
     state = models.CharField(max_length=10, choices=TYPE_CHOICES,
                                       default='N')
+
+    #VALVULAS
+    service_valve = models.DateField('Servicio', blank=True, null=True)
+    ten_percent_valve = models.DateField('10 %', blank=True, null=True)
+    fill_valve = models.DateField("Llenado", blank=True, null=True)
+    safety_valve = models.DateField('Seguridad', blank=True, null=True)
+
     def __unicode__(self):
         return self.series
 
