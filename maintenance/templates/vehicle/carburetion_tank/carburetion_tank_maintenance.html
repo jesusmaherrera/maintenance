@@ -7,7 +7,7 @@
   });
   </script>
 {% endblock %}
-{% block breadcrumb %}{{ block.super }} &raquo; Tanque de Carburacion ({{ carburetion_tank }}){% endblock %} 
+{% block breadcrumb %}{{ block.super }} &raquo; Tanque de Combustible ({{ carburetion_tank }}){% endblock %} 
 {% block content %}     
   <h2>Detalles de Tanque de Combustible <a class="btn btnPrint" href="/CarburetionTankReport/{{ carburetion_tank.id}}" target="_blank"> <i class=" icon-print"></i> Imprimir Reporte</a></h2>
   <br>
@@ -18,13 +18,23 @@
       {{ carburetion_tank.series}}
     </span>
     <span class="span3">
-      <b>Marca / Modelo:</b><br>
-      {{ carburetion_tank.brand }} / {{ carburetion_tank.model}}
-    </span>
-    <span class="span3">
       <b>Capacidad:</b><br>
       {{ carburetion_tank.capacity }}
     </span>
+    <span class="span3">
+      <b>Contenido:</b><br>
+      {% if carburetion_tank.content == 'G' %}
+        GAS
+      {% else %}
+        DIESEL
+      {% endif %}
+    </span>
+    {% if carburetion_tank.content == 'G' %}
+      <span class="span3">
+        <b>Marca / Modelo:</b><br>
+        {{ carburetion_tank.brand }} / {{ carburetion_tank.model}}
+      </span>
+    {% endif %}
   </fieldset>
   <fieldset id="valvueFS" style="clear:both; text-align:left;">
     <legend>Fechas de Caducidad de Valvulas</legend>

@@ -13,13 +13,23 @@
           {{ carburetion_tank.series}}
         </td>
         <td width="20%">
+          <b>Capacidad:</b> <br>
+          {{ carburetion_tank.capacity }}
+        </td>
+        <td>
+          <b>Contenido:</b><br>
+          {% if carburetion_tank.content == 'G' %}
+            GAS
+          {% else %}
+            DIESEL
+          {% endif %}
+        </td>
+        {% if carburetion_tank.content == 'G' %}
+        <td width="20%">
           <b>Marca / Modelo:</b><br>
           {{ carburetion_tank.brand }} / {{ carburetion_tank.model}}
         </td>
-        <td width="20%">
-          <b>Capacidad:</b> <br>
-          {{ carburetion_tank..capacity }}
-        </td>
+        {% endif %}
       </tr>
     </table>
   </fieldset>

@@ -54,9 +54,13 @@ class carburetion_tank(models.Model):
         ('N', 'NORMAL'),
         ('D', 'DESHABILITADO'),
     )
-    state = models.CharField(max_length=10, choices=TYPE_CHOICES,
-                                      default='N')
-
+    state = models.CharField(max_length=10, choices=TYPE_CHOICES, default='N')
+    
+    CONTENT_TYPES = (
+        ('G', 'GAS'),
+        ('D', 'DIECEL'),
+    )
+    content = models.CharField(max_length=10, choices=CONTENT_TYPES, default='G')
     #VALVULAS
     service_valve = models.DateField('Servicio', blank=True, null=True)
     ten_percent_valve = models.DateField('10 %', blank=True, null=True)

@@ -9,6 +9,7 @@
   <thead>
     <tr>
       <th>SERVICIOS</th>
+      <th>TIPO</th>
       <th>OPCIONES</th>
     </tr> 
   </thead>
@@ -35,6 +36,9 @@
               {{ service.name }}
             </a>
           </td>
+          <td>
+            {{ service.service_type }}
+          <td>
         <td style="text-align:center;">
           <a href='#myModal{{ service.id}}' data-toggle="modal" class="btn btn-mini btn-danger"><i class="icon-trash"></i></a>
         </td>

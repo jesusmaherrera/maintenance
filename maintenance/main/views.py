@@ -72,7 +72,7 @@ def service_group_inlineView(request , id = None, template_name='service_group_i
 ##########################################
 @login_required(login_url='/login/')
 def servicesView(request, template="services.html"):
-	services = service.objects.all()
+	services = service.objects.all().order_by('-service_type')
 	servicesGroups = services_group.objects.all()
 	c = {'services':services,'servicesGroups':servicesGroups,}
 	return render_to_response(template, c, context_instance=RequestContext(request))
@@ -91,7 +91,7 @@ def services_groupInline_formset(request, id = None, template= "services_groupIn
 		if form.is_valid() and formset.is_valid():
 			form.save()
 			formset.save()
-			services = service.objects.all()
+			services = service.objects.all().order_by('-service_type').des()
 			servicesGroups = services_group.objects.all()
 			c = {'services':services,'servicesGroups':servicesGroups,}
 			return render_to_response('services.html', c, context_instance = RequestContext(request))
@@ -105,7 +105,7 @@ def services_groupInline_formset(request, id = None, template= "services_groupIn
 def delete_services_group(request, id = None):
 	ServicesGroup = get_object_or_404(services_group, pk=id)
 	ServicesGroup.delete()
-	services = service.objects.all()
+	services = service.objects.all().order_by('-service_type')
 	servicesGroups = services_group.objects.all()
 	c = {'services':services,'servicesGroups':servicesGroups,}
 	return render_to_response('services.html', c, context_instance = RequestContext(request))
@@ -121,7 +121,7 @@ def service_manageView(request, id = None, template_name='service.html'):
 		Form = serviceForm(request.POST, instance=Service)
 		if Form.is_valid():
 			Form.save()
-			services = service.objects.all()
+			services = service.objects.all().order_by('-service_type')
 			servicesGroups = services_group.objects.all()
 			c = {'services':services,'servicesGroups':servicesGroups,}
 			return render_to_response('services.html', c, context_instance = RequestContext(request))
@@ -135,7 +135,7 @@ def service_manageView(request, id = None, template_name='service.html'):
 def delete_service(request, id = None):
 	Service = get_object_or_404(service, pk=id)
 	Service.delete()
-	services = service.objects.all()
+	services = service.objects.all().order_by('-service_type')
 	servicesGroups = services_group.objects.all()
 	c = {'services':services,'servicesGroups':servicesGroups,}
 	return render_to_response('services.html', c, context_instance = RequestContext(request))

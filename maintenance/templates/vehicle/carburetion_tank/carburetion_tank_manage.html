@@ -8,7 +8,25 @@
 {% block js_code %}
 <script type="text/javascript">
     $(function() {
-        $('#valvueFS input').datepicker({ dateFormat: 'dd/mm/yy',});
+      if ($('#id_content').val() == 'G')
+      {
+        $('#gas_data').show();
+      }
+      else{
+        $('#gas_data').hide(); 
+      }
+    
+      $('#valvueFS input').datepicker({ dateFormat: 'dd/mm/yy',});
+        
+      $('#id_content').change(function() {
+        if ($(this).val() == 'G')
+        {
+          $('#gas_data').show();
+        }
+        else{
+          $('#gas_data').hide(); 
+        }
+      });
     })
 </script>
 {% endblock %}
@@ -29,23 +47,31 @@
             {{ carburetion_tankForm.series }}
           </span>
           <span class="span3">
-            {{ carburetion_tankForm.brand.errors }}
-            Marca:
-            <br>
-            {{ carburetion_tankForm.brand }}
-          </span>
-          <span class="span3">
-            {{ carburetion_tankForm.model.errors }}
-            Modelo:
-            <br>
-            {{ carburetion_tankForm.model }}
-          </span>
-          <span class="span3">
             {{ carburetion_tankForm.capacity.errors }}
             Capacidad:
             <br>
             {{ carburetion_tankForm.capacity }}
           </span>
+          <span class="span3">
+            {{ carburetion_tankForm.content.errors }}
+            Contenido:
+            <br>
+            {{ carburetion_tankForm.content }}
+          </span>
+          <div id="gas_data">
+            <span class="span3" style="clear:both;">
+              {{ carburetion_tankForm.brand.errors }}
+              Marca:
+              <br>
+              {{ carburetion_tankForm.brand }}
+            </span>
+            <span class="span3">
+              {{ carburetion_tankForm.model.errors }}
+              Modelo:
+              <br>
+              {{ carburetion_tankForm.model }}
+            </span>
+          </div>
         </fieldset>
         <fieldset id="valvueFS">
           <legend>Fechas de Caducidad de Valvulas</legend>
