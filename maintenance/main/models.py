@@ -101,6 +101,7 @@ class vehicle(models.Model):
     )
     vehicle_type = models.CharField('Tipo',max_length=10, choices=VEHICLE_TYPE_CHOICES,
                                       default='TR')
+
     image = models.ImageField(blank=True, null=True, upload_to='vehicles', verbose_name='Imágen')
 
     def __unicode__(self):

@@ -27,33 +27,34 @@
     <article class="tarjeta" >
             <div class="btn-group btn-danger" style="width:100%;">
               <a href='/Vehicle/{{ vehicle.id }}' style="width:75%;" class="btn btn-danger btn-primary">
-                {{ vehicle.name }}
+               {{ vehicle.name }}
               </a>
-              <a class="btn btn-danger btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-asterisk icon-white"></span></a>
-              <ul class="dropdown-menu" style="text-align:left;">
-                {% if vehicle.chassis %}
-                <li><a href='/mantenimientos_chasis/{{ vehicle.chassis.id }}'><i class="icon-pencil"></i> Chasis</a></li>
-                {% endif%}
-                {% if vehicle.carburetion_tank %}
-                <li><a href='/mantenimientos_TanqueCarburacion/{{ vehicle.carburetion_tank.id }}'><i class="icon-pencil"></i> Tanque de Combustible</a></li>
-                {% endif%}
-                {% if vehicle.storage_tank %}
-                <li><a href='/mantenimientos_TanqueAlmacenamiento/{{ vehicle.storage_tank.id }}'><i class="icon-pencil"></i> Tanque de Almacenamiento</a></li>
-                {% endif%}
-                {% if vehicle.radio %}
-                <li><a href='/RadioMaintenances/{{ vehicle.radio.id }}'><i class="icon-pencil"></i> 
-                  Radio</a></li>
-                {% endif%}
-                <li class="divider"></li>
-                <li><a data-toggle="modal" href="#myModal{{ vehicle.id }}"><i class="icon-trash"></i> Eliminar</a></li>
-              </ul>
+              <a class="btn btn-danger btn-primary dropdown-toggle" data-toggle="modal" href="#myModal{{ vehicle.id }}"><span class="icon-trash"></span></a>
             </div>
         </a>
-  		  <section>
+  		  <section style="height:300px; text-align:left;">
           <img src='{{MEDIA_URL}}{{vehicle.image}}' style="height: 130px; width: 200px; margin-top:.5em; margin-bottom:.5em;"/>
           <p><label>{{ vehicle.chassis.brand }} {{ vehicle.chassis.line}} {{ vehicle.chassis.model}}</label></p>
-          <p><label style="float:left;">Chasis </label> {{ vehicle.chassis.name }}</p>
-          <p><label style="float:left;">Placas:</label> {{ vehicle.chassis.license_plates}}</p>
+          <!-- {% if vehicle.chassis.license_plates %}
+            <p><label style="float:left;">Placas:</label> {{ vehicle.chassis.license_plates}}</p>
+          {% endif %} -->
+          {% if vehicle.chassis %}
+            <a href='/mantenimientos_chasis/{{ vehicle.chassis.id }}'><i class="icon-pencil"></i> <b>Chasis</b></a>{{ vehicle.chassis.name }}
+          {% endif %}
+          {% if vehicle.storage_tank %}
+            <br>
+            <a href='/mantenimientos_TanqueAlmacenamiento/{{ vehicle.storage_tank.id }}'><i class="icon-pencil"></i><b> Tanque de Almacenamiento</b></a>
+            {{ vehicle.storage_tank.series}}
+          {% endif %}
+          <br>
+          {% if vehicle.carburetion_tank %}
+            <a href='/mantenimientos_TanqueCarburacion/{{ vehicle.carburetion_tank.id }}'><i class="icon-pencil"></i><b>Tanque de Combustible</b></a>
+            {{ vehicle.carburetion_tank.series}}
+          {% endif %}
+          {% if vehicle.radio %}
+            <a href='/RadioMaintenances/{{ vehicle.radio.id }}'><i class="icon-pencil"></i> <b>Radio</b></a>
+            {{ vehicle.radio.series}}
+          {% endif %}
         </section>
   	</article>	
   {% endfor%}
