@@ -153,7 +153,7 @@ class service(models.Model):
     
     SERVICE_TYPE_CHOICES = (
         ('CH', 'CHASIS'),
-        ('TC', 'TANQUE DE CARBURACION'),
+        ('TC', 'TANQUE DE COMBUSTIBLE'),
         ('TA', 'TANQUE DE ALMACENAMIENTO'),
         ('R', 'RADIO'),
     )

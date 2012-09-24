@@ -1,32 +1,57 @@
 {% extends "vehicle/chassis/base.html" %}
 {% block title %}Home{% endblock %}
+{% block js_code %}
+  <script>  
+  $(document).ready(function() {
+    $(".btnPrint").printPage();
+  });
+  </script>
+{% endblock %}
 {% block breadcrumb %}{{ block.super }} &raquo; Chasis ({{ chassis }}){% endblock %} 
 {% block content %}  
   
-  <h2>Chasis <a class="btn" href="/reporte/{{ chassis.id}}" target="_blank">Reporte</a>
+  <h2>Chasis <a class="btn btnPrint" href="/reporte/{{ chassis.id}}" target="_blank"><i class=" icon-print"></i> Imprimir Reporte</a>
   </h2>
   <br>
-  <div class="span3">
-    {{ chassis.name}} <br>
-    <br>
-    <p><label>{{ chassis.brand }} {{ chassis.line}} {{ chassis.model}}</label></p>
-    <p><label style="float:left;">Chasis </label> {{ chassis.name }}</p>
-    <p><label style="float:left;">Placas:</label> {{ chassis.license_plates}}</p>
-    <p><label style="float:left;">Color:</label> {{ chassis.color}}</p>
-    <p><label style="float:left;">Kilometraje:</label> {{ chassis.mileage}}</p>
-    <br>
-  </div>
+  <fieldset style="clear:both; text-align:left;">
+    <legend>Datos Generales</legend>
+    <span class="span3">
+      <b>Serie</b><br>
+      {{ chassis.name }}
+    </span>
+    <span class="span3">
+      <b>Marca / Linea / Modelo:</b><br>
+      {{ chassis.brand }} / {{ chassis.line}} / {{ chassis.model}}
+    </span>
+    <span class="span3">
+      <b>Placas:</b><br>
+      {{ chassis.license_plates}}
+    </span>
+    <span class="span3">
+      <b>Color:</b><br>
+      {{ chassis.color}}
+    </span>
+    <span class="span3">
+      <b>Kilometraje:</b><br>
+      {{ chassis.mileage}}
+    </span>
+  </fieldset>
+  <br><br>
   {% for ServiceGroup in ServicesGroups %}
   <div class="span3" style="text-align:left;">
-    <b>{{ ServiceGroup.name }}</b>
-    <hr>
+    <ul style="list-style-type: square;"><b>{{ ServiceGroup.name }}</b> </ul>
     {% for ServiceGroupItem in ServicesGroupItems %}
       {% if ServiceGroupItem.services_group == ServiceGroup %}
-        {{ ServiceGroupItem.services.name }} <br>
+        <li>{{ ServiceGroupItem.services.name }} </li>
       {% endif %}
     {% endfor %}
+  </ul>
   </div>
   {% endfor %}
+  
+  <br>
+  <br>
+  <br>
   <h3 style="clear:both;">Mantenimientos Realizados a Chasis <a class="btn" href="/ChassisMaintenance/New/{{ chassis.id}}"><i class="icon-plus"></i></a></h3> &nbsp; &nbsp;
   {% for chassis_maintenance in chassis_maintenances %}
   <div id="myModal{{ chassis_maintenance.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -53,6 +78,7 @@
         </div>  
     <section>
       <label>{{ chassis_maintenance.date }} </label>
+      {{ chassis_maintenance.description }} 
       <hr>
       {% for chassis_service in chassis_services %} 
         {% if chassis_service.chassis_maintenance == chassis_maintenance %}

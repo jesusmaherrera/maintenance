@@ -1,19 +1,29 @@
 {% extends "vehicle/radio/base.html" %}
 {% block title %}Home{% endblock %}
+{% block js_code %}
+  <script>  
+  $(document).ready(function() {
+    $(".btnPrint").printPage();
+  });
+  </script>
+{% endblock %}
 {% block breadcrumb %}{{ block.super }} &raquo; Radio ({{ radio }}){% endblock %} 
 {% block content %}  
   
-  <h2>Radio <a class="btn" href="/RadioReport/{{ radio.id}}" target="_blank">Reporte</a>
+  <h2>Radio <a class="btn btnPrint" href="/RadioReport/{{ radio.id}}" target="_blank"><i class=" icon-print"></i> Imprimir Reporte</a>
   </h2>
   <br>
-  <div class="span3">
-    {{ radio.name}} <br>
-    <br>
-    <p><label>{{ radio.series }} {{ radio.brand}} </label></p>
-    <p><label style="float:left;">Modelo:</label> {{ radio.model}}</p>
-    <p><label style="float:left;">Estado </label> {{ radio.state }}</p>
-    <br>
-  </div>
+  <fieldset style="clear:both; text-align:left;">
+    <legend>Datos Generales</legend>
+    <span class="span3">
+      <b>Serie:</b><br>
+      {{ radio.series}}  
+    </span>
+    <span class="span3">
+      <b>Marca / Modelo</b><br>
+      {{ radio.brand}} / {{ radio.model}}
+    </span>
+  </fieldset>
   <h3 style="clear:both;">Mantenimientos Realizados a Radio <a class="btn" href="/RadioMaintenance/New/{{ radio.id }}"><i class="icon-plus"></i> </a></h3>
   {% for radio_maintenance in radio_maintenances %}
   <div id="myModal{{ radio_maintenance.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -40,6 +50,7 @@
         </div>  
     <section>
       <label>{{ radio_maintenance.date }} </label>
+      {{ radio_maintenance.description }}
       <hr>
       {% for radio_service in radio_services %} 
         {% if radio_service.radio_maintenance == radio_maintenance %}

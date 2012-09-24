@@ -1,14 +1,50 @@
 {% extends "vehicle/carburetion_tank/base.html" %}
 {% block title %}Home{% endblock %}
+{% block js_code %}
+  <script>  
+  $(document).ready(function() {
+    $(".btnPrint").printPage();
+  });
+  </script>
+{% endblock %}
 {% block breadcrumb %}{{ block.super }} &raquo; Tanque de Carburacion ({{ carburetion_tank }}){% endblock %} 
 {% block content %}     
-  <h2>Detalles de Tanque de Carburacion <a class="btn" href="/CarburetionTankReport/{{ carburetion_tank.id}}" target="_blank">Reporte</a></h2>
+  <h2>Detalles de Tanque de Combustible <a class="btn btnPrint" href="/CarburetionTankReport/{{ carburetion_tank.id}}" target="_blank"> <i class=" icon-print"></i> Imprimir Reporte</a></h2>
   <br>
-  {{ carburetion_tank.series}}<br>
-  <br>
-  <p><label>{{ carburetion_tank.brand }}{{ carburetion_tank.model}}</label></p>
-  <p><label style="float:left;">Chasis </label> {{ carburetion_tank.series }}</p>
-
+  <fieldset style="clear:both; text-align:left;">
+    <legend>Datos Generales</legend>
+    <span class="span3">
+      <b>Serie:</b> <br>
+      {{ carburetion_tank.series}}
+    </span>
+    <span class="span3">
+      <b>Marca / Modelo:</b><br>
+      {{ carburetion_tank.brand }} / {{ carburetion_tank.model}}
+    </span>
+    <span class="span3">
+      <b>Capacidad:</b><br>
+      {{ carburetion_tank.capacity }}
+    </span>
+  </fieldset>
+  <fieldset id="valvueFS" style="clear:both; text-align:left;">
+    <legend>Fechas de Caducidad de Valvulas</legend>
+    <span class="span3">
+      <b>Servicio</b><br>
+      {{ carburetion_tank.service_valve }}
+    </span>
+    <span class="span3">
+      <b>10 %:</b><br>
+      {{ carburetion_tank.ten_percent_valve }}
+    </span>
+    <span class="span3">
+      <b>Llenado:</b><br>
+      {{ carburetion_tank.fill_valve }}
+    </span>
+    <span class="span3">
+      <b>Seguridad:</b><br>
+      {{ carburetion_tank.safety_valve }}
+    </span>
+  </fieldset>
   <br>
   <h3>Mantenimientos Realizados  &nbsp; &nbsp;<a class="btn" href="/CarburetionTankMaintenace/New/{{ carburetion_tank.id }}/"><i class="icon-plus"></i></a></h3>
 
@@ -37,6 +73,7 @@
         </div> 
     <section>
       <label>{{ carburetion_tank_maintenance.date }}</label>
+      {{ carburetion_tank_maintenance.description }}
       <hr>
       {{ storage_tank_maintenance.date }}
       {% for carburetion_tank_service in carburetion_tank_services %} 

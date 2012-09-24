@@ -1,14 +1,67 @@
 {% extends "vehicle/storage_tank/base.html" %}
 {% block title %}Home{% endblock %}
+{% block js_code %}
+  <script>  
+  $(document).ready(function() {
+    $(".btnPrint").printPage();
+  });
+  </script>
+{% endblock %}
+
 {% block breadcrumb %}{{ block.super }} &raquo; Tanque Almacenamiento ({{ storage_tank }}){% endblock %} 
 {% block content %}     
-  <h2>Detalles de Tanque de Almacenamiento <a class="btn" href="/StorageTankReport/{{ storage_tank.id}}" target="_blank">Reporte</a></h2>
+  <h2>Detalles de Tanque de Almacenamiento <a class="btn btnPrint" href="/StorageTankReport/{{ storage_tank.id}}" target="_blank"><i class=" icon-print"></i> Imprimir Reporte</a></h2>
   <br>
-  {{ storage_tank.series}}<br>
-  <br>
-  <p><label>{{ storage_tank.brand }}{{ storage_tank.model}}</label></p>
-  <p><label style="float:left;">Chasis </label> {{ storage_tank.series }}</p>
-
+  <fieldset style="clear:both; text-align:left;">
+    <legend>Datos Generales</legend>
+    <span class="span3">
+      <b>Serie:</b> <br>
+      {{ storage_tank.series}}
+    </span>
+    <span class="span3">
+      <b>Marca / Modelo:</b><br>
+      {{ storage_tank.brand }} / {{ storage_tank.model}}
+    </span>
+    <span class="span3">
+      <b>Capacidad Nominal 100%:</b> <br>
+      {{ storage_tank.water_nominal_cap }}
+    </span>
+    <span class="span3">
+      <b>Capacidad al 90%:</b><br>
+      {{ storage_tank.capArt }}
+    </span>
+</fieldset>
+<fieldset id="valvueFS" style="clear:both; text-align:left;">
+          <legend>Fechas de Caducidad de Valvulas</legend>
+          <span class="span3">
+            <b>Exceso de llenado:</b><br>
+            {{ storage_tank.overfill_valve }}
+          </span>
+          <span class="span3">
+            <b>10 %:</b><br>
+            {{ storage_tank.ten_percent_valve }}
+          </span>
+          <span class="span3">
+            <b>Llenado:</b><br>
+            {{ storage_tank.fill_valve }}
+          </span>
+          <span class="span3" >
+            <b>No Retroceso:</b><br>
+            {{ storage_tank.no_recoil_valve }}
+          </span>
+          <span class="span3" >
+            <b>Exceso de Vapor:</b><br>
+            {{ storage_tank.excess_steam_valve }}
+          </span>
+          <span class="span3">
+            <b>Seguridad:</b><br>
+            {{ storage_tank.safety_valve }}
+          </span>
+          <span class="span3">
+            <b>Check Look:</b><br>
+            {{ storage_tank.check_look_valve }}
+          </span>
+        </fieldset>
   <br>
   <h3>Mantenimientos Realizados a Tanque de Almacenamiento <a class="btn" href="/StorageTankMaintenace/New/{{ storage_tank.id }}"><i class="icon-plus"></i></a></h3>
   {% for storage_tank_maintenance in storage_tank_maintenances %}
@@ -36,6 +89,7 @@
     </div>
     <section>
       <label>{{ storage_tank_maintenance.date }}</label>
+      {{ storage_tank_maintenance.description }}
       <hr>
       {% for storage_tank_service in storage_tank_services %} 
         {% if storage_tank_service.storage_tank_maintenance == storage_tank_maintenance %}

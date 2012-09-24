@@ -2,16 +2,26 @@
 
 {% block content %}  
   
-  <h2>Reporte de mantenimientos de Radio
+  <h2>Mantenimientos de Radio
   </h2>
   <br>
-  <div class="span3" style="text-align:left;">
-    <b>{{ radio.series}} </b><br>
-    <br>
-    <p><label><b>{{ radio.brand }}{{ radio.model}}</b></label></p>
-    <br>
-  </div>
-  {% for ServiceGroup in radio_services_groups %}
+  <fieldset style="clear:both; font-size:.8em; text-align:left">
+    <legend>Datos Generales</legend>
+    <table width="100%" style="margin-left:30px; vertical-align:top;">
+      <tr>
+        <td>
+          <b>Serie:</b> <br>
+          {{ radio.series}}  
+        </td>
+        <td>
+          <b>Marca / Modelo:</b><br>
+          {{ radio.brand}} / {{ radio.model}}
+        </td>
+      </tr>
+    </table>
+  </fieldset>
+
+ <!--  {% for ServiceGroup in radio_services_groups %}
   
   <div class="span3" style="text-align:left;">
     <b>{{ ServiceGroup.name }}</b>
@@ -22,25 +32,27 @@
       {% endif %}
     {% endfor %}
   </div>
-  {% endfor %}
+  {% endfor %} -->
   
   <br><br>
-   <table class="table table-condensed">
+  <table class="table table-condensed"  style="border-color: gray; border-style: solid; border-width: 1px;" >
     <thead>
-      <tr COLSPAN="4">
-        <th>MANTENIMIENTOS</th>
+      <tr>
+        <th colspan="2">MANTENIMIENTOS</th>
       </tr> 
     </thead>
-    <tbody>
+    <tbody style="font-size:.7em;">
       {% for radio_maintenance in radio_maintenances %}
-      <tr style="font-weight:bold; background-color:gray;">
-        <td>{{ radio_maintenance.garage }}</td>
-        <td>{{ radio_maintenance.date }}</td>
+      <tr style="font-weight:bold; background-color:#AFC6D8; color: white; border-color: gray; border-style: solid; border-width: 1px;">
+        <td colspan="2"  style="font-weight:bold; background-color:#AFC6D8; color: white; border-color: gray; border-style: solid; border-width: 1px; border-right:2px;">
+          {{ radio_maintenance.garage }} {{ radio_maintenance.date }}<br>
+          {{ radio_maintenance.description }}
+        </td>
       </tr>
-            {% for radio_service in radio_services %} 
+           {% for radio_service in radio_services %} 
               {% if radio_service.radio_maintenance == radio_maintenance %}
-                <tr colspan="4">
-                  <td>
+                <tr>
+                  <td colspan="2">
                     {{ radio_service.service }}
                   </td>
                 </tr>
@@ -49,7 +61,7 @@
             {% for radio_services_group in radio_services_groups %} 
               {% if radio_services_groups.radio_maintenance == radio_maintenance  %}
                 <tr>
-                  <td>
+                  <td colspan="2">
                     {{ radio_services_group.services_group.name }}
                   </td>
                 </tr>
