@@ -34,6 +34,7 @@ class storage_tank(models.Model):
                                       default='N')
 
     #VALVULAS
+    service_valve = models.DateField('Servicio', blank=True, null=True)
     overfill_valve = models.DateField('Exceso de llenado', blank=True, null=True)
     ten_percent_valve = models.DateField('10 %', blank=True, null=True)
     fill_valve = models.DateField("Llenado", blank=True, null=True)
@@ -58,7 +59,6 @@ class carburetion_tank(models.Model):
     
     CONTENT_TYPES = (
         ('G', 'GAS'),
-        ('D', 'DIECEL'),
     )
     content = models.CharField(max_length=10, choices=CONTENT_TYPES, default='G')
     #VALVULAS
@@ -96,11 +96,15 @@ class vehicle(models.Model):
     radio = models.ForeignKey(radio, on_delete=models.SET_NULL, blank=True, null=True)
     
     VEHICLE_TYPE_CHOICES = (
-        ('PI', 'PIPA'),
-        ('TR', 'TROCA'),
+        ('PIG', 'PIPA A GAS LP'),
+        ('PID', 'PIPA DIESEL'),
+        ('CI', 'CILINDRERA'),
+        ('PK', 'PICK UP'),
+        ('AU', 'AUTO'),
+
     )
     vehicle_type = models.CharField('Tipo',max_length=10, choices=VEHICLE_TYPE_CHOICES,
-                                      default='TR')
+                                      default='PIG')
 
     image = models.ImageField(blank=True, null=True, upload_to='vehicles', verbose_name='Imágen')
 
