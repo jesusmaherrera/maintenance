@@ -27,7 +27,7 @@
     <article class="tarjeta" >
             <div class="btn-group btn-danger" style="width:100%;">
               <a href='/Vehicle/{{ vehicle.id }}' style="width:75%;" class="btn btn-danger btn-primary">
-               Chassis: {{ vehicle.name }}
+               Unidad: {{ vehicle.name }}
               </a>
               <a class="btn btn-danger btn-primary dropdown-toggle" data-toggle="modal" href="#myModal{{ vehicle.id }}"><span class="icon-trash"></span></a>
             </div>
@@ -39,7 +39,7 @@
             <p><label style="float:left;">Placas:</label> {{ vehicle.chassis.license_plates}}</p>
           {% endif %} -->
           {% if vehicle.chassis %}
-            <a href='/mantenimientos_chasis/{{ vehicle.chassis.id }}'><i class="icon-pencil"></i> <b>Unidad</b></a>{{ vehicle.chassis.name }}
+            <a href='/mantenimientos_chasis/{{ vehicle.chassis.id }}'><i class="icon-pencil"></i> <b>Chasis</b></a>{{ vehicle.chassis.name }}
           {% endif %}
           {% if vehicle.storage_tank %}
             <br>

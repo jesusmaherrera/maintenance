@@ -47,10 +47,7 @@
             <br>
             {{ storage_tankForm.content }}
           </span>
-        </fieldset>
-        <fieldset id="valvueFS">
-          <legend>Fechas de Caducidad de Valvulas</legend>
-          <span class="span3">
+	    <span class="span3">
             {{ storage_tankForm.water_nominal_cap.errors }}
             Capacidad Nominal 100%:
             <br>
@@ -61,6 +58,15 @@
             Capacidad al 90%:
             <br>
             {{ storage_tankForm.capArt }}
+          </span>
+        </fieldset>
+        <fieldset id="valvueFS">
+          <legend>Fechas de Caducidad de Valvulas</legend>
+	    <span class="span3">
+            {{ storage_tankForm.service_valve.errors }}
+            Servicio:
+            <br>
+            {{ storage_tankForm.service_valve }}
           </span>
           <span class="span3">
             {{ storage_tankForm.overfill_valve.errors }}

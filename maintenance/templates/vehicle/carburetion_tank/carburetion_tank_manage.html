@@ -13,7 +13,7 @@
         $('#gas_data').show();
       }
       else{
-        $('#gas_data').hide(); 
+        $('#gas_data').hide();
       }
     
       $('#valvueFS input').datepicker({ dateFormat: 'dd/mm/yy',});
@@ -41,12 +41,6 @@
         <fieldset>
           <legend>Datos Generales</legend>
           <span class="span3">
-            {{ carburetion_tankForm.series.errors }}
-            Serie:
-            <br>
-            {{ carburetion_tankForm.series }}
-          </span>
-          <span class="span3">
             {{ carburetion_tankForm.capacity.errors }}
             Capacidad:
             <br>
@@ -59,6 +53,12 @@
             {{ carburetion_tankForm.content }}
           </span>
           <div id="gas_data">
+	      <span class="span3">
+              {{ carburetion_tankForm.series.errors }}
+              Serie:
+              <br>
+              {{ carburetion_tankForm.series }}
+            </span>
             <span class="span3" style="clear:both;">
               {{ carburetion_tankForm.brand.errors }}
               Marca:
