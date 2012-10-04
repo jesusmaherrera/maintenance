@@ -39,7 +39,7 @@
             <p><label style="float:left;">Placas:</label> {{ vehicle.chassis.license_plates}}</p>
           {% endif %} -->
           {% if vehicle.chassis %}
-            <a href='/mantenimientos_chasis/{{ vehicle.chassis.id }}'><i class="icon-pencil"></i> <b>Chasis</b></a>{{ vehicle.chassis.name }}
+            <a href='/mantenimientos_chasis/{{ vehicle.chassis.id }}'><i class="icon-pencil"></i> <b>Unidad</b></a>{{ vehicle.chassis.name }}
           {% endif %}
           {% if vehicle.storage_tank %}
             <br>
