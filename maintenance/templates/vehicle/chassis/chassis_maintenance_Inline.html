@@ -5,6 +5,15 @@
     .delete-row {
         margin-left:5px;
     }
+
+    textarea{
+        width: 810px;
+        height: 400px;
+    }
+    #id_description {
+        width: 810px;
+        height: 200px;
+    }
 </style>
 {% endblock %}
 {% block js_code %}
@@ -66,7 +75,9 @@
                 Kilometraje:
                 {{ form.mileage }}
             </span>
-            <span class="span3" style="clear:both;">
+            <br>
+            <span class="span5" width='810px'> 
+                <br>
                 Descripcion:
                 {{ form.description }}
             </span>

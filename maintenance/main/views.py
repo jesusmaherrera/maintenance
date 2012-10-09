@@ -17,7 +17,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 # Create your views here.
 @login_required(login_url='/login/')
 def index(request):
-  	vehicles = vehicle.objects.all()
+  	vehicles = vehicle.objects.all().order_by('name')
   	return render_to_response('index.html',{'vehicles':vehicles},context_instance=RequestContext(request))
 
 @login_required(login_url='/login/')
@@ -26,7 +26,7 @@ def new_vehicleView(request):
 		vehicleForm = new_vehicleForm(request.POST, request.FILES)
 		if vehicleForm.is_valid():
 			vehicleForm.save()
-			vehicles = vehicle.objects.all()
+			vehicles = vehicle.objects.all().order_by('name')
 			return render_to_response('index.html',context_instance = RequestContext(request))
 	else:
 	 	vehicleForm = new_vehicleForm()
@@ -91,7 +91,7 @@ def services_groupInline_formset(request, id = None, template= "services_groupIn
 		if form.is_valid() and formset.is_valid():
 			form.save()
 			formset.save()
-			services = service.objects.all().order_by('-service_type').des()
+			services = service.objects.all().order_by('-service_type')
 			servicesGroups = services_group.objects.all()
 			c = {'services':services,'servicesGroups':servicesGroups,}
 			return render_to_response('services.html', c, context_instance = RequestContext(request))
@@ -534,7 +534,7 @@ def vehicle_manageView(request, id= None, template_name = 'vehicle/vehicle_manag
 		vehicleForm = new_vehicleForm(request.POST, request.FILES, instance= vehicleI)
 		if vehicleForm.is_valid():
 			vehicleForm.save()
-			vehicles = vehicle.objects.all()
+			vehicles = vehicle.objects.all().order_by('name')
 			return render_to_response("index.html", {'vehicles':vehicles}, context_instance = RequestContext(request))
 	else:
 	 	vehicleForm = new_vehicleForm(instance= vehicleI)
@@ -553,7 +553,7 @@ def delete_vehicle(request, id = None):
 	vehicleInstance = get_object_or_404(vehicle, pk=id)
 	vehicleInstance.delete()
 
-	vehicles = vehicle.objects.all()
+	vehicles = vehicle.objects.all().order_by('name')
   	return render_to_response('index.html',{'vehicles':vehicles},context_instance=RequestContext(request))
 
 ##########################################

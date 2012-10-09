@@ -123,7 +123,7 @@ class radio_maintenance(models.Model):
     date = models.DateTimeField()
     garage = models.ForeignKey(garage, on_delete=models.SET_NULL, blank=True, null=True)
     radio = models.ForeignKey(radio, blank=True, null=True)
-    description = models.CharField(max_length=150)
+    description = models.CharField(max_length=800)
     
     def __unicode__(self):
         return u'%s %s'% (self.date, self.garage)
@@ -133,7 +133,7 @@ class chassis_maintenance(models.Model):
     garage = models.ForeignKey(garage, on_delete=models.SET_NULL, blank=True, null=True)
     chassis = models.ForeignKey(chassis, blank=True, null=True)
     mileage = models.CharField(max_length=10, blank=True, null=True)
-    description = models.CharField(max_length=150, blank=True, null=True)
+    description = models.CharField(max_length=800, blank=True, null=True)
 
     def __unicode__(self):
         return u'%s %s'% (self.date, self.garage)
@@ -142,7 +142,7 @@ class storage_tank_maintenance(models.Model):
     date = models.DateTimeField()
     garage = models.ForeignKey(garage, on_delete=models.SET_NULL, blank=True, null=True)
     storage_tank = models.ForeignKey(storage_tank, blank=True, null=True)
-    description = models.CharField(max_length=150, blank=True, null=True)
+    description = models.CharField(max_length=800, blank=True, null=True)
 
     def __unicode__(self):
         return u'%s %s'% (self.date, self.garage)
@@ -151,7 +151,7 @@ class carburetion_tank_maintenance(models.Model):
     date = models.DateTimeField()
     garage = models.ForeignKey(garage, on_delete=models.SET_NULL, blank=True, null=True)
     carburetion_tank = models.ForeignKey(carburetion_tank, blank=True, null=True)
-    description = models.CharField(max_length=150, blank=True, null=True)
+    description = models.CharField(max_length=800, blank=True, null=True)
 
     def __unicode__(self):
         return u'%s %s'% (self.date, self.garage)        
@@ -196,7 +196,7 @@ class chassis_maintenance_S(models.Model):
 
 class chassis_maintenance_Service(models.Model):
     chassis_maintenance = models.ForeignKey(chassis_maintenance)
-    service = models.CharField(max_length=150)
+    service = models.CharField(max_length=1500)
 
     def __unicode__(self):
         return u'%s'% (self.id)
