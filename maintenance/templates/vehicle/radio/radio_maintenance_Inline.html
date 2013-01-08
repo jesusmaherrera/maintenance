@@ -42,12 +42,12 @@
 <div>
     <div style="margin:0 auto 0 auto;">
         <form method="post" action="">{% csrf_token %}
-             {% if message != "" %}
-    <div class="alert fade in">
-        <button type="button" class="close" data-dismiss="alert">×</button>
-        <strong>{{ message }}!</strong> 
-    </div>
-    {% endif %}
+           {% if message != "" %}
+           <div class="alert fade in">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ message }}!</strong> 
+        </div>
+        {% endif %}
     <form method="post" action="">{% csrf_token %}
         <div style="text-align:left;">
             <fieldset>
