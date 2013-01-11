@@ -1,5 +1,8 @@
 #encoding:utf-8
 from django.db import models
+from maintenance.stdimage import StdImageField
+import random
+import os
 
 class chassis(models.Model):
     name = models.CharField('Serie',max_length=50)
@@ -106,7 +109,8 @@ class vehicle(models.Model):
     vehicle_type = models.CharField('Tipo',max_length=10, choices=VEHICLE_TYPE_CHOICES,
                                       default='PIG')
 
-    image = models.ImageField(blank=True, null=True, upload_to='vehicles', verbose_name='Imágen')
+    #image = StdImageField(blank=True, null=True , upload_to=get_image_path, size=(200, 130), verbose_name='Imágen')
+    image = models.ImageField(blank=True, null=True , upload_to='vehicles', verbose_name='Imágen')
 
     def __unicode__(self):
         return self.name
