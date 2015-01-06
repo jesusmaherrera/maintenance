@@ -15,7 +15,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name = 'django_vehicles_maintenance',
-    version = '0.0.4',
+    version = '0.0.5',
     packages = ['django_vehicles_maintenance',],
     include_package_data = True,
     license = 'BSD License', # example license

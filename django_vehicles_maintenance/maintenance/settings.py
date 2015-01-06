@@ -10,7 +10,7 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-MANTANIMIENTOS_DATA_PATH = os.environ['MANTANIMIENTOS_DB']
+MANTANIMIENTOS_DATA_PATH = os.environ['MANTANIMIENTOS_DATA_PATH']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
